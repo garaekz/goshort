@@ -11,5 +11,7 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Environment variables file
+.env
 # Dependency directories (remove the comment below to include it)
 # vendor/

@@ -1,12 +1,14 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/garaekz/goshort/url"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/joho/godotenv"
 )
 
 func initDB() *gorm.DB {
@@ -20,6 +22,11 @@ func initDB() *gorm.DB {
 	return db
 }
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	db := initDB()
 	defer db.Close()
 
@@ -32,7 +39,7 @@ func main() {
 		v1.POST("/", urlAPI.Create)
 	}
 
-	err := r.Run()
+	err = r.Run()
 	if err != nil {
 		panic(err)
 	}
