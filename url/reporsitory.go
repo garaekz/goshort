@@ -14,11 +14,22 @@ func ProvideRepository(DB *gorm.DB) Repository {
 	return Repository{DB: DB}
 }
 
-// FindByCode finds the given url
+// FindByCode finds the given Code url
 func (repo *Repository) FindByCode(code string) (URL, bool) {
 	var url URL
 
 	if repo.DB.Where("code = ?", code).First(&url).RecordNotFound() {
+		return url, false
+	}
+
+	return url, true
+}
+
+// FindByOriginalURL finds the given OriginalURL url
+func (repo *Repository) FindByOriginalURL(originalURL string) (URL, bool) {
+	var url URL
+
+	if repo.DB.Where("original_url = ?", originalURL).First(&url).RecordNotFound() {
 		return url, false
 	}
 

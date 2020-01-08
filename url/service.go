@@ -18,7 +18,11 @@ func (s *Service) FindByCode(code string) (URL, bool) {
 
 // Save calls the repository function Save
 func (s *Service) Save(url URL) URL {
-	s.Repository.Save(url)
+	u, status := s.Repository.FindByOriginalURL(url.OriginalURL)
 
-	return url
+	if status == false {
+		s.Repository.Save(url)
+		return url
+	}
+	return u
 }

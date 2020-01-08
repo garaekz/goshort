@@ -18,7 +18,7 @@ func ProvideAPI(s Service) API {
 	return API{Service: s}
 }
 
-// FindByCode calls service function to find URL by OriginalURL
+// FindByCode calls service function to find URL by Code
 func (api *API) FindByCode(c *gin.Context) {
 	url, status := api.Service.FindByCode(c.Param("code"))
 	if status == false {
