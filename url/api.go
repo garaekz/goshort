@@ -22,9 +22,8 @@ func ProvideAPI(s Service) API {
 func (api *API) FindByCode(c *gin.Context) {
 	url, status := api.Service.FindByCode(c.Param("code"))
 	if status == false {
-		c.JSON(http.StatusOK, gin.H{"err": "Not found"})
+		c.JSON(http.StatusNotFound, gin.H{"err": "Not found"})
 	} else {
-		// TODO: Return JSON error
 		fmt.Println(ToDTO(url))
 		c.JSON(http.StatusOK, gin.H{"url": ToDTO(url)})
 	}

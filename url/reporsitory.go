@@ -1,8 +1,16 @@
 package url
 
 import (
+	"crypto/rand"
+
 	"github.com/jinzhu/gorm"
 )
+
+const (
+	StdLen = 4
+)
+
+var StdChars = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
 
 // Repository passes current database connection
 type Repository struct {
@@ -41,4 +49,57 @@ func (repo *Repository) Save(url URL) URL {
 	repo.DB.Save(&url)
 
 	return url
+}
+
+func (repo *Repository) generateUniqueCode() string {
+	n := StdLen
+	i := 0
+
+	for {
+		code := repo.RandomCode(n)
+		_, status := repo.FindByCode(code)
+		if status == false {
+			return code
+		}
+		if n%10 == 0 {
+			n++
+		}
+		i++
+	}
+}
+
+// RandomCode returns a new random string of the provided length.
+func (repo *Repository) RandomCode(length int) string {
+	return repo.RandomCodeChars(length, StdChars)
+}
+
+// RandomCodeChars returns a new random string of the provided length using the byte slice.
+func (repo *Repository) RandomCodeChars(length int, chars []byte) string {
+	if length == 0 {
+		return ""
+	}
+	clen := len(chars)
+	if clen < 2 || clen > 256 {
+		panic("uniuri: wrong charset length for NewLenChars")
+	}
+	maxrb := 255 - (256 % clen)
+	b := make([]byte, length)
+	r := make([]byte, length+(length/4))
+	i := 0
+	for {
+		if _, err := rand.Read(r); err != nil {
+			panic("uniuri: error reading random bytes: " + err.Error())
+		}
+		for _, rb := range r {
+			c := int(rb)
+			if c > maxrb {
+				continue
+			}
+			b[i] = chars[c%clen]
+			i++
+			if i == length {
+				return string(b)
+			}
+		}
+	}
 }
