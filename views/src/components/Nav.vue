@@ -1,7 +1,8 @@
 <template>
   <sui-menu secondary>
-    <sui-menu-item active link name="Home">Home</sui-menu-item>
-
+    <sui-menu-menu>
+      <router-link is="sui-menu-item" to="/">Home</router-link>
+    </sui-menu-menu>
     <sui-menu-menu position="right">
       <sui-menu-item>
         <sui-button color="teal" content="Login / Register" />

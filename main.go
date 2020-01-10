@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/garaekz/goshort/url"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -33,6 +34,8 @@ func main() {
 
 	urlAPI := initURLAPI(db)
 	r := gin.Default()
+	r.Use(cors.Default())
+	r.LoadHTMLGlob("./views/dist/**.html")
 
 	r.Use(static.Serve("/", static.LocalFile("./views/dist", true)))
 	r.GET("/:code", urlAPI.FindByCode)

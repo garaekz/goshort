@@ -1,6 +1,7 @@
 package url
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -16,6 +17,9 @@ func ProvideService(repo Repository) Service {
 
 // pruneURL trims URL trailing slash
 func (url *URL) pruneURL() {
+	if !strings.HasPrefix(url.OriginalURL, "http://") && !strings.HasPrefix(url.OriginalURL, "https://") {
+		url.OriginalURL = fmt.Sprintf("http://%s", url.OriginalURL)
+	}
 	url.OriginalURL = strings.TrimSuffix(url.OriginalURL, "/")
 }
 
