@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,400,700,900&display=swap');
+
+html {
+  font-family: 'Raleway', sans-serif;
+}
+body {
+  background: #eaeaea;
+}
+.ui {
+  &.menu {
+    height: 8em;
+  }
+}
+.main-input {
+  font-size: 26px;
+}
+.full-width {
+  width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+  .main-input {
+    font-size: 18px;
+  }
+}
+
+/* Tablet / iPad Portrait */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Computer / Desktop / iPad Landscape */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Large Monitor */
+@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+
+}
+
+/* Widescreen Monitor */
+@media only screen and (min-width: 1920px) {
+
+}
