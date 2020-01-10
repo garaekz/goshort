@@ -6,10 +6,12 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// StdLen sets the initial length of the generated code
 const (
 	StdLen = 4
 )
 
+// StdChars contains the valid characters to use in a code
 var StdChars = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
 
 // Repository passes current database connection

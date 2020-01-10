@@ -1,7 +1,6 @@
 package url
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -24,8 +23,8 @@ func (api *API) FindByCode(c *gin.Context) {
 	if status == false {
 		c.JSON(http.StatusNotFound, gin.H{"err": "Not found"})
 	} else {
-		fmt.Println(ToDTO(url))
-		c.JSON(http.StatusOK, gin.H{"url": ToDTO(url)})
+		// c.JSON(http.StatusOK, gin.H{"url": ToDTO(url)})
+		c.Redirect(http.StatusMovedPermanently, url.OriginalURL)
 	}
 }
 
