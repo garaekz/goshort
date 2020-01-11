@@ -10,6 +10,14 @@ body {
   &.menu {
     height: 8em;
   }
+  &.grid {
+    &.shortened-res {
+      margin-bottom: 2em;
+      & h1 {
+        font-size: 3rem;
+      }
+    }
+  }
 }
 .main-input {
   font-size: 26px;

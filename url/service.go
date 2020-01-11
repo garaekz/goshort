@@ -2,7 +2,7 @@ package url
 
 import (
 	"fmt"
-	"net/url"
+	"regexp"
 	"strings"
 )
 
@@ -26,8 +26,9 @@ func (u *URL) pruneURL() {
 
 // IsURL checks URL validity
 func IsURL(str string) bool {
-	u, err := url.Parse(str)
-	return err == nil && u.Scheme != "" && u.Host != ""
+	re := regexp.MustCompile("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$")
+
+	return re.FindStringIndex(str) != nil
 }
 
 // setRandomCode sets URL struct Code field

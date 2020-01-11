@@ -3,7 +3,16 @@
     <sui-grid>
       <sui-grid-row>
         <sui-grid-column :computer="2" :tablet="1" class=""></sui-grid-column>
-        <sui-grid-column :computer="12" :tablet="14" :mobile="16" class="">
+        <sui-grid-column centered :computer="12" :tablet="14" :mobile="16">
+          <div
+            v-if="shorted"
+            class="ui one column stackable center aligned page grid shortened-res"
+          >
+            <div class="column twelve wide">
+              <!-- TODO: Fix styles of this -->
+              <h1>{{ shorted }}</h1>
+            </div>
+          </div>
           <div class="ui action left icon input full-width">
             <input
               type="text"
@@ -16,6 +25,13 @@
               <i class="paper plane icon"></i>
             </div>
           </div>
+          <sui-message
+            v-if="error"
+            icon="times circle"
+            error
+            header="Your URL is invalid"
+            content="Please provide a valid URL."
+          />
         </sui-grid-column>
         <sui-grid-column :computer="2" :tablet="1" class=""></sui-grid-column>
       </sui-grid-row>
@@ -30,7 +46,9 @@ export default {
   name: "home",
   components: {},
   data: () => ({
-    url: null
+    url: null,
+    error: null,
+    shorted: null
   }),
   methods: {
     async saveURL() {
@@ -40,12 +58,15 @@ export default {
         })
         .then(
           response => {
-            console.log(response);
+            // TODO: Implement env with domain name
+            this.shorted = "http://localhost:8080/" + response.data.url.code;
           },
-          error => {
-            console.log(error);
+          () => {
+            this.error = true;
+            setTimeout(() => (this.error = false), 5000);
           }
         );
+      this.url = "";
     }
   }
 };
