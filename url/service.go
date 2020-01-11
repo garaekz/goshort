@@ -2,6 +2,7 @@ package url
 
 import (
 	"fmt"
+	"net/url"
 	"strings"
 )
 
@@ -16,16 +17,22 @@ func ProvideService(repo Repository) Service {
 }
 
 // pruneURL trims URL trailing slash
-func (url *URL) pruneURL() {
-	if !strings.HasPrefix(url.OriginalURL, "http://") && !strings.HasPrefix(url.OriginalURL, "https://") {
-		url.OriginalURL = fmt.Sprintf("http://%s", url.OriginalURL)
+func (u *URL) pruneURL() {
+	if !strings.HasPrefix(u.OriginalURL, "http://") && !strings.HasPrefix(u.OriginalURL, "https://") {
+		u.OriginalURL = fmt.Sprintf("http://%s", u.OriginalURL)
 	}
-	url.OriginalURL = strings.TrimSuffix(url.OriginalURL, "/")
+	u.OriginalURL = strings.TrimSuffix(u.OriginalURL, "/")
+}
+
+// IsURL checks URL validity
+func IsURL(str string) bool {
+	u, err := url.Parse(str)
+	return err == nil && u.Scheme != "" && u.Host != ""
 }
 
 // setRandomCode sets URL struct Code field
-func (url *URL) setRandomCode(s *Service) {
-	url.Code = s.Repository.generateUniqueCode()
+func (u *URL) setRandomCode(s *Service) {
+	u.Code = s.Repository.generateUniqueCode()
 }
 
 // FindByCode calls the repository function FindByCode
@@ -35,14 +42,19 @@ func (s *Service) FindByCode(code string) (URL, bool) {
 }
 
 // Save calls the repository function Save
-func (s *Service) Save(url URL) URL {
-	url.pruneURL()
-	u, status := s.Repository.FindByOriginalURL(url.OriginalURL)
-
+func (s *Service) Save(u URL) (URL, bool) {
+	u.pruneURL()
+	ou, status := s.Repository.FindByOriginalURL(u.OriginalURL)
+	fmt.Println(status)
 	if status == false {
-		url.setRandomCode(s)
-		s.Repository.Save(url)
-		return url
+		u.setRandomCode(s)
+		fmt.Println(u)
+		valid := IsURL(u.OriginalURL)
+		if !valid {
+			return u, false
+		}
+		s.Repository.Save(u)
+		return u, true
 	}
-	return u
+	return ou, true
 }

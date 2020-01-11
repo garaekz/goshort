@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.1",
+    "build": "^0.1.4",
     "core-js": "^3.4.4",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.8.1",

@@ -34,11 +34,18 @@ export default {
   }),
   methods: {
     async saveURL() {
-      console.log(this.url);
-      let { data } = await axios.post("http://localhost:8080/api/v1/shorten", {
-        original_url: this.url
-      });
-      console.log(data);
+      await axios
+        .post("http://localhost:8080/api/v1/shorten", {
+          original_url: this.url
+        })
+        .then(
+          response => {
+            console.log(response);
+          },
+          error => {
+            console.log(error);
+          }
+        );
     }
   }
 };
