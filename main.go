@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -16,6 +17,7 @@ import (
 func initDB() *gorm.DB {
 	db, err := gorm.Open("mysql", os.Getenv("DATABASE_URL"))
 	if err != nil {
+		fmt.Println("Hubo un error al abrir DB")
 		panic(err)
 	}
 
@@ -49,6 +51,7 @@ func main() {
 
 	err := r.Run()
 	if err != nil {
+		fmt.Println("Hubo un error al iniciar el server")
 		panic(err)
 	}
 }
