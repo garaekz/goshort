@@ -6,15 +6,43 @@ html {
 body {
   background: #eaeaea;
 }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .ui {
   &.menu {
     height: 8em;
   }
-  &.grid {
-    &.shortened-res {
-      margin-bottom: 2em;
-      & h1 {
-        font-size: 3rem;
+  &.input{
+    margin-top: 2em;
+  }
+}
+.shortened-res {
+  margin-bottom: 2em;
+  padding-left: 0;
+  padding-right: 0;
+  & h1 {
+    font-size: 3rem;
+    cursor: pointer;
+    text-decoration:underline;
+    text-decoration-style: dotted;
+    & i.copy-icon {
+      text-decoration: none;
+      animation: 0.2s ease-out 0s 1 normal none running;
+    }
+    & i.check-icon {
+      color: green;
+      text-decoration: none;
+      animation: 0.2s ease-out 0s 1 normal none running;
+    }
+    &:hover {
+      color: #414a4c;
+      & i.copy-icon {
+        transform: translateY(-2px) scale(1.02, 1.02);
+        animation: 0.2s ease-out 0s 1 normal none running;
       }
     }
   }
@@ -27,6 +55,11 @@ body {
 }
 
 @media only screen and (max-width: 767px) {
+  .shortened-res {
+    & h1 {
+      font-size: 2rem;
+    }
+  }
   .main-input {
     font-size: 18px;
   }

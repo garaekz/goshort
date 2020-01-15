@@ -14,7 +14,7 @@ import (
 )
 
 func initDB() *gorm.DB {
-	db, err := gorm.Open("mysql", os.Getenv("DB_URL"))
+	db, err := gorm.Open("mysql", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		panic(err)
 	}
@@ -24,9 +24,12 @@ func initDB() *gorm.DB {
 	return db
 }
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("APP_ENV") != "production" {
+		err := godotenv.Load()
+
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
 	}
 
 	db := initDB()
@@ -44,7 +47,7 @@ func main() {
 		v1.POST("/", urlAPI.Create)
 	}
 
-	err = r.Run()
+	err := r.Run()
 	if err != nil {
 		panic(err)
 	}

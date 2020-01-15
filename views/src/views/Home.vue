@@ -8,9 +8,14 @@
             v-if="shorted"
             class="ui one column stackable center aligned page grid shortened-res"
           >
-            <div class="column twelve wide">
-              <!-- TODO: Fix styles of this -->
-              <h1>{{ shorted }}</h1>
+            <div>
+              <h1 v-clipboard:copy="shorted" @click="copyToClipboard()">
+                <transition name="fade">
+                  <sui-icon class="copy-icon" name="copy outline" v-if="!copying" />
+                  <sui-icon class="check-icon" name="check" v-else />
+                </transition>
+                {{ shorted }}
+              </h1>
             </div>
           </div>
           <div class="ui action left icon input full-width">
@@ -47,19 +52,24 @@ export default {
   components: {},
   data: () => ({
     url: null,
+    copying: false,
     error: null,
     shorted: null
   }),
   methods: {
+    copyToClipboard() {
+      this.copying = true;
+      setTimeout(() => (this.copying = false), 1000);
+    },
     async saveURL() {
       await axios
-        .post("http://localhost:8080/api/v1/shorten", {
+        .post("/api/v1/shorten", {
           original_url: this.url
         })
         .then(
           response => {
             // TODO: Implement env with domain name
-            this.shorted = "http://localhost:8080/" + response.data.url.code;
+            this.shorted = window.location.host + "/" + response.data.url.code;
           },
           () => {
             this.error = true;
