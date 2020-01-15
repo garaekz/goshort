@@ -29,6 +29,7 @@ body {
     cursor: pointer;
     text-decoration:underline;
     text-decoration-style: dotted;
+    white-space: nowrap;
     & i.copy-icon {
       text-decoration: none;
       animation: 0.2s ease-out 0s 1 normal none running;

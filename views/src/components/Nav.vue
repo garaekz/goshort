@@ -5,7 +5,7 @@
     </sui-menu-menu>
     <sui-menu-menu position="right">
       <sui-menu-item>
-        <sui-button color="teal" content="Login / Register" />
+        <sui-button disabled color="teal" content="Login / Register" />
       </sui-menu-item>
     </sui-menu-menu>
   </sui-menu>
