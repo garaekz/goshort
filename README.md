@@ -8,7 +8,7 @@
 
  - Install dependencies: `go get -u ./...`
  - Copy `.env.example` and save it as `.env`
- - Edit `.env` file with your `PORT` and `DB_URL`info
+ - Edit `.env` file with your `PORT` and `DATABASE_URL` info
  - Install **VueJS** dependencies: `npm install`
  - Compile frontend: `npm run build`
  - Build: `go build`
@@ -63,6 +63,9 @@ This code is used to redirect to original URL, if not found shows a 404 Page.
  - [x] Make **GoShort** client with VueJS
  - [ ] Implement Redis to search by code
  - [ ] Implement visit count
+ - [ ] Implement QR Code
+ - [ ] Implement local storage history to guests
+ - [ ] Implement throttle by IP
  - [x] Add LICENSE
  - [x] Add CHANGELOG.md
 
