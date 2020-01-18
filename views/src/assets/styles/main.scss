@@ -19,6 +19,14 @@ body {
   &.input{
     margin-top: 2em;
   }
+  &.grid {
+    &.logo {
+      margin-bottom: 5em;
+      & img {
+         width: 50%;
+      }
+    }
+  }
 }
 .shortened-res {
   margin-bottom: 2em;
@@ -78,10 +86,26 @@ body {
 
 /* Large Monitor */
 @media only screen and (min-width: 1200px) and (max-width: 1919px) {
-
+  .ui {
+    &.grid {
+      &.logo {
+        & img {
+           width: 80%;
+        }
+      }
+    }
+  }
 }
 
 /* Widescreen Monitor */
 @media only screen and (min-width: 1920px) {
-
+  .ui {
+    &.grid {
+      &.logo {
+        & img {
+           width: 80%;
+        }
+      }
+    }
+  }
 }

@@ -1,11 +1,20 @@
 <template>
   <sui-menu secondary>
     <sui-menu-menu>
-      <router-link is="sui-menu-item" to="/">Home</router-link>
+      <sui-menu-item>
+        <router-link is="sui-button" to="/" color="teal">Home</router-link>
+      </sui-menu-item>
     </sui-menu-menu>
     <sui-menu-menu position="right">
-      <sui-menu-item>
+      <!-- <sui-menu-item>
+        Will uncomment when the login's ready
         <sui-button disabled color="teal" content="Login / Register" />
+      </sui-menu-item> -->
+      <sui-menu-item>
+        <a href="https://github.com/garaekz/goshort" class="ui icon button teal">
+          <i class="github icon"></i>
+          Github
+        </a>
       </sui-menu-item>
     </sui-menu-menu>
   </sui-menu>

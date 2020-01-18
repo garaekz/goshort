@@ -4,6 +4,9 @@
       <sui-grid-row>
         <sui-grid-column :computer="2" :tablet="1" class=""></sui-grid-column>
         <sui-grid-column centered :computer="12" :tablet="14" :mobile="16">
+          <div class="ui one column stackable center aligned page grid logo">
+            <img :src="require('@/assets/goshort.svg')" alt="">
+          </div>
           <div
             v-if="shorted"
             class="ui one column stackable center aligned page grid shortened-res"
@@ -39,6 +42,70 @@
           />
         </sui-grid-column>
         <sui-grid-column :computer="2" :tablet="1" class=""></sui-grid-column>
+      </sui-grid-row>
+    </sui-grid>
+    <sui-grid :columns="2">
+      <sui-grid-row>
+        <sui-grid-column>
+          <sui-card class="fluid">
+            <sui-card-content>
+              <sui-card-header>Cute Dog</sui-card-header>
+              <sui-card-meta>2 days ago</sui-card-meta>
+              <sui-card-description>
+                <sui-item-group>
+                  <sui-item>
+                    <qrcode value="http://dagacoding.com" :options="{ width: 200 }"></qrcode>
+                    <sui-item-content>
+                      <sui-item-header>Header</sui-item-header>
+                      <sui-item-meta>
+                        <span>Description</span>
+                      </sui-item-meta>
+                      <sui-item-description>
+                        <p>
+                          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                          invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                        </p>
+                      </sui-item-description>
+                      <sui-item-extra>
+                        Additional Details
+                      </sui-item-extra>
+                    </sui-item-content>
+                  </sui-item>
+                </sui-item-group>
+              </sui-card-description>
+            </sui-card-content>
+          </sui-card>
+        </sui-grid-column>
+        <sui-grid-column>
+          <sui-card class="fluid">
+              <sui-card-content>
+                <sui-card-header>Cute Dog</sui-card-header>
+                <sui-card-meta>2 days ago</sui-card-meta>
+                <sui-card-description>
+                  <sui-item-group>
+                    <sui-item>
+                      <qrcode value="http://dagacoding.com" :options="{ width: 200 }"></qrcode>
+                      <sui-item-content>
+                        <sui-item-header>Header</sui-item-header>
+                        <sui-item-meta>
+                          <span>Description</span>
+                        </sui-item-meta>
+                        <sui-item-description>
+                          <p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                        </sui-item-description>
+                        <sui-item-extra>
+                          Additional Details
+                        </sui-item-extra>
+                      </sui-item-content>
+                    </sui-item>
+                  </sui-item-group>
+                </sui-card-description>
+              </sui-card-content>
+            </sui-card>
+        </sui-grid-column>
       </sui-grid-row>
     </sui-grid>
   </div>
