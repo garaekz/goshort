@@ -13,8 +13,9 @@
     "core-js": "^3.6.4",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.8.1",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.1",
+    "vue-qrcode-component": "^2.1.1",
     "vue-router": "^3.1.4",
     "vuex": "^3.1.2"
   },
@@ -29,7 +30,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.10"

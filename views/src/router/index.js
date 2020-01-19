@@ -9,7 +9,10 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
+    meta: {
+      title: "GoShort | URL Shortener build with Golang"
+    }
   },
   {
     path: "/about",
@@ -22,11 +25,14 @@ const routes = [
   },
   { path: "*", component: PageNotFound }
 ];
-
+const DEFAULT_TITLE = "GoShort | URL Shortener build with Golang";
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+router.afterEach(to => {
+  document.title = to.meta.title || DEFAULT_TITLE;
 });
 
 export default router;

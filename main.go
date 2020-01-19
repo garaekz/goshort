@@ -10,12 +10,19 @@ import (
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 )
 
 func initDB() *gorm.DB {
-	db, err := gorm.Open("postgres", os.Getenv("DATABASE_URL"))
+	dbType := "postgres"
+
+	if os.Getenv("APP_ENV") != "production" {
+		dbType = "mysql"
+	}
+
+	db, err := gorm.Open(dbType, os.Getenv("DATABASE_URL"))
 	if err != nil {
 		fmt.Println("Hubo un error al abrir DB")
 		panic(err)

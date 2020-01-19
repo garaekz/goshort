@@ -19,13 +19,21 @@ body {
   &.input{
     margin-top: 2em;
   }
+  &.grid {
+    &.logo {
+      margin-bottom: 5em;
+      & img {
+         width: 50%;
+      }
+    }
+  }
 }
 .shortened-res {
   margin-bottom: 2em;
   padding-left: 0;
   padding-right: 0;
   & h1 {
-    font-size: 3rem;
+    font-size: 2rem;
     cursor: pointer;
     text-decoration:underline;
     text-decoration-style: dotted;
@@ -49,39 +57,57 @@ body {
   }
 }
 .main-input {
-  font-size: 26px;
+  font-size: 18px;
 }
 .full-width {
   width: 100%;
 }
 
-@media only screen and (max-width: 767px) {
+.ui.items>.item>.image+.content {
+  &.qr-content {
+    display: flex;
+    flex-direction: column;
+    & .extra {
+      margin-top: auto;
+    }
+  }
+}
+
+
+/* Tablet / iPad Portrait */
+@media only screen and (min-width: 768px) {
   .shortened-res {
     & h1 {
-      font-size: 2rem;
+      font-size: 3rem;
     }
   }
   .main-input {
-    font-size: 18px;
+    font-size: 26px;
+  }
+  .ui.grid>.row>.column {
+    &.qr-grid-column {
+      margin-bottom: 2em;
+    }
   }
 }
 
-/* Tablet / iPad Portrait */
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-}
-
 /* Computer / Desktop / iPad Landscape */
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
+@media only screen and (min-width: 992px) {
 }
 
 /* Large Monitor */
-@media only screen and (min-width: 1200px) and (max-width: 1919px) {
-
+@media only screen and (min-width: 1200px) {
+  .ui {
+    &.grid {
+      &.logo {
+        & img {
+           width: 80%;
+        }
+      }
+    }
+  }
 }
 
 /* Widescreen Monitor */
 @media only screen and (min-width: 1920px) {
-
 }
