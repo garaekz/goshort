@@ -63,7 +63,8 @@ This code is used to redirect to original URL, if not found shows a 404 Page.
  - [x] Make **GoShort** client with VueJS
  - [ ] Implement Redis to search by code
  - [ ] Implement visit count
- - [ ] Implement QR Code
+ - [x] Implement QR Code
+ - [x] Visual changes (add brand)
  - [ ] Implement local storage history to guests
  - [ ] Implement throttle by IP
  - [x] Add LICENSE
