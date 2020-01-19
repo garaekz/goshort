@@ -48,34 +48,47 @@
         <sui-grid-column :computer="2" :tablet="1" class=""></sui-grid-column>
       </sui-grid-row>
     </sui-grid>
-    <sui-grid stackable :columns="2">
+    <sui-grid stackable :columns="2" class="qr-grid">
       <sui-grid-row>
-        <sui-grid-column>
+        <sui-grid-column
+          class="qr-grid-column"
+          v-for="(s, index) in shorteds"
+          :key="index"
+        >
           <sui-card class="fluid">
             <sui-card-content>
               <sui-card-description>
                 <sui-item-group>
                   <sui-item>
                     <qr-code
-                      text="http://dagacoding.com"
+                      :text="urlify(s.code, true)"
                       :size="200"
                       class="image"
                     ></qr-code>
-                    <sui-item-content>
-                      <sui-item-header>Header</sui-item-header>
+                    <sui-item-content class="qr-content">
+                      <sui-item-header>{{ urlify(s.code) }}</sui-item-header>
                       <sui-item-meta>
-                        <span>Description</span>
+                        <span style="word-wrap:break-word;">{{
+                          s.original_url
+                        }}</span>
                       </sui-item-meta>
-                      <sui-item-description>
-                        <p>
-                          Lorem ipsum dolor sit amet, consetetur sadipscing
-                          elitr, sed diam nonumy eirmod tempor invidunt ut
-                          labore et dolore magna aliquyam erat, sed diam
-                          voluptua.
-                        </p>
-                      </sui-item-description>
                       <sui-item-extra>
-                        Additional Details
+                        <sui-button-group attached="bottom">
+                          <div
+                            v-if="!s.copying"
+                            is="sui-button"
+                            content="Copy to clipboard"
+                            icon="clipboard"
+                            @click="copyQR(index)"
+                          />
+                          <div
+                            v-else
+                            color="teal"
+                            is="sui-button"
+                            content="Copied"
+                            icon="check circle"
+                          />
+                        </sui-button-group>
                       </sui-item-extra>
                     </sui-item-content>
                   </sui-item>
@@ -90,11 +103,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
   name: "home",
   components: {},
+  computed: {
+    ...mapGetters(["shorteds"])
+  },
   data: () => ({
     url: null,
     copying: false,
@@ -102,6 +119,20 @@ export default {
     shorted: null
   }),
   methods: {
+    urlify(code, protocol) {
+      return (
+        (protocol ? window.location.protocol + "//" : "") +
+        window.location.host +
+        "/" +
+        code
+      );
+    },
+    copyQR(key) {
+      this.$copyText(this.urlify(this.shorteds[key].code, true)).then(() => {
+        this.shorteds[key]["copying"] = true;
+      });
+      setTimeout(() => (this.shorteds[key]["copying"] = false), 1500);
+    },
     copyToClipboard() {
       this.copying = true;
       setTimeout(() => (this.copying = false), 1000);
@@ -113,8 +144,10 @@ export default {
         })
         .then(
           response => {
-            // TODO: Implement env with domain name
             this.shorted = window.location.host + "/" + response.data.url.code;
+            this.$store.dispatch("saveShorted", {
+              data: response.data.url
+            });
           },
           () => {
             this.error = true;

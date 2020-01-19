@@ -11,7 +11,10 @@
         <sui-button disabled color="teal" content="Login / Register" />
       </sui-menu-item> -->
       <sui-menu-item>
-        <a href="https://github.com/garaekz/goshort" class="ui icon button teal">
+        <a
+          href="https://github.com/garaekz/goshort"
+          class="ui icon button teal"
+        >
           <i class="github icon"></i>
           Github
         </a>

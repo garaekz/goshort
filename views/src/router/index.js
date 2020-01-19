@@ -25,13 +25,13 @@ const routes = [
   },
   { path: "*", component: PageNotFound }
 ];
-const DEFAULT_TITLE = 'Some Default Title';
+const DEFAULT_TITLE = "GoShort | URL Shortener build with Golang";
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
 });
-router.afterEach((to) => {
+router.afterEach(to => {
   document.title = to.meta.title || DEFAULT_TITLE;
 });
 
