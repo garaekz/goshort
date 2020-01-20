@@ -4,6 +4,11 @@ dist: bionic
 
 language: go
 
+branches:
+  only:
+  - master
+  - dev
+
 # Setup PostgreSQL database.
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
