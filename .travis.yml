@@ -4,8 +4,18 @@ dist: bionic
 
 language: go
 
+# Setup PostgreSQL database.
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+
 # Force-enable Go modules.
-env: GO111MODULE=on GOFLAGS='-mod vendor'
+# Setup .env file info.
+env: 
+  - GO111MODULE=on
+  - GOFLAGS='-mod vendor'
+  - PORT=80
+  - DATABASE_URL="postgres:@/travis_ci_test?charset=utf8&parseTime=True&loc=Local"
+  - APP_ENV="travis"
 
 go:
   - 1.13.x
@@ -34,4 +44,4 @@ before_script:
 # .golangci.yml file at the top level of your repo.
 script:
   - golangci-lint run       # run a bunch of code checkers/linters in parallel
-  - go test -v -race ./...  # Run all the tests with the race detector enabled
+  - go test -v -race ./...  # Run all the tests with the cdrace detector enabled

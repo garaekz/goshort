@@ -18,7 +18,7 @@ import (
 func initDB() *gorm.DB {
 	dbType := "postgres"
 
-	if os.Getenv("APP_ENV") != "production" {
+	if os.Getenv("APP_ENV") != "production" && os.Getenv("APP_ENV") != "travis" {
 		dbType = "mysql"
 	}
 
@@ -33,7 +33,7 @@ func initDB() *gorm.DB {
 	return db
 }
 func main() {
-	if os.Getenv("APP_ENV") != "production" {
+	if os.Getenv("APP_ENV") != "production" && os.Getenv("APP_ENV") != "travis" {
 		err := godotenv.Load()
 
 		if err != nil {
