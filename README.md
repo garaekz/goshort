@@ -69,6 +69,7 @@ This code is used to redirect to original URL, if not found shows a 404 Page.
  - [ ] Implement throttle by IP
  - [x] Add LICENSE
  - [x] Add CHANGELOG.md
+ - [x] Implement CI/CD (we implemented Travis CI)
 
 # Changelog
 You can see all our realeases in the[ changelog](CHANGELOG.md)
