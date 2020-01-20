@@ -43,4 +43,3 @@ func (api *API) Create(c *gin.Context) {
 		}
 	}
 }
-

@@ -1,5 +1,7 @@
 
 # GoShort
+
+[![Build Status](https://travis-ci.com/garaekz/goshort.svg?branch=master)](https://travis-ci.com/garaekz/goshort)
 [![Go Report Card](https://goreportcard.com/badge/github.com/garaekz/goshort)](https://goreportcard.com/report/github.com/garaekz/goshort)
 
 **GoShort** is a simple Golang API URL Shortener, started as a learning project it gave me a nice time building the first version, I'll try to update it often with new ideas and functionality, one of the things I wanna do first is use Redis + MySQL to balance the load of the current MySQL database, the second thing I wanna do is restructure the files in order to make it easier to mantain. Hope you people like this and I'm open to new ideas, ~~just remember this is just the server part, the client will be public soon~~, some tutorial will be public soon on my blog.
@@ -69,7 +71,7 @@ This code is used to redirect to original URL, if not found shows a 404 Page.
  - [ ] Implement throttle by IP
  - [x] Add LICENSE
  - [x] Add CHANGELOG.md
+ - [x] Add CI/CD to the workflow
 
 # Changelog
 You can see all our realeases in the[ changelog](CHANGELOG.md)
-```
