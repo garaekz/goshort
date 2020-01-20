@@ -26,7 +26,7 @@ func (u *URL) pruneURL() {
 
 // IsURL checks URL validity
 func IsURL(str string) bool {
-	re := regexp.MustCompile("^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$")
+	re := regexp.MustCompile(`^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$`)
 
 	return re.FindStringIndex(str) != nil
 }
@@ -47,7 +47,7 @@ func (s *Service) Save(u URL) (URL, bool) {
 	u.pruneURL()
 	ou, status := s.Repository.FindByOriginalURL(u.OriginalURL)
 	fmt.Println(status)
-	if status == false {
+	if !status {
 		u.setRandomCode(s)
 		fmt.Println(u)
 		valid := IsURL(u.OriginalURL)

@@ -60,7 +60,7 @@ func (repo *Repository) generateUniqueCode() string {
 	for {
 		code := repo.RandomCode(n)
 		_, status := repo.FindByCode(code)
-		if status == false {
+		if !status {
 			return code
 		}
 		if n%10 == 0 {
