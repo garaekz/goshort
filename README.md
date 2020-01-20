@@ -73,5 +73,12 @@ This code is used to redirect to original URL, if not found shows a 404 Page.
  - [x] Add CHANGELOG.md
  - [x] Add CI/CD to the workflow
 
+# Compatibility
+The project frontend is built with VueJS, that means ES6 syntax is the standard used, some browsers may not be compliant to this standard yet, thus some issues may arise, we've been notified about a bug happening in iPhone 6s with Safari, following that trace we find the same issue in IE11, we've managed to fix IE11 issue but couldn't reproduce the issue in iPhone 6s yet.
+
+This issue may be found (or not) in browsers not fully compliant with ECMAScript 2015 (ES6), we added [babel-polyfill](https://github.com/babel/babel) to handle this issue but we cannot guarantee that the problem will not arise again in older browsers.
+
+Thanks to **Yan Edy Chota Castillo** who first encountered this bug in production!
+
 # Changelog
 You can see all our realeases in the[ changelog](CHANGELOG.md)
