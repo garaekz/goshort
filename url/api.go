@@ -20,7 +20,7 @@ func ProvideAPI(s Service) API {
 // FindByCode calls service function to find URL by Code
 func (api *API) FindByCode(c *gin.Context) {
 	url, status := api.Service.FindByCode(c.Param("code"))
-	if status == false {
+	if !status {
 		c.HTML(404, "index.html", nil)
 	} else {
 		c.Redirect(http.StatusMovedPermanently, url.OriginalURL)
@@ -36,7 +36,7 @@ func (api *API) Create(c *gin.Context) {
 		c.Status(http.StatusBadRequest)
 	} else {
 		createdURL, status := api.Service.Save(ToURL(dto))
-		if status == true {
+		if status {
 			c.JSON(http.StatusOK, gin.H{"url": ToDTO(createdURL)})
 		} else {
 			c.JSON(http.StatusBadRequest, nil)
