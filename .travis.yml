@@ -8,15 +8,6 @@ language: go
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 
-# Force-enable Go modules.
-# Setup .env file info.
-env: 
-  - GO111MODULE=on
-  - GOFLAGS='-mod vendor'
-  - PORT=80
-  - DATABASE_URL="postgres:@/travis_ci_test?charset=utf8&parseTime=True&loc=Local"
-  - APP_ENV="travis"
-
 go:
   - 1.13.x
 
