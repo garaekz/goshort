@@ -2,6 +2,7 @@ package url
 
 import (
 	"fmt"
+	"net/url"
 	"regexp"
 	"strings"
 )
@@ -16,12 +17,24 @@ func ProvideService(repo Repository) Service {
 	return Service{Repository: repo}
 }
 
-// pruneURL trims URL trailing slash
-func (u *URL) pruneURL() {
+// formatURL trims URL trailing slash, set schema and host to lowercase
+func (u *URL) formatURL() {
 	if !strings.HasPrefix(u.OriginalURL, "http://") && !strings.HasPrefix(u.OriginalURL, "https://") {
 		u.OriginalURL = fmt.Sprintf("http://%s", u.OriginalURL)
 	}
 	u.OriginalURL = strings.TrimSuffix(u.OriginalURL, "/")
+	ur, err := url.Parse(u.OriginalURL)
+
+	if err != nil {
+		panic(err)
+	}
+
+	schema := strings.ToLower(ur.Scheme)
+	host := strings.ToLower(ur.Host)
+	path := ur.Path
+	rquery := ur.RawQuery
+
+	u.OriginalURL = fmt.Sprintf("%s://%s%s?%s", schema, host, path, rquery)
 }
 
 // IsURL checks URL validity
@@ -44,12 +57,11 @@ func (s *Service) FindByCode(code string) (URL, bool) {
 
 // Save calls the repository function Save
 func (s *Service) Save(u URL) (URL, bool) {
-	u.pruneURL()
+	u.formatURL()
 	ou, status := s.Repository.FindByOriginalURL(u.OriginalURL)
-	fmt.Println(status)
+
 	if !status {
 		u.setRandomCode(s)
-		fmt.Println(u)
 		valid := IsURL(u.OriginalURL)
 		if !valid {
 			return u, false
