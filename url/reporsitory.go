@@ -39,7 +39,7 @@ func (repo *Repository) FindByCode(code string) (URL, bool) {
 func (repo *Repository) FindByOriginalURL(originalURL string) (URL, bool) {
 	var url URL
 
-	if repo.DB.Where("original_url ilike ?", originalURL).First(&url).RecordNotFound() {
+	if repo.DB.Where("BINARY original_url = ?", originalURL).First(&url).RecordNotFound() {
 		return url, false
 	}
 
