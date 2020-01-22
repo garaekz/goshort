@@ -34,7 +34,11 @@ func (u *URL) formatURL() {
 	path := ur.Path
 	rquery := ur.RawQuery
 
-	u.OriginalURL = fmt.Sprintf("%s://%s%s?%s", schema, host, path, rquery)
+	if rquery != "" {
+		u.OriginalURL = fmt.Sprintf("%s://%s%s?%s", schema, host, path, rquery)
+	} else {
+		u.OriginalURL = fmt.Sprintf("%s://%s%s", schema, host, path)
+	}
 }
 
 // IsURL checks URL validity
