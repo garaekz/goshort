@@ -140,7 +140,7 @@ export default {
     async saveURL() {
       await axios
         .post("/api/v1/shorten", {
-          original_url: this.url.toLowerCase()
+          original_url: this.url
         })
         .then(
           response => {
