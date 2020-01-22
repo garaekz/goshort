@@ -145,8 +145,6 @@ export default {
         .then(
           response => {
             this.shorted = window.location.host + "/" + response.data.url.code;
-            // eslint-disable-next-line no-console
-            console.log(response);
             this.$store.dispatch("saveShorted", {
               data: response.data.url
             });
