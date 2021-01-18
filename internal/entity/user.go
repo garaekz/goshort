@@ -1,9 +1,20 @@
 package entity
 
-// User represents a user.
+import "time"
+
+// User represents a user record.
 type User struct {
-	ID   string
-	Name string
+	ID        string     `json:"id" db:"id"`
+	Email     string     `json:"email" db:"email"`
+	Password  string     `json:"password" db:"password"`
+	CreatedAt time.Time  `json:"created_at" db:"created_at"`
+	UpdatedAt *time.Time `json:"updated_at" db:"updated_at"`
+	IsActive  bool       `json:"is_active" db:"is_active"`
+}
+
+// TableName represents the table name
+func (u User) TableName() string {
+	return "users"
 }
 
 // GetID returns the user ID.
@@ -11,7 +22,7 @@ func (u User) GetID() string {
 	return u.ID
 }
 
-// GetName returns the user name.
-func (u User) GetName() string {
-	return u.Name
+// GetEmail returns the user ID.
+func (u User) GetEmail() string {
+	return u.Email
 }

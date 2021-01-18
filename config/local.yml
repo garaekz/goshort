@@ -1,2 +1,2 @@
-dsn: "postgres://127.0.0.1/go_restful?sslmode=disable&user=postgres&password=postgres"
+dsn: "root:@tcp(127.0.0.1)/goshort?charset=utf8&parseTime=true&loc=Local"
 jwt_signing_key: "LxsKJywDL5O5PvgODZhBH12KE6k2yL8E"

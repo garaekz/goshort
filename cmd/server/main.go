@@ -5,22 +5,24 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"github.com/go-ozzo/ozzo-dbx"
-	"github.com/go-ozzo/ozzo-routing/v2"
+	"net/http"
+	"os"
+	"time"
+
+	dbx "github.com/go-ozzo/ozzo-dbx"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/content"
 	"github.com/go-ozzo/ozzo-routing/v2/cors"
+	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
-	"github.com/qiangxue/go-rest-api/internal/album"
 	"github.com/qiangxue/go-rest-api/internal/auth"
 	"github.com/qiangxue/go-rest-api/internal/config"
 	"github.com/qiangxue/go-rest-api/internal/errors"
 	"github.com/qiangxue/go-rest-api/internal/healthcheck"
+	"github.com/qiangxue/go-rest-api/internal/user"
 	"github.com/qiangxue/go-rest-api/pkg/accesslog"
 	"github.com/qiangxue/go-rest-api/pkg/dbcontext"
 	"github.com/qiangxue/go-rest-api/pkg/log"
-	"net/http"
-	"os"
-	"time"
 )
 
 // Version indicates the current version of the application.
@@ -41,7 +43,7 @@ func main() {
 	}
 
 	// connect to the database
-	db, err := dbx.MustOpen("postgres", cfg.DSN)
+	db, err := dbx.MustOpen("mysql", cfg.DSN)
 	if err != nil {
 		logger.Error(err)
 		os.Exit(-1)
@@ -87,14 +89,14 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 
 	authHandler := auth.Handler(cfg.JWTSigningKey)
 
-	album.RegisterHandlers(rg.Group(""),
-		album.NewService(album.NewRepository(db, logger), logger),
-		authHandler, logger,
+	auth.RegisterHandlers(rg.Group(""),
+		auth.NewService(db, cfg.JWTSigningKey, cfg.JWTExpiration, logger),
+		logger,
 	)
 
-	auth.RegisterHandlers(rg.Group(""),
-		auth.NewService(cfg.JWTSigningKey, cfg.JWTExpiration, logger),
-		logger,
+	user.RegisterHandlers(rg.Group(""),
+		user.NewService(user.NewRepository(db, logger), logger),
+		authHandler, logger,
 	)
 
 	return router
