@@ -1,13 +1,14 @@
-package album
+package link
 
 import (
 	"context"
 	"database/sql"
 	"errors"
+	"testing"
+
 	"github.com/qiangxue/go-rest-api/internal/entity"
 	"github.com/qiangxue/go-rest-api/pkg/log"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 var errCRUD = errors.New("error crud")
