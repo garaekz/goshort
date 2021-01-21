@@ -20,6 +20,7 @@ import (
 	"github.com/qiangxue/go-rest-api/internal/errors"
 	"github.com/qiangxue/go-rest-api/internal/healthcheck"
 	"github.com/qiangxue/go-rest-api/internal/link"
+	"github.com/qiangxue/go-rest-api/internal/page"
 	"github.com/qiangxue/go-rest-api/internal/user"
 	"github.com/qiangxue/go-rest-api/pkg/accesslog"
 	"github.com/qiangxue/go-rest-api/pkg/dbcontext"
@@ -87,6 +88,7 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	healthcheck.RegisterHandlers(router, Version)
 
 	rg := router.Group("/v1")
+	rg2 := router.Group("")
 
 	authHandler := auth.Handler(cfg.JWTSigningKey)
 	customAuthHandler := auth.CustomHandler(cfg.JWTSigningKey)
@@ -104,6 +106,11 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	link.RegisterHandlers(rg.Group(""),
 		link.NewService(link.NewRepository(db, logger), logger),
 		authHandler, customAuthHandler, logger,
+	)
+
+	page.RegisterHandlers(rg2.Group(""),
+		page.NewService(page.NewRepository(db, logger), logger),
+		authHandler, logger,
 	)
 
 	return router

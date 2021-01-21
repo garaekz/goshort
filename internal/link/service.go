@@ -12,7 +12,7 @@ import (
 
 // Service encapsulates usecase logic for links.
 type Service interface {
-	Get(ctx context.Context, id string) (Link, error)
+	Get(ctx context.Context, code string) (Link, error)
 	Query(ctx context.Context, offset, limit int) ([]Link, error)
 	Count(ctx context.Context) (int, error)
 	Create(ctx context.Context, input CreateLinkRequest) (Link, error)
