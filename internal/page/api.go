@@ -22,7 +22,10 @@ type resource struct {
 func (r resource) get(c *routing.Context) error {
 	link, err := r.service.Get(c.Request.Context(), c.Param("code"))
 	if err != nil {
-		return err
+		status := http.StatusTemporaryRedirect
+		http.Redirect(c.Response, c.Request, "/#/404", status)
+		c.Abort()
+		return nil
 	}
 
 	status := http.StatusTemporaryRedirect

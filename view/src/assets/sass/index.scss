@@ -3,3 +3,33 @@
 @tailwind utilities;
 @import 'fonts';
 @import 'navbar';
+
+body {
+  font-family: 'Montserrat';
+}
+
+.shortened-res {
+  & h1 {
+    font-size: 2rem;
+    cursor: pointer;
+    text-decoration:underline;
+    text-decoration-style: dotted;
+    white-space: nowrap;
+    & .copy-icon {
+      text-decoration: none;
+      animation: 0.2s ease-out 0s 1 normal none running;
+    }
+    & .check-icon {
+      color: green;
+      text-decoration: none;
+      animation: 0.2s ease-out 0s 1 normal none running;
+    }
+    &:hover {
+      color: #414a4c;
+      & .copy-icon {
+        transform: translateY(-2px) scale(1.02, 1.02);
+        animation: 0.2s ease-out 0s 1 normal none running;
+      }
+    }
+  }
+}

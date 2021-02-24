@@ -18,6 +18,7 @@ module.exports = {
     'max-len': 'off',
     eqeqeq: 'off',
     'no-alert': 'off',
+    'object-shorthand': 'off',
     confirm: 'off',
     'consistent-return': 'off',
     'vue/no-unused-vars': 'off',

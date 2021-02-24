@@ -13,6 +13,7 @@ import (
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/content"
 	"github.com/go-ozzo/ozzo-routing/v2/cors"
+	"github.com/go-ozzo/ozzo-routing/v2/file"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
 	"github.com/qiangxue/go-rest-api/internal/auth"
@@ -107,6 +108,13 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 		link.NewService(link.NewRepository(db, logger), logger),
 		authHandler, customAuthHandler, logger,
 	)
+
+	// serve index file
+	router.Get("/", file.Content("./view/dist/index.html"))
+	// serve assets folder
+	router.Get("/assets/*", file.Server(file.PathMap{
+		"/": "./view/dist/",
+	}))
 
 	page.RegisterHandlers(rg2.Group(""),
 		page.NewService(page.NewRepository(db, logger), logger),

@@ -4,11 +4,16 @@
     <nav>
       <ul class="list-reset flex items-center">
         <li class="ml-4">
-          <a class="text-urbano-menulinks uppercase text-sm no-underline py-2 border-none p-0" href="#">
+          <router-link class="text-urbano-menulinks uppercase text-sm no-underline py-2 border-none p-0" :to="'/'">
             Home
-          </a>
+          </router-link>
         </li>
         <li class="ml-4">
+          <a class="text-urbano-menulinks uppercase text-sm no-underline py-2 border-none p-0" href="https://github.com/garaekz/goshort/">
+            Github
+          </a>
+        </li>
+        <!-- <li class="ml-4">
           <a class="text-urbano-menulinks uppercase text-sm no-underline py-2 border-none p-0" href="#">
             Features
           </a>
@@ -17,7 +22,7 @@
           <a class="text-urbano-menulinks uppercase text-sm no-underline py-2 border-none p-0" href="#">
             Pricing
           </a>
-        </li>
+        </li> -->
       </ul>
     </nav>
     <!-- END Global navigation -->

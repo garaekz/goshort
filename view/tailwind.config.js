@@ -9,7 +9,7 @@ module.exports = {
           menulinks: '#9D9D9D',
           prev: '#7C7C7C',
           green: '#12B6AD',
-        }
+        },
       },
       width: {
         '44r': '44rem',

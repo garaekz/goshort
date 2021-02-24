@@ -143,7 +143,7 @@ func (r repository) GenerateUniqueCode(ctx context.Context) (string, error) {
 			return "", err
 		}
 
-		if n%10 == 0 {
+		if i%10 == 0 {
 			n++
 		}
 
