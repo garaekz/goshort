@@ -2,11 +2,12 @@
 package accesslog
 
 import (
+	"net/http"
+	"time"
+
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/access"
 	"github.com/qiangxue/go-rest-api/pkg/log"
-	"net/http"
-	"time"
 )
 
 // Handler returns a middleware that records an access log message for every HTTP request being processed.
@@ -26,7 +27,7 @@ func Handler(logger log.Logger) routing.Handler {
 		err := c.Next()
 
 		// generate an access log message
-		logger.With(ctx, "duration", time.Now().Sub(start).Milliseconds(), "status", rw.Status).
+		logger.With(ctx, "duration", time.Since(start).Milliseconds(), "status", rw.Status).
 			Infof("%s %s %s %d %d", c.Request.Method, c.Request.URL.Path, c.Request.Proto, rw.Status, rw.BytesWritten)
 
 		return err

@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"net/http"
+	"runtime/debug"
+
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/qiangxue/go-rest-api/pkg/log"
-	"net/http"
-	"runtime/debug"
 )
 
 // Handler creates a middleware that handles panics and errors encountered during HTTP request processing.
@@ -44,18 +45,18 @@ func Handler(logger log.Logger) routing.Handler {
 
 // buildErrorResponse builds an error response from an error.
 func buildErrorResponse(err error) ErrorResponse {
-	switch err.(type) {
+	switch err := err.(type) {
 	case ErrorResponse:
-		return err.(ErrorResponse)
+		return err
 	case validation.Errors:
-		return InvalidInput(err.(validation.Errors))
+		return InvalidInput(err)
 	case routing.HTTPError:
-		switch err.(routing.HTTPError).StatusCode() {
+		switch err.StatusCode() {
 		case http.StatusNotFound:
 			return NotFound("")
 		default:
 			return ErrorResponse{
-				Status:  err.(routing.HTTPError).StatusCode(),
+				Status:  err.StatusCode(),
 				Message: err.Error(),
 			}
 		}

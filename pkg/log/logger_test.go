@@ -3,11 +3,12 @@ package log
 import (
 	"bytes"
 	"context"
-	"github.com/stretchr/testify/assert"
-	"go.uber.org/zap"
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 )
 
 func TestNew(t *testing.T) {
@@ -48,7 +49,7 @@ func Test_getRequestID(t *testing.T) {
 
 func Test_logger_With(t *testing.T) {
 	l := New()
-	l2 := l.With(nil)
+	l2 := l.With(context.TODO())
 	assert.True(t, reflect.DeepEqual(l2, l))
 
 	req := buildRequest("abc", "123")
