@@ -1,6 +1,7 @@
-module github.com/qiangxue/go-rest-api
+module github.com/garaekz/goshort
 
-go 1.13
+go 1.16
+// +heroku goVersion 1.16
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible

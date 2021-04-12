@@ -1,5 +1,5 @@
 <template>
-  <div class="md:w-3/6 w-full grid grid-cols-2 gap-4">
+  <div class="md:w-3/6 w-full grid md:grid-cols-2 md:gap-4 grid-cols-1">
     <div v-for="shorted in shorteds" :key="shorted.code">
       <article class="grid grid-cols-8 bg-white shadow-sm lg:max-w-2xl p-4 lg:col-span-2">
         <qr-code
