@@ -5,9 +5,9 @@ import (
 	"time"
 
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/qiangxue/go-rest-api/internal/auth"
-	"github.com/qiangxue/go-rest-api/internal/entity"
-	"github.com/qiangxue/go-rest-api/pkg/log"
+	"github.com/garaekz/goshort/internal/auth"
+	"github.com/garaekz/goshort/internal/entity"
+	"github.com/garaekz/goshort/pkg/log"
 )
 
 // Service encapsulates usecase logic for links.

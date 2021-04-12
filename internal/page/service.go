@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/qiangxue/go-rest-api/pkg/log"
+	"github.com/garaekz/goshort/pkg/log"
 )
 
 // Service encapsulates usecase logic for pages.

@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/qiangxue/go-rest-api/internal/test"
-	"github.com/qiangxue/go-rest-api/pkg/log"
+	"github.com/garaekz/goshort/internal/test"
+	"github.com/garaekz/goshort/pkg/log"
 )
 
 func TestAPI(t *testing.T) {

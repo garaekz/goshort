@@ -7,8 +7,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/auth"
-	"github.com/qiangxue/go-rest-api/internal/entity"
-	"github.com/qiangxue/go-rest-api/internal/errors"
+	"github.com/garaekz/goshort/internal/entity"
+	"github.com/garaekz/goshort/internal/errors"
 )
 
 // Handler returns a JWT-based authentication middleware.

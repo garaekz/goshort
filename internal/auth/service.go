@@ -7,10 +7,10 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	dbx "github.com/go-ozzo/ozzo-dbx"
-	"github.com/qiangxue/go-rest-api/internal/entity"
-	"github.com/qiangxue/go-rest-api/internal/errors"
-	"github.com/qiangxue/go-rest-api/pkg/dbcontext"
-	"github.com/qiangxue/go-rest-api/pkg/log"
+	"github.com/garaekz/goshort/internal/entity"
+	"github.com/garaekz/goshort/internal/errors"
+	"github.com/garaekz/goshort/pkg/dbcontext"
+	"github.com/garaekz/goshort/pkg/log"
 	"golang.org/x/crypto/bcrypt"
 )
 

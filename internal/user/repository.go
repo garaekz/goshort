@@ -4,10 +4,10 @@ import (
 	"context"
 
 	dbx "github.com/go-ozzo/ozzo-dbx"
-	"github.com/qiangxue/go-rest-api/internal/auth"
-	"github.com/qiangxue/go-rest-api/internal/entity"
-	"github.com/qiangxue/go-rest-api/pkg/dbcontext"
-	"github.com/qiangxue/go-rest-api/pkg/log"
+	"github.com/garaekz/goshort/internal/auth"
+	"github.com/garaekz/goshort/internal/entity"
+	"github.com/garaekz/goshort/pkg/dbcontext"
+	"github.com/garaekz/goshort/pkg/log"
 )
 
 // Repository encapsulates the logic to access users from the data source.
