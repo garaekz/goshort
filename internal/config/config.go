@@ -11,6 +11,7 @@ import (
 const (
 	defaultServerPort         = 8080
 	defaultJWTExpirationHours = 72
+	defaultDBType         = "mysql"
 )
 
 // Config represents an application configuration.
@@ -23,6 +24,8 @@ type Config struct {
 	JWTSigningKey string `yaml:"jwt_signing_key" env:"JWT_SIGNING_KEY,secret"`
 	// JWT expiration in hours. Defaults to 72 hours (3 days)
 	JWTExpiration int `yaml:"jwt_expiration" env:"JWT_EXPIRATION"`
+	// the data source name (DSN) for connecting to the database. required.
+	DBType string `yaml:"db_type" env:"DB_TYPE,secret"`
 }
 
 // Validate validates the application configuration.
@@ -39,6 +42,7 @@ func Load(file string, logger log.Logger) (*Config, error) {
 	c := Config{
 		ServerPort:    defaultServerPort,
 		JWTExpiration: defaultJWTExpirationHours,
+		DBType: defaultDBType,
 	}
 
 	// load from YAML config file
