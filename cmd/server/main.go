@@ -46,7 +46,7 @@ func main() {
 	}
 
 	// connect to the database
-	db, err := dbx.MustOpen(cfg.DB_TYPE, cfg.DSN)
+	db, err := dbx.MustOpen(cfg.DBType, cfg.DSN)
 	if err != nil {
 		logger.Error(err)
 		os.Exit(-1)
