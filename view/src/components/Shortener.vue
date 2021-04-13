@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex justify-center">
     <div class="w-full md:w-44r">
-      <div class="shortened-res">
+      <div class="shortened-res px-2">
         <h1 v-if="shorted" v-clipboard:copy="shorted" @click="copyToClipboard()" class="flex justify-center items-center m-1 font-medium text-5xl">
           <transition name="fade" v-if="!copying">
             <!-- icon here -->
