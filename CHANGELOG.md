@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Minor change to set title/meta when embeded
 
-## 2.0.1 - 2021-04-13
+## [2.0.1] - 2021-04-13
 
 ### Added
 
