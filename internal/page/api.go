@@ -3,8 +3,8 @@ package page
 import (
 	"net/http"
 
-	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/garaekz/goshort/pkg/log"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
 )
 
 // RegisterHandlers sets up the routing of the HTTP handlers.

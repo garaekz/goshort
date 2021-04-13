@@ -1,9 +1,9 @@
 package auth
 
 import (
-	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/log"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
 )
 
 // RegisterHandlers registers handlers for different HTTP requests.

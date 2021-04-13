@@ -1,8 +1,8 @@
 package accesslog
 
 import (
-	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/garaekz/goshort/pkg/log"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"

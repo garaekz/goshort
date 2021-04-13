@@ -9,6 +9,13 @@ module.exports = {
       .clear()
       .add("./view/src/main.js")
       .end();
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title = 'GoShort | Golang built URL shortener';
+        args[0].template = './view/public/index.html';
+        return args;
+      });
     config.resolve.alias
       .set("@", path.resolve(__dirname, "./view/src"))
   }

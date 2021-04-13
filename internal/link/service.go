@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/pkg/log"
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
 
 // Service encapsulates usecase logic for links.

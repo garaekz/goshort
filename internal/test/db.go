@@ -1,11 +1,11 @@
 package test
 
 import (
-	dbx "github.com/go-ozzo/ozzo-dbx"
-	_ "github.com/lib/pq" // initialize posgresql for test
 	"github.com/garaekz/goshort/internal/config"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
+	dbx "github.com/go-ozzo/ozzo-dbx"
+	_ "github.com/lib/pq" // initialize posgresql for test
 	"path"
 	"runtime"
 	"testing"

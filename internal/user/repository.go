@@ -3,11 +3,11 @@ package user
 import (
 	"context"
 
-	dbx "github.com/go-ozzo/ozzo-dbx"
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
+	dbx "github.com/go-ozzo/ozzo-dbx"
 )
 
 // Repository encapsulates the logic to access users from the data source.
@@ -85,7 +85,7 @@ func (r repository) Query(ctx context.Context, offset, limit int) ([]entity.User
 	return users, err
 }
 
-// Links reads the user ID and searchs for the links related on the database.
+// Links reads the user ID and searches for the links related on the database.
 func (r repository) Links(ctx context.Context, offset, limit int) ([]entity.Link, error) {
 	var links []entity.Link
 	identity := auth.CurrentUser(ctx)

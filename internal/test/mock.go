@@ -1,12 +1,12 @@
 package test
 
 import (
-	routing "github.com/go-ozzo/ozzo-routing/v2"
-	"github.com/go-ozzo/ozzo-routing/v2/content"
-	"github.com/go-ozzo/ozzo-routing/v2/cors"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/accesslog"
 	"github.com/garaekz/goshort/pkg/log"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
+	"github.com/go-ozzo/ozzo-routing/v2/content"
+	"github.com/go-ozzo/ozzo-routing/v2/cors"
 	"net/http"
 	"net/http/httptest"
 )
