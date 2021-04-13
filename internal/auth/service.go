@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	dbx "github.com/go-ozzo/ozzo-dbx"
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
+	dbx "github.com/go-ozzo/ozzo-dbx"
 	"golang.org/x/crypto/bcrypt"
 )
 

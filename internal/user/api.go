@@ -3,10 +3,10 @@ package user
 import (
 	"net/http"
 
-	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/log"
 	"github.com/garaekz/goshort/pkg/pagination"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
 )
 
 // RegisterHandlers sets up the routing of the HTTP handlers.

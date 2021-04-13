@@ -9,13 +9,6 @@ import (
 	"os"
 	"time"
 
-	dbx "github.com/go-ozzo/ozzo-dbx"
-	routing "github.com/go-ozzo/ozzo-routing/v2"
-	"github.com/go-ozzo/ozzo-routing/v2/content"
-	"github.com/go-ozzo/ozzo-routing/v2/cors"
-	"github.com/go-ozzo/ozzo-routing/v2/file"
-	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/lib/pq"
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/config"
 	"github.com/garaekz/goshort/internal/errors"
@@ -26,6 +19,13 @@ import (
 	"github.com/garaekz/goshort/pkg/accesslog"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
+	dbx "github.com/go-ozzo/ozzo-dbx"
+	routing "github.com/go-ozzo/ozzo-routing/v2"
+	"github.com/go-ozzo/ozzo-routing/v2/content"
+	"github.com/go-ozzo/ozzo-routing/v2/cors"
+	"github.com/go-ozzo/ozzo-routing/v2/file"
+	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 // Version indicates the current version of the application.

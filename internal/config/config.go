@@ -1,19 +1,19 @@
 package config
 
 import (
-	"os"
-	"strconv"
+	"github.com/garaekz/goshort/pkg/log"
 	"github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/qiangxue/go-env"
-	"github.com/garaekz/goshort/pkg/log"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"os"
+	"strconv"
 )
 
 const (
 	defaultServerPort         = 8080
 	defaultJWTExpirationHours = 72
-	defaultDBType         = "mysql"
+	defaultDBType             = "mysql"
 )
 
 // Config represents an application configuration.
@@ -44,13 +44,13 @@ func Load(file string, logger log.Logger) (*Config, error) {
 	var port int
 	port, err := strconv.Atoi(os.Getenv("PORT"))
 	if err != nil {
-			port = defaultServerPort
+		port = defaultServerPort
 	}
 
 	c := Config{
 		ServerPort:    port,
 		JWTExpiration: defaultJWTExpirationHours,
-		DBType: defaultDBType,
+		DBType:        defaultDBType,
 	}
 
 	// load from YAML config file

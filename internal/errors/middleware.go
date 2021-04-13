@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"runtime/debug"
 
+	"github.com/garaekz/goshort/pkg/log"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/garaekz/goshort/pkg/log"
 )
 
 // Handler creates a middleware that handles panics and errors encountered during HTTP request processing.
