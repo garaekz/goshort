@@ -1,8 +1,11 @@
 
+
 # GoShort
 
 [![Build Status](https://travis-ci.com/garaekz/goshort.svg?branch=master)](https://travis-ci.com/garaekz/goshort)
 [![Go Report Card](https://goreportcard.com/badge/github.com/garaekz/goshort)](https://goreportcard.com/report/github.com/garaekz/goshort)
+
+![enter image description here](https://lh3.googleusercontent.com/SIvWY5TITWsYUG597ZH0qzE-1ZOc1-zjLs8m1UEZDALk_IEdezPSOvroeg24Djytu3kqN1f2ph1ntNVaJAlRNzUUO1lhnemypG91KWxscjlMh6CxarJ4UDYRNMQ5dbspWCG6_teNwg=w2400)
 
 **GoShort** is a simple Golang API URL Shortener, started as a learning project it gave me a nice time building the first version, I'll try to update it often with new ideas and functionality, ~~one of the things I wanna do first is use Redis + MySQL to balance the load of the current MySQL database, the second thing I wanna do is restructure the files in order to make it easier to mantain. Hope you people like this and I'm open to new ideas, just remember this is just the server part, the client will be public soon, some tutorial will be public soon on my blog~~ this project's now on the second version, I now restructured all the code and I laid the foundations to new cool features, I´ll try to add user registration and IP throttle in order to expand this tool use and functionality.
 
