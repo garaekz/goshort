@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2021-04-12
+
+### Changed
+
+- All of the backend has changed, we used a starter kit and followed some guidelines to keep this code clean.
+- We  re-structured our VueJS frontend, we give it some flavor using TailwindCSS and got a new design by a great designer.
+
+### Removed
+
+- We completely removed TLD check as many people use local URL's and some TLD's are pretety long, we expect this as a good change, we'll keep an eye on this to prevent abuse.
+
+### Added
+
+- We now keep our list of shorted URL's in the browser using the Local Storage (hope this helps!).
+- 
+
 ## [1.2.4] - 2020-01-21
 
 ### Changed
