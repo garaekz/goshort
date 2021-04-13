@@ -7,14 +7,16 @@
 body {
   font-family: 'Montserrat';
 }
-
+.logo-wrapper {
+  padding: 0 1.5rem;
+}
 .shortened-res {
   & h1 {
     font-size: 2rem;
     cursor: pointer;
     text-decoration:underline;
     text-decoration-style: dotted;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
     & .copy-icon {
       text-decoration: none;
       animation: 0.2s ease-out 0s 1 normal none running;
