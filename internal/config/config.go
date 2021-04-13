@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/qiangxue/go-env"
 	"github.com/garaekz/goshort/pkg/log"
@@ -39,8 +40,12 @@ func (c Config) Validate() error {
 // Load returns an application configuration which is populated from the given configuration file and environment variables.
 func Load(file string, logger log.Logger) (*Config, error) {
 	// default config
+	port, err := os.Getenv("PORT")
+	if err != nil {
+			port = defaultServerPort
+	} 
 	c := Config{
-		ServerPort:    defaultServerPort,
+		ServerPort:    port,
 		JWTExpiration: defaultJWTExpirationHours,
 		DBType: defaultDBType,
 	}
