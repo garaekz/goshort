@@ -25,5 +25,9 @@ const routes = [
 const router = new VueRouter({
   routes,
 });
+router.beforeEach((toRoute, fromRoute, next) => {
+  window.document.title = 'GoShort | Golang built URL shortener';
 
+  next();
+});
 export default router;

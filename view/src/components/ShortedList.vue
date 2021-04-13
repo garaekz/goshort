@@ -15,7 +15,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full h-full pl-4 flex flex-col">
+          <div class="w-full h-full pl-4 flex flex-col" style="overflow-wrap: break-word;">
             <h2 class="text-gray-800 text-xl font-bold">{{ urlify(shorted.code) }}</h2>
             {{ shorted.original_url }}
             <button v-clipboard:copy="urlify(shorted.code)" class="w-full bg-gray-200 mt-auto font-bold text-gray-500 hover:text-gray-600 py-2">

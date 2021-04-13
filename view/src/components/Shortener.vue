@@ -14,7 +14,7 @@
           {{ shorted }}
         </h1>
       </div>
-      <div :class="[error ? 'pb-4' : 'pb-12', shorted ? 'pt-4' : 'pt-12']" class="flex flex-wrap items-stretch relative md:w-44r w-full">
+      <div :class="[error ? 'pb-4' : 'pb-12', shorted ? 'pt-4' : 'pt-12']" class="flex flex-wrap items-stretch relative md:w-44r w-full px-2">
         <input
           type="text"
           class="search-input flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border h-12 border-grey-light rounded px-3 relative focus:outline-none focus:ring-1"
