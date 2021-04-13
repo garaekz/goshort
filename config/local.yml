@@ -1,0 +1,2 @@
+dsn: "root:@tcp(127.0.0.1)/goshort?charset=utf8&parseTime=true&loc=Local"
+jwt_signing_key: "UTH0atg0m2rw--42MCweuAM9qrrx1O0L4ZvJ3_sH3Tw"
