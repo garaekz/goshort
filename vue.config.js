@@ -1,10 +1,7 @@
-/* module.exports = {
-  assetsDir: 'assets',
-};
- */
 const path = require("path");
 
 module.exports = {
+  outputDir: path.resolve(__dirname, "./view/dist"),
   assetsDir: 'assets',
   chainWebpack: config => {
     config
@@ -13,6 +10,6 @@ module.exports = {
       .add("./view/src/main.js")
       .end();
     config.resolve.alias
-      .set("@", path.join(__dirname, "./view/src"))
+      .set("@", path.resolve(__dirname, "./view/src"))
   }
 };
