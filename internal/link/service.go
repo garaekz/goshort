@@ -35,7 +35,7 @@ type CreateLinkRequest struct {
 // Validate validates the CreateLinkRequest fields.
 func (m CreateLinkRequest) Validate() error {
 	return validation.ValidateStruct(&m,
-		validation.Field(&m.URL, validation.Required, validation.Length(0, 128)),
+		validation.Field(&m.URL, validation.Required),
 	)
 }
 
