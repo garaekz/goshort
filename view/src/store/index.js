@@ -35,7 +35,8 @@ export default new Vuex.Store({
   },
   actions: {
     SAVE_URL: ({ commit }, url) => new Promise((resolve, reject) => {
-      axios.post('http://localhost:8080/v1/links', {
+      const url = `${window.location.protocol}//${window.location.host}`;
+      axios.post(`${url}/v1/links`, {
         url,
       })
         .then((response) => {
