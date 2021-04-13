@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS "urls" (
 	PRIMARY KEY ("id"),
 	INDEX "idx_urls_deleted_at" ("deleted_at"),
 	UNIQUE INDEX "urls_code_key" ("code"),
-	CONSTRAINT "urls_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON UPDATE CASCADE ON DELETE CASCADE
+	CONSTRAINT "urls_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
