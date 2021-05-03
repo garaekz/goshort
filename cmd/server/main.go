@@ -78,12 +78,16 @@ func main() {
 // buildHandler sets up the HTTP routing and builds an HTTP handler.
 func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.Handler {
 	router := routing.New()
-
+	opts := cors.Options{
+		AllowOrigins: os.Getenv("DEFAULT_HOST"),
+		AllowHeaders: "*",
+		AllowMethods: "*",
+	}
 	router.Use(
 		accesslog.Handler(logger),
 		errors.Handler(logger),
 		content.TypeNegotiator(content.JSON),
-		cors.Handler(cors.AllowAll),
+		cors.Handler(opts),
 	)
 
 	healthcheck.RegisterHandlers(router, Version)
@@ -91,8 +95,9 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	rg := router.Group("/v1")
 	rg2 := router.Group("")
 
-	authHandler := auth.Handler(cfg.JWTSigningKey)
+	//authHandler := auth.Handler(cfg.JWTSigningKey)
 	customAuthHandler := auth.CustomHandler(cfg.JWTSigningKey)
+	authHandler := auth.APIHandler()
 
 	auth.RegisterHandlers(rg.Group(""),
 		auth.NewService(db, cfg.JWTSigningKey, cfg.JWTExpiration, logger),

@@ -2,6 +2,8 @@ package auth
 
 import (
 	"context"
+	defaultErrors "errors"
+	"fmt"
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
@@ -19,6 +21,18 @@ func Handler(verificationKey string) routing.Handler {
 // CustomHandler returns a JWT-based authentication middleware.
 func CustomHandler(verificationKey string) routing.Handler {
 	return CustomJWT(verificationKey, auth.JWTOptions{TokenHandler: handleToken})
+}
+
+// APIHandler returns a Bearer authentication middleware.
+func APIHandler() routing.Handler {
+	return auth.Bearer(bearerTokenVerificator)
+}
+
+func bearerTokenVerificator(c *routing.Context, token string) (auth.Identity, error) {
+
+	fmt.Printf("Hostname: %s \n", c.Request.Host)
+	fmt.Println(token)
+	return nil, defaultErrors.New("Invalid credential")
 }
 
 // handleToken stores the user identity in the request context so that it can be accessed elsewhere.

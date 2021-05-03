@@ -15,13 +15,13 @@ import (
 // RegisterHandlers sets up the routing of the HTTP handlers.
 func RegisterHandlers(r *routing.RouteGroup, service Service, authHandler routing.Handler, customAuthHandler routing.Handler, logger log.Logger) {
 	res := resource{service, logger}
-
+	r.Use(authHandler)
 	r.Get("/links/<id>", res.get)
 	r.Get("/links", res.query)
 
 	r.Use(customAuthHandler)
 	r.Post("/links", res.create)
-	r.Use(authHandler)
+
 	// the following endpoints require a valid JWT
 	r.Put("/links/<id>", res.update)
 	r.Delete("/links/<id>", res.delete)
