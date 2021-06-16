@@ -17,7 +17,7 @@
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
     "core-js": "^3.9.0",
-    "postcss": "^7.0.35",
+    "postcss": "^7.0.36",
     "sweetalert2": "^10.15.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
     "v-clipboard": "^2.2.3",
