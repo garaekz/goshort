@@ -1,0 +1,534 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# Este es software libre; consulte en el c�digo fuente las condiciones de copia.
+# NO hay garant�a; ni siquiera para MERCANTIBILIDAD o EL CUMPLIMIENTO DE
+# ALG�N PROP�SITO PARTICULAR.
+
+ # Este programa fue construido para i386-pc-mingw32
+ 
+"grep" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+
+El sistema no puede encontrar la ruta especificada.
+
+
+# Base de datos del Make, mostrada en Tue Jul 19 22:48:54 2022
+
+# Variables
+
+# autom�tica/o
+<D = $(patsubst %/,%,$(dir $<))
+# autom�tica/o
+?F = $(notdir $?)
+# makefile
+MAKEFLAGS = Rrqp
+# autom�tica/o
+?D = $(patsubst %/,%,$(dir $?))
+# autom�tica/o
+@D = $(patsubst %/,%,$(dir $@))
+# entorno
+HOMEDRIVE = C:
+# autom�tica/o
+@F = $(notdir $@)
+# autom�tica/o
+^D = $(patsubst %/,%,$(dir $^))
+# makefile
+CURDIR := g:/proyectos/goshortv2
+# por defecto
+SHELL := sh.exe
+# entorno
+WINDIR = C:\WINDOWS
+# entorno
+VSCODE_NLS_CONFIG = {"locale":"es-419","availableLanguages":{},"_languagePackSupport":true}
+# entorno
+ONEDRIVE = C:\Users\Gara\OneDrive
+# entorno
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
+# makefile (de `makefile', l�nea 1):
+MAKEFILE_LIST :=  makefile
+# entorno
+TMP = C:\Users\Gara\AppData\Local\Temp
+# entorno
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# makefile (de `makefile', l�nea 2):
+VERSION = $(shell git describe --tags --always --dirty --match=v* 2> /dev/null  
+|| echo "1.0.0")
+# entorno
+PROGRAMW6432 = C:\Program Files
+# entorno
+PROGRAMDATA = C:\ProgramData
+# entorno
+VSCODE_CWD = C:\Users\Gara\AppData\Local\Programs\Microsoft VS Code
+# entorno
+GOPROXY = https://proxy.golang.org,direct
+# makefile (de `makefile', l�nea 7):
+APP_DSN = $(shell sed -n 's/^dsn:[[:space:]]*"\(.*\)"/\1/p' $(CONFIG_FILE))
+# entorno
+PATH = C:\Python310\Scripts\;C:\Python310\;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;H:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Python38\Lib\site-packages;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\system32\config\systemprofile\AppData\roaming\Python\Python39\scripts;C:\Program Files\Git\cmd;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\WINDOWS\system32\config\systemprofile\AppData\roaming\Python\Python39\scripts;C:\Users\Gara\AppData\Roaming\Python\Python39\Scripts;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Symfony\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\dotnet\;C:\Program Files\Go\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Gara\AppData\Local\Microsoft\WindowsApps;C:\Users\Gara\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Gara\AppData\Roaming\Composer\vendor\bin;C:\Users\Gara\go\bin;C:\Program Files\heroku\bin;C:\Program Files\PostgreSQL\12\bin;C:\Program Files (x86)\GnuWin32\bin;C:\Users\Gara\AppData\Local\GitHubDesktop\bin;C:\ffmpeg\bin;C:\Users\Gara\go\bin;C:\Users\Gara\AppData\Local\Microsoft\WindowsApps;C:\Users\Gara\AppData\Roaming\npm;C:\Program Files\Azure Data Studio\bin;C:\Users\Gara\.dotnet\tools;C:\Users\Gara\AppData\Local\gitkraken\bin;C:\Users\Gara\go\bin
+# entorno
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# entorno
+CHOCOLATEYLASTPATHUPDATE = 132416585623158688
+# entorno
+PROCESSOR_ARCHITECTURE = x86
+# entorno
+USERPROFILE = C:\Users\Gara
+# entorno
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
+# entorno
+ALLUSERSPROFILE = C:\ProgramData
+# entorno
+GOPATH = C:\Users\Gara\go
+# entorno
+NUMBER_OF_PROCESSORS = 12
+# entorno
+ELECTRON_RUN_AS_NODE = 1
+# makefile (de `makefile', l�nea 4):
+LDFLAGS := -ldflags "-X main.Version="1.0.0""
+# por defecto
+.FEATURES := target-specific order-only second-expansion else-if archives
+# makefile (de `makefile', l�nea 6):
+CONFIG_FILE = ./config/local.yml
+# autom�tica/o
+%F = $(notdir $%)
+# entorno
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_38296_CKGPQODZGNEKRFJI
+# entorno
+COMPUTERNAME = GARA
+# entorno
+PROGRAMFILES = C:\Program Files (x86)
+# entorno
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# entorno
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# entorno
+USERNAME = Gara
+# entorno
+PUBLIC = C:\Users\Public
+# entorno
+GOMODCACHE = C:\Users\Gara\go\pkg\mod
+# entorno
+VSCODE_CODE_CACHE_PATH = C:\Users\Gara\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
+# entorno
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# entorno
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# entorno
+LOGONSERVER = \\GARA
+# entorno
+OPENSSL_CONF = C:\Program Files\PostgreSQL\psqlODBC\etc\openssl.cnf
+# entorno
+ONEDRIVECONSUMER = C:\Users\Gara\OneDrive
+# entorno
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# entorno
+USERDOMAIN = GARA
+# makefile (de `makefile', l�nea 1):
+MODULE = $(shell go list -m)
+# por defecto
+MAKE = $(MAKE_COMMAND)
+# por defecto
+MAKECMDGOALS := all
+# por defecto
+MAKE_VERSION := 3.81
+# makefile
+.DEFAULT_GOAL := default
+# entorno
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# autom�tica/o
+%D = $(patsubst %/,%,$(dir $%))
+# entorno
+LOCALAPPDATA = C:\Users\Gara\AppData\Local
+# entorno
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\PowerShell\Modules\
+# por defecto
+MAKE_COMMAND := make.exe
+# entorno
+PROCESSOR_ARCHITEW6432 = AMD64
+# por defecto
+.VARIABLES := 
+# autom�tica/o
+*F = $(notdir $*)
+# entorno
+PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
+# entorno
+OS = Windows_NT
+# entorno
+VSCODE_IPC_HOOK = \\.\pipe\62237b15ee08ad8ab7b63cedd10da486-1.69.2-main-sock
+# entorno
+HOMEPATH = \Users\Gara
+# entorno
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# entorno
+PROMPT = $P$G
+# entorno
+MFLAGS = -Rrqp
+# autom�tica/o
+*D = $(patsubst %/,%,$(dir $*))
+# entorno
+SYSTEMROOT = C:\WINDOWS
+# autom�tica/o
++D = $(patsubst %/,%,$(dir $+))
+# autom�tica/o
++F = $(notdir $+)
+# entorno
+APPDATA = C:\Users\Gara\AppData\Roaming
+# makefile (de `makefile', l�nea 8):
+MIGRATE := docker run -v /migrations:/migrations --network host migrate/migrate:v4.10.0 -path=/migrations/ -database ""
+# makefile (de `makefile', l�nea 3):
+PACKAGES := 
+# entorno
+TEMP = C:\Users\Gara\AppData\Local\Temp
+# entorno
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# por defecto
+MAKEFILES := 
+# autom�tica/o
+<F = $(notdir $<)
+# entorno
+LC_ALL = C
+# autom�tica/o
+^F = $(notdir $^)
+# makefile (de `makefile', l�nea 11):
+FSWATCH_FILE := './fswatch.cfg'
+# por defecto
+SUFFIXES := 
+# entorno
+SYSTEMDRIVE = C:
+# entorno
+SESSIONNAME = Console
+# entorno
+PROCESSOR_REVISION = 7100
+# entorno
+MAKELEVEL := 0
+# entorno
+LANG = C
+# entorno
+PROCESSOR_LEVEL = 23
+# makefile (de `makefile', l�nea 10):
+PID_FILE := './.pid'
+# entorno
+VSCODE_PID = 38296
+# entorno
+USERDOMAIN_ROAMINGPROFILE = GARA
+# estad�sticas del conjunto de variables de la tabla de hash:
+# Carga=97/1024=9%, Rehash=0, Colisiones=12/135=9%
+
+# Valores de variables espec�ficas al patr�n
+
+# No hay valores de variables espec�ficas al patr�n.
+
+# Directorios
+
+# H:\xampp\php (llave H:/xampp/php, mtime 1655857005): 63 archivos, no imposibilidades.
+# C:\Program Files\heroku\bin (llave C:/Program Files/heroku/bin, mtime 1579074698): 4 archivos, no imposibilidades.
+# C:\Program Files\Docker\Docker\resources\bin (llave C:/Program Files/Docker/Docker/resources/bin, mtime 1655858442): 13 archivos, no imposibilidades.
+# C:\Program Files\Go\bin (llave C:/Program Files/Go/bin, mtime 1658015128): 4 archivos, no imposibilidades.
+# C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\ (llave C:/Program Files (x86)/Microsoft SQL Server/150/DTS/Binn/, mtime 1655933876): 4 archivos, no imposibilidades.
+# C:\Program Files (x86)\Razer\ChromaBroadcast\bin (llave C:/Program Files (x86)/Razer/ChromaBroadcast/bin, mtime 1630978799): 5 archivos, no imposibilidades.
+# C:\Program Files\Microsoft SQL Server\150\Tools\Binn\ (llave C:/Program Files/Microsoft SQL Server/150/Tools/Binn/, mtime 1655933886): 13 archivos, no imposibilidades.
+# C:\Program Files (x86)\Razer Chroma SDK\bin (llave C:/Program Files (x86)/Razer Chroma SDK/bin, mtime 1657169960): 233 archivos, no imposibilidades.
+# C:\Windows\System32\WindowsPowerShell\v1.0\ (llave C:/Windows/System32/WindowsPowerShell/v1.0/, mtime 1644603813): 32 archivos, no imposibilidades.
+# C:\Windows\System32\Wbem (llave C:/Windows/System32/Wbem, mtime 1657698128): 172 archivos, no imposibilidades.
+# . (llave g:/proyectos/goshortv2, mtime 1658296134): 17 archivos, no imposibilidades.
+# C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common (llave C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common, mtime 1592079710): 10 archivos, no imposibilidades.
+# C:\Users\Gara\AppData\Local\Programs\Microsoft VS Code\bin (llave C:/Users/Gara/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1658242550): 4 archivos, no imposibilidades.
+# C:\Users\Gara\AppData\Roaming\Python\Python39\Scripts (llave C:/Users/Gara/AppData/Roaming/Python/Python39/Scripts, mtime 1631553126): 25 archivos, no imposibilidades.
+# C:\ProgramData\chocolatey\bin (llave C:/ProgramData/chocolatey/bin, mtime 1612854341): 24 archivos, no imposibilidades.
+# C:\ffmpeg\bin (llave C:/ffmpeg/bin, mtime 1614504161): 5 archivos, no imposibilidades.
+# C:\Program Files\nodejs\ (llave C:/Program Files/nodejs/, mtime 1642667714): 13 archivos, no imposibilidades.
+# C:\Python310\ (llave C:/Python310/, mtime 1642589387): 18 archivos, no imposibilidades.
+# C:\Users\Gara\AppData\Roaming\npm (llave C:/Users/Gara/AppData/Roaming/npm, mtime 1652719218): 66 archivos, no imposibilidades.
+# C:\Users\Gara\.dotnet\tools: podr�a no estar establecido.
+# C:\Python310\Scripts\ (llave C:/Python310/Scripts/, mtime 1642589387): 5 archivos, no imposibilidades.
+# C:\Program Files\MySQL\MySQL Shell 8.0\bin\ (llave C:/Program Files/MySQL/MySQL Shell 8.0/bin/, mtime 1593462544): 7 archivos, no imposibilidades.
+# C:\Users\Gara\AppData\Roaming\Composer\vendor\bin (llave C:/Users/Gara/AppData/Roaming/Composer/vendor/bin, mtime 1620162968): 4 archivos, no imposibilidades.
+# C:\Program Files (x86)\GnuWin32\bin (llave C:/Program Files (x86)/GnuWin32/bin, mtime 1652398857): 8 archivos, no imposibilidades.
+# C:\Windows\System32\OpenSSH\: podr�a no estar establecido.
+# C:\ProgramData\ComposerSetup\bin (llave C:/ProgramData/ComposerSetup/bin, mtime 1651455312): 5 archivos, no imposibilidades.
+# C:\Program Files\PuTTY\ (llave C:/Program Files/PuTTY/, mtime 1642565288): 12 archivos, no imposibilidades.
+# C:\Program Files (x86)\Common Files\Oracle\Java\javapath (llave C:/Program Files (x86)/Common Files/Oracle/Java/javapath, mtime 1620225921): 5 archivos, no imposibilidades.
+# C:\Users\Gara\AppData\Local\Microsoft\WindowsApps (llave C:/Users/Gara/AppData/Local/Microsoft/WindowsApps, mtime 1658169708): 21 archivos, no imposibilidades.
+# C:\Windows (llave C:/Windows, mtime 1657698126): 116 archivos, no imposibilidades.
+# C:\Users\Gara\AppData\Local\GitHubDesktop\bin (llave C:/Users/Gara/AppData/Local/GitHubDesktop/bin, mtime 1597345220): 4 archivos, no imposibilidades.
+# C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\ (llave C:/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/, mtime 1655933886): 11 archivos, no imposibilidades.
+# C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\ (llave C:/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/, mtime 1655933911): 6 archivos, no imposibilidades.
+# C:\Program Files\Microsoft\Web Platform Installer\ (llave C:/Program Files/Microsoft/Web Platform Installer/, mtime 1655930316): 26 archivos, no imposibilidades.
+# C:\Program Files\Azure Data Studio\bin: podr�a no estar establecido.
+# C:\Program Files\Microsoft SQL Server\150\DTS\Binn\ (llave C:/Program Files/Microsoft SQL Server/150/DTS/Binn/, mtime 1655933911): 46 archivos, no imposibilidades.
+# C:\WINDOWS\system32\config\systemprofile\AppData\roaming\Python\Python39\scripts: podr�a no estar establecido.
+# C:\Program Files\Razer\ChromaBroadcast\bin (llave C:/Program Files/Razer/ChromaBroadcast/bin, mtime 1630978799): 5 archivos, no imposibilidades.
+# C:\Program Files\Symfony\ (llave C:/Program Files/Symfony/, mtime 1643163280): 3 archivos, no imposibilidades.
+# C:\Program Files\dotnet\ (llave C:/Program Files/dotnet/, mtime 1657664583): 13 archivos, no imposibilidades.
+# C:\Program Files\Razer Chroma SDK\bin (llave C:/Program Files/Razer Chroma SDK/bin, mtime 1636131824): 5 archivos, no imposibilidades.
+# C:\Program Files\PostgreSQL\12\bin: podr�a no estar establecido.
+# C:\Users\Gara\go\bin (llave C:/Users/Gara/go/bin, mtime 1658018312): 18 archivos, no imposibilidades.
+# C:\ProgramData\DockerDesktop\version-bin: podr�a no estar establecido.
+# C:\Users\Gara\AppData\Local\gitkraken\bin (llave C:/Users/Gara/AppData/Local/gitkraken/bin, mtime 1657405896): 3 archivos, no imposibilidades.
+# C:\Program Files\Git\cmd (llave C:/Program Files/Git/cmd, mtime 1620839345): 8 archivos, no imposibilidades.
+# C:\Windows\system32 (llave C:/Windows/system32, mtime 1658281276): 3113 archivos, no imposibilidades.
+# C:\Python38\Lib\site-packages (llave C:/Python38/Lib/site-packages, mtime 1612848763): 85 archivos, no imposibilidades.
+# C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR (llave C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR, mtime 1592079149): 5 archivos, no imposibilidades.
+# C:\WINDOWS\system32\config\systemprofile\AppData\Local\ 
+Microsoft\WindowsApps: podr�a no estar establecido.
+
+# 4259 archivos, no imposibilidades en 50 directorios.
+
+# Reglas impl�citas.
+
+# No hay reglas impl�citas.
+
+# Archivos
+
+db-start:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 66):
+	@mkdir -p testdata/postgres
+	docker run --rm --name postgres -v $(shell pwd)/testdata:/testdata \
+	-v $(shell pwd)/testdata/postgres:/var/lib/postgresql/data \
+	-e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=goshort -d -p 5432:5432 postgres
+	
+
+testdata:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 77):
+	make migrate-reset
+	@echo "Populating test data..."
+	@docker exec -it postgres psql "$(APP_DSN)" -f /testdata/testdata.sql
+	
+
+migrate-down:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 96):
+	@echo "Reverting database to the last migration step..."
+	@$(MIGRATE) down 1
+	
+
+# No es un objetivo:
+all:
+#  Objetivo de l�nea de instrucciones.
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+# estad�sticas del conjunto de variables de la tabla de hash:
+# Carga=0/32=0%, Rehash=0, Colisiones=0/0=0%
+
+build-docker:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 54):
+	docker build -f cmd/server/Dockerfile -t server .
+	
+
+.PHONY: default help test test-cover run run-restart build build-docker clean version db-start db-stop testdata lint fmt migrate migrate-down migrate-new migrate-reset
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  La fecha de modificaci�n no se comprob�.
+#  El archivo ha sido actualizado.
+
+# No es un objetivo:
+.DEFAULT:
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  La fecha de modificaci�n no se comprob�.
+#  El archivo ha sido actualizado.
+
+migrate-reset:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 106):
+	@echo "Resetting database..."
+	@$(MIGRATE) drop
+	@echo "Running all database migrations..."
+	@$(MIGRATE) up
+	
+
+test:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 23):
+	@echo "mode: count" > coverage-all.out
+	@$(foreach pkg,$(PACKAGES), \
+	go test -p=1 -cover -covermode=count -coverprofile=coverage.out ${pkg}; \
+	tail -n +2 coverage.out >> coverage-all.out;)
+	
+
+# No es un objetivo:
+makefile:
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  �ltima modificaci�n 2022-07-19 22:35:30
+#  El archivo ha sido actualizado.
+#  Actualizado con �xito.
+# estad�sticas del conjunto de variables de la tabla de hash:
+# Carga=0/32=0%, Rehash=0, Colisiones=0/0=0%
+
+build:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 50):
+	CGO_ENABLED=0 go build ${LDFLAGS} -a -o server $(MODULE)/cmd/server
+	
+
+run-restart:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 38):
+	@pkill -P `cat $(PID_FILE)` || true
+	@printf '%*s\n' "80" '' | tr ' ' -
+	@echo "Source file changed. Restarting server..."
+	@go run ${LDFLAGS} cmd/server/main.go & echo $$! > $(PID_FILE)
+	@printf '%*s\n' "80" '' | tr ' ' -
+	
+
+help:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 19):
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	
+
+default: help
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+
+migrate:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 91):
+	@echo "Running all new database migrations..."
+	@$(MIGRATE) up
+	
+
+# No es un objetivo:
+.SUFFIXES:
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  La fecha de modificaci�n no se comprob�.
+#  El archivo ha sido actualizado.
+
+migrate-new:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 101):
+	@read -p "Enter the name of the new migration: " name; \
+	$(MIGRATE) create -ext sql -dir /migrations/ $${name// /_}
+	
+
+version:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 62):
+	@echo $(VERSION)
+	
+
+run:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 34):
+	go run ${LDFLAGS} cmd/server/main.go
+	
+
+clean:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 58):
+	rm -rf server coverage.out coverage-all.out
+	
+
+test-cover: test
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 30):
+	go tool cover -html=coverage-all.out
+	
+
+db-stop:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 73):
+	docker stop postgres
+	
+
+fmt:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 87):
+	@go fmt $(PACKAGES)
+	
+
+lint:
+#  objetivo falso (dependencia de .PHONY).
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  El archivo no existe.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 83):
+	@golint $(PACKAGES)
+	
+
+run-live:
+#  La b�squeda de reglas impl�citas ha sido efectuada.
+#  La fecha de modificaci�n no se comprob�.
+#  El archivo ha sido actualizado.
+#  comandos para ejecutar (de `makefile', linea 45):
+	@go run ${LDFLAGS} cmd/server/main.go & echo $$! > $(PID_FILE)
+	@fswatch -x -o --event Created --event Updated --event Renamed -r internal pkg cmd config | xargs -n1 -I {} make run-restart
+	
+
+# estad�sticas de la tabla de hash de los archivos:
+# Carga=25/1024=2%, Rehash=0,  
+process_begin: CreateProcess(NULL, pwd, ...) failed.
+process_begin: CreateProcess(NULL, sed -n s/^dsn:[[:space:]]*\"\(.*\)\"/\1/p ./config/local.yml, ...) failed.
+make.exe: *** No hay ninguna regla para construir el objetivo `all'.  Alto.
+
+Colisiones=2/75=3%
+# Rutas de b�squeda VPATH
+
+# No hay rutas de b�squeda `vpath'.
+
+# No hay ruta de b�squeda general (variable `VPATH').
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Se termina la base de datos de Make en Tue Jul 19 22:48:54 2022
+
+ 

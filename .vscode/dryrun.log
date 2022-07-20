@@ -1,0 +1,9 @@
+make.exe: se ingresa al directorio `g:/proyectos/goshortv2'
+grep -E '^[a-zA-Z_-]+:.*?## .*$'  makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $1, $2}'
+make.exe: se sale del directorio `g:/proyectos/goshortv2'
+ 
+process_begin: CreateProcess(NULL, "", ...) failed.
+process_begin: CreateProcess(NULL, "", ...) failed.
+process_begin: CreateProcess(NULL, pwd, ...) failed.
+process_begin: CreateProcess(NULL, sed -n s/^dsn:[[:space:]]*\"\(.*\)\"/\1/p ./config/local.yml, ...) failed.
+

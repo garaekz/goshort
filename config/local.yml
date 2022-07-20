@@ -1,0 +1,2 @@
+dsn: "postgres://127.0.0.1/goshort?sslmode=disable&user=postgres&password=postgres"
+jwt_signing_key: "LxsKJywDL5O5PvgODZhBH12KE6k2yL8E"
