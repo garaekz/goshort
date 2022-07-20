@@ -1,0 +1,9 @@
+version: '2.1'
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=t@t.io
+      - PGADMIN_DEFAULT_PASSWORD=t
+    ports:
+      - 5050:80

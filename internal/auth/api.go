@@ -15,7 +15,7 @@ func RegisterHandlers(rg *routing.RouteGroup, service Service, logger log.Logger
 func login(service Service, logger log.Logger) routing.Handler {
 	return func(c *routing.Context) error {
 		var req struct {
-			Username string `json:"username"`
+			Email    string `json:"email"`
 			Password string `json:"password"`
 		}
 
@@ -24,7 +24,7 @@ func login(service Service, logger log.Logger) routing.Handler {
 			return errors.BadRequest("")
 		}
 
-		token, err := service.Login(c.Request.Context(), req.Username, req.Password)
+		token, err := service.Login(c.Request.Context(), req.Email, req.Password)
 		if err != nil {
 			return err
 		}

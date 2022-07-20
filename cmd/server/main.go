@@ -25,7 +25,7 @@ import (
 )
 
 // Version indicates the current version of the application.
-var Version = "1.0.0"
+var Version = "3.0.0"
 
 var flagConfig = flag.String("config", "./config/local.yml", "path to the config file")
 
@@ -87,14 +87,15 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	rg := router.Group("/v1")
 
 	authHandler := auth.Handler(cfg.JWTSigningKey)
+	keyHandler := auth.APIHandler(db)
 
 	album.RegisterHandlers(rg.Group(""),
 		album.NewService(album.NewRepository(db, logger), logger),
-		authHandler, logger,
+		authHandler, keyHandler, logger,
 	)
 
 	auth.RegisterHandlers(rg.Group(""),
-		auth.NewService(cfg.JWTSigningKey, cfg.JWTExpiration, logger),
+		auth.NewService(auth.NewRepository(db, logger), cfg.JWTSigningKey, cfg.JWTExpiration, logger),
 		logger,
 	)
 

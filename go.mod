@@ -12,6 +12,7 @@ require (
 	github.com/qiangxue/go-env v1.0.0
 	github.com/stretchr/testify v1.4.0
 	go.uber.org/zap v1.13.0
+	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
 	gopkg.in/yaml.v2 v2.2.2
 )
 
