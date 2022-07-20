@@ -1,5 +1,5 @@
 #!/bin/bash -e
-
+echo "[`date`] Just checking this is running"
 exec > >(tee -a /var/log/app/entry.log|logger -t server -s 2>/dev/console) 2>&1
 
 APP_ENV=${APP_ENV:-local}

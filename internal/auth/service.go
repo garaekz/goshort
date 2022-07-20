@@ -60,7 +60,8 @@ func (s service) authenticate(ctx context.Context, email, password string) Ident
 		fmt.Println(err)
 		return nil
 	}
-
+	pass, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	fmt.Printf("%s %s\n", password, string(pass))
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		fmt.Println(err)
 		logger.Infof("authentication failed")

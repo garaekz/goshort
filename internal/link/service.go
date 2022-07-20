@@ -12,7 +12,8 @@ import (
 
 // Service encapsulates usecase logic for links.
 type Service interface {
-	Get(ctx context.Context, code string) (Link, error)
+	Get(ctx context.Context, id string) (Link, error)
+	GetByCode(ctx context.Context, code string) (Link, error)
 	Query(ctx context.Context, offset, limit int) ([]Link, error)
 	Count(ctx context.Context) (int, error)
 	Create(ctx context.Context, input CreateLinkRequest) (Link, error)
@@ -67,6 +68,15 @@ func NewService(repo Repository, logger log.Logger) Service {
 // Get returns the link with the specified the link ID.
 func (s service) Get(ctx context.Context, id string) (Link, error) {
 	link, err := s.repo.Get(ctx, id)
+	if err != nil {
+		return Link{}, err
+	}
+	return Link{Code: link.Code, OriginalURL: link.OriginalURL, CreatedAt: link.CreatedAt}, nil
+}
+
+// GetByCode returns the link with the specified code.
+func (s service) GetByCode(ctx context.Context, code string) (Link, error) {
+	link, err := s.repo.GetByCode(ctx, code)
 	if err != nil {
 		return Link{}, err
 	}

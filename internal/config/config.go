@@ -1,19 +1,20 @@
 package config
 
 import (
-	"github.com/garaekz/goshort/pkg/log"
-	"github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/qiangxue/go-env"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
 	"strconv"
+
+	"github.com/garaekz/goshort/pkg/log"
+	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/qiangxue/go-env"
+	"gopkg.in/yaml.v2"
 )
 
 const (
 	defaultServerPort         = 8080
 	defaultJWTExpirationHours = 72
-	defaultDBType             = "mysql"
+	defaultDBType             = "postgres"
 )
 
 // Config represents an application configuration.

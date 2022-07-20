@@ -9,27 +9,27 @@ import (
 	"os"
 	"time"
 
+	"github.com/garaekz/goshort/internal/api_key"
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/config"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/internal/healthcheck"
 	"github.com/garaekz/goshort/internal/link"
-	"github.com/garaekz/goshort/internal/page"
 	"github.com/garaekz/goshort/internal/user"
 	"github.com/garaekz/goshort/pkg/accesslog"
+	"github.com/garaekz/goshort/pkg/customerapi"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
 	dbx "github.com/go-ozzo/ozzo-dbx"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/content"
 	"github.com/go-ozzo/ozzo-routing/v2/cors"
-	"github.com/go-ozzo/ozzo-routing/v2/file"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
 )
 
 // Version indicates the current version of the application.
-var Version = "1.0.0"
+var Version = "3.0.0"
 
 var flagConfig = flag.String("config", "./config/local.yml", "path to the config file")
 
@@ -93,11 +93,11 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	healthcheck.RegisterHandlers(router, Version)
 
 	rg := router.Group("/v1")
-	rg2 := router.Group("")
+	// rg2 := router.Group("")
 
-	//authHandler := auth.Handler(cfg.JWTSigningKey)
-	customAuthHandler := auth.CustomHandler(cfg.JWTSigningKey)
-	authHandler := auth.APIHandler()
+	authHandler := auth.Handler(cfg.JWTSigningKey)
+	customerAuthHandler := customerapi.CustomerAPIHandler(user.NewRepository(db, logger))
+	// authHandler := auth.APIHandler()
 
 	auth.RegisterHandlers(rg.Group(""),
 		auth.NewService(db, cfg.JWTSigningKey, cfg.JWTExpiration, logger),
@@ -109,21 +109,14 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 		authHandler, logger,
 	)
 
-	link.RegisterHandlers(rg.Group(""),
-		link.NewService(link.NewRepository(db, logger), logger),
-		authHandler, customAuthHandler, logger,
+	api_key.RegisterHandlers(rg.Group(""),
+		api_key.NewService(api_key.NewRepository(db, logger), logger),
+		authHandler, logger,
 	)
 
-	// serve index file
-	router.Get("/", file.Content("./view/dist/index.html"))
-	// serve assets folder
-	router.Get("/assets/*", file.Server(file.PathMap{
-		"/": "./view/dist/",
-	}))
-
-	page.RegisterHandlers(rg2.Group(""),
-		page.NewService(page.NewRepository(db, logger), logger),
-		authHandler, logger,
+	link.RegisterHandlers(rg.Group(""),
+		link.NewService(link.NewRepository(db, logger), logger),
+		authHandler, customerAuthHandler, logger,
 	)
 
 	return router

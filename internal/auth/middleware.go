@@ -29,8 +29,6 @@ func APIHandler() routing.Handler {
 }
 
 func bearerTokenVerificator(c *routing.Context, token string) (auth.Identity, error) {
-
-	fmt.Printf("Hostname: %s \n", c.Request.Host)
 	fmt.Println(token)
 	return nil, defaultErrors.New("Invalid credential")
 }
@@ -42,6 +40,7 @@ func handleToken(c *routing.Context, token *jwt.Token) error {
 		token.Claims.(jwt.MapClaims)["id"].(string),
 		token.Claims.(jwt.MapClaims)["email"].(string),
 	)
+	fmt.Printf("Context: %s", ctx)
 	c.Request = c.Request.WithContext(ctx)
 	return nil
 }

@@ -13,14 +13,14 @@ import (
 )
 
 // RegisterHandlers sets up the routing of the HTTP handlers.
-func RegisterHandlers(r *routing.RouteGroup, service Service, authHandler routing.Handler, customAuthHandler routing.Handler, logger log.Logger) {
+func RegisterHandlers(r *routing.RouteGroup, service Service, authHandler routing.Handler, customerAuthHandler routing.Handler, logger log.Logger) {
 	res := resource{service, logger}
-	r.Use(authHandler)
-	r.Get("/links/<id>", res.get)
-	r.Get("/links", res.query)
-
-	r.Use(customAuthHandler)
+	r.Use(customerAuthHandler)
 	r.Post("/links", res.create)
+	r.Get("/links/<code>", res.get)
+
+	r.Use(authHandler)
+	r.Get("/links", res.query)
 
 	// the following endpoints require a valid JWT
 	r.Put("/links/<id>", res.update)
@@ -33,7 +33,7 @@ type resource struct {
 }
 
 func (r resource) get(c *routing.Context) error {
-	link, err := r.service.Get(c.Request.Context(), c.Param("id"))
+	link, err := r.service.GetByCode(c.Request.Context(), c.Param("code"))
 	if err != nil {
 		return err
 	}
