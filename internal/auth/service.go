@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -16,7 +15,7 @@ import (
 type Service interface {
 	// authenticate authenticates a user using username and password.
 	// It returns a JWT token if authentication succeeds. Otherwise, an error is returned.
-	Login(ctx context.Context, username, password string) (string, error)
+	Login(ctx context.Context, email, password string) (string, error)
 }
 
 // Identity represents an authenticated user identity.
@@ -41,8 +40,8 @@ func NewService(repo Repository, signingKey string, tokenExpiration int, logger 
 
 // Login authenticates a user and generates a JWT token if authentication succeeds.
 // Otherwise, an error is returned.
-func (s service) Login(ctx context.Context, username, password string) (string, error) {
-	if identity := s.authenticate(ctx, username, password); identity != nil {
+func (s service) Login(ctx context.Context, email, password string) (string, error) {
+	if identity := s.authenticate(ctx, email, password); identity != nil {
 		return s.generateJWT(identity)
 	}
 	return "", errors.Unauthorized("")
@@ -53,17 +52,19 @@ func (s service) Login(ctx context.Context, username, password string) (string, 
 func (s service) authenticate(ctx context.Context, email, password string) Identity {
 	logger := s.logger.With(ctx, "email", email)
 
+	// This shall only work on test environment.
+	if s.signingKey == "test" && email == "test@test.io" && password == "pass" {
+		logger.Infof("authentication successful")
+		return entity.User{ID: "100", Email: "test@test.io"}
+	}
+
 	user, err := s.repo.GetUserByEmail(ctx, email)
 	if err != nil {
 		logger.Infof("User not found: Authentication failed")
 		return nil
 	}
 
-	pass, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	fmt.Printf("\n\n%s %s\n\n", password, string(pass))
-
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		fmt.Println(err)
 		logger.Infof("authentication failed")
 		return nil
 	}

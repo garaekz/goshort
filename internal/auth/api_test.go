@@ -12,8 +12,8 @@ import (
 
 type mockService struct{}
 
-func (m mockService) Login(ctx context.Context, username, password string) (string, error) {
-	if username == "test" && password == "pass" {
+func (m mockService) Login(ctx context.Context, email, password string) (string, error) {
+	if email == "test@test.io" && password == "pass" {
 		return "token-100", nil
 	}
 	return "", errors.Unauthorized("")
@@ -22,12 +22,13 @@ func (m mockService) Login(ctx context.Context, username, password string) (stri
 func TestAPI(t *testing.T) {
 	logger, _ := log.NewForTest()
 	router := test.MockRouter(logger)
+
 	RegisterHandlers(router.Group(""), mockService{}, logger)
 
 	tests := []test.APITestCase{
-		{"success", "POST", "/login", `{"username":"test","password":"pass"}`, nil, http.StatusOK, `{"token":"token-100"}`},
-		{"bad credential", "POST", "/login", `{"username":"test","password":"wrong pass"}`, nil, http.StatusUnauthorized, ""},
-		{"bad json", "POST", "/login", `"username":"test","password":"wrong pass"}`, nil, http.StatusBadRequest, ""},
+		{Name: "success", Method: "POST", URL: "/login", Body: `{"email":"test@test.io","password":"pass"}`, Header: nil, WantStatus: http.StatusOK, WantResponse: `{"token":"token-100"}`},
+		{Name: "bad credential", Method: "POST", URL: "/login", Body: `{"email":"test@test.io","password":"wrong pass"}`, Header: nil, WantStatus: http.StatusUnauthorized, WantResponse: ""},
+		{Name: "bad json", Method: "POST", URL: "/login", Body: `"email":"test@test.io","password":"wrong pass"}`, Header: nil, WantStatus: http.StatusBadRequest, WantResponse: ""},
 	}
 	for _, tc := range tests {
 		test.Endpoint(t, router, tc)

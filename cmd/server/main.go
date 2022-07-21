@@ -9,11 +9,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/garaekz/goshort/internal/album"
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/config"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/internal/healthcheck"
+	"github.com/garaekz/goshort/internal/short"
 	"github.com/garaekz/goshort/pkg/accesslog"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
@@ -89,14 +89,14 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	authHandler := auth.Handler(cfg.JWTSigningKey)
 	keyHandler := auth.APIHandler(db)
 
-	album.RegisterHandlers(rg.Group(""),
-		album.NewService(album.NewRepository(db, logger), logger),
-		authHandler, keyHandler, logger,
-	)
-
 	auth.RegisterHandlers(rg.Group(""),
 		auth.NewService(auth.NewRepository(db, logger), cfg.JWTSigningKey, cfg.JWTExpiration, logger),
 		logger,
+	)
+
+	short.RegisterHandlers(rg.Group(""),
+		short.NewService(short.NewRepository(db, logger), logger),
+		authHandler, keyHandler, logger,
 	)
 
 	return router

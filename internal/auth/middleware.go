@@ -32,6 +32,13 @@ func handleAPIKey(c *routing.Context, apiKey string) (auth.Identity, error) {
 	if err != nil {
 		return nil, defaultErrors.New("Invalid API Key")
 	}
+	ctx := WithUser(
+		c.Request.Context(),
+		user.ID,
+		user.Email,
+	)
+	c.Request = c.Request.WithContext(ctx)
+
 	return user, nil
 }
 
@@ -74,7 +81,7 @@ func MockAuthHandler(c *routing.Context) error {
 	if c.Request.Header.Get("Authorization") != "TEST" {
 		return errors.Unauthorized("")
 	}
-	ctx := WithUser(c.Request.Context(), "100", "Tester")
+	ctx := WithUser(c.Request.Context(), "100", "test@test.io")
 	c.Request = c.Request.WithContext(ctx)
 	return nil
 }
@@ -83,5 +90,6 @@ func MockAuthHandler(c *routing.Context) error {
 func MockAuthHeader() http.Header {
 	header := http.Header{}
 	header.Add("Authorization", "TEST")
+	header.Add("X-Forwarded-For", "8.8.8.8")
 	return header
 }

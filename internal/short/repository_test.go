@@ -1,4 +1,4 @@
-package album
+package short
 
 import (
 	"context"
@@ -15,7 +15,7 @@ import (
 func TestRepository(t *testing.T) {
 	logger, _ := log.NewForTest()
 	db := test.DB(t)
-	test.ResetTables(t, db, "album")
+	test.ResetTables(t, db, "shorts")
 	repo := NewRepository(db, logger)
 
 	ctx := context.Background()
@@ -25,38 +25,41 @@ func TestRepository(t *testing.T) {
 	assert.Nil(t, err)
 
 	// create
-	err = repo.Create(ctx, entity.Album{
-		ID:        "test1",
-		Name:      "album1",
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+	err = repo.Create(ctx, entity.Short{
+		Code:        "test1",
+		OriginalURL: "http://test.com",
+		Visits:      0,
+		UserID:      "100",
+		CreatorIP:   "127.0.0.1",
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	})
 	assert.Nil(t, err)
 	count2, _ := repo.Count(ctx)
 	assert.Equal(t, 1, count2-count)
 
 	// get
-	album, err := repo.Get(ctx, "test1")
+	short, err := repo.Get(ctx, "test1")
 	assert.Nil(t, err)
-	assert.Equal(t, "album1", album.Name)
+	assert.Equal(t, "http://test.com", short.OriginalURL)
 	_, err = repo.Get(ctx, "test0")
 	assert.Equal(t, sql.ErrNoRows, err)
 
 	// update
-	err = repo.Update(ctx, entity.Album{
-		ID:        "test1",
-		Name:      "album1 updated",
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+	err = repo.Update(ctx, entity.Short{
+		Code:        "test1 updated",
+		OriginalURL: "http://test.com updated",
+		Visits:      0,
+		UpdatedAt:   time.Now(),
 	})
 	assert.Nil(t, err)
-	album, _ = repo.Get(ctx, "test1")
-	assert.Equal(t, "album1 updated", album.Name)
+	short, _ = repo.Get(ctx, "test1")
+	assert.Equal(t, "http://test.com", short.OriginalURL)
 
 	// query
-	albums, err := repo.Query(ctx, 0, count2)
+	shorts, err := repo.Query(ctx, 0, count2)
 	assert.Nil(t, err)
-	assert.Equal(t, count2, len(albums))
+	assert.Equal(t, count2, len(shorts))
 
 	// delete
 	err = repo.Delete(ctx, "test1")
