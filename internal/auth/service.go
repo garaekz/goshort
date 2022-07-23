@@ -44,7 +44,7 @@ func (s service) Login(ctx context.Context, email, password string) (string, err
 	if identity := s.authenticate(ctx, email, password); identity != nil {
 		return s.generateJWT(identity)
 	}
-	return "", errors.Unauthorized("")
+	return "", errors.Unauthorized("Login failed, please check your credentials")
 }
 
 // authenticate authenticates a user using username and password.
@@ -65,11 +65,11 @@ func (s service) authenticate(ctx context.Context, email, password string) Ident
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		logger.Infof("authentication failed")
+		logger.Infof("Authentication failed")
 		return nil
 	}
 
-	logger.Infof("authentication successful")
+	logger.Infof("Authentication successful")
 	return entity.User{ID: user.GetID(), Email: user.GetEmail()}
 }
 

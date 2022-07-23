@@ -22,3 +22,5 @@ testdata/postgres
 
 # PID file generated to support live reload
 .pid
+
+.vscode/

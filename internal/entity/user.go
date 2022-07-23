@@ -4,12 +4,17 @@ import "time"
 
 // User represents a user.
 type User struct {
-	ID        string     `json:"id" db:"id"`
+	ID        string     `json:"id" db:"pk,id"`
 	Email     string     `json:"email" db:"email"`
 	Password  string     `json:"-" db:"password"`
 	CreatedAt time.Time  `json:"created_at" db:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at" db:"updated_at"`
 	IsActive  bool       `json:"is_active" db:"is_active"`
+}
+
+// TableName represents the table name
+func (s User) TableName() string {
+	return "users"
 }
 
 // GetID returns the user ID.

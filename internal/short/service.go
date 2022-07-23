@@ -77,7 +77,7 @@ func (s service) Get(ctx context.Context, code string) (Short, error) {
 	if err != nil {
 		return Short{}, err
 	}
-	return Short{parseShortResponse(short)}, nil
+	return Short{ParseShortResponse(short)}, nil
 }
 
 // GetCreated returns a recently created short with the specified the short ID.
@@ -86,7 +86,7 @@ func (s service) GetCreated(ctx context.Context, code string) (Short, error) {
 	if err != nil {
 		return Short{}, err
 	}
-	return Short{parseShortResponse(short)}, nil
+	return Short{ParseShortResponse(short)}, nil
 }
 
 // Create creates a new short.
@@ -113,8 +113,8 @@ func (s service) Create(ctx context.Context, req CreateShortRequest) (Short, err
 		}
 	}
 	// If it's already on the DB we just return that
-	if (Short{parseShortResponse(short)}) != (Short{}) {
-		return Short{parseShortResponse(short)}, nil
+	if (Short{ParseShortResponse(short)}) != (Short{}) {
+		return Short{ParseShortResponse(short)}, nil
 	}
 
 	code, err := s.repo.GenerateUniqueCode(ctx)
@@ -160,7 +160,7 @@ func (s service) Update(ctx context.Context, id string, req UpdateShortRequest) 
 	if err := s.repo.Update(ctx, short); err != nil {
 		return Short{}, err
 	}
-	return Short{parseShortResponse(short)}, nil
+	return Short{ParseShortResponse(short)}, nil
 }
 
 // Delete deletes the short with the specified ID.
@@ -188,7 +188,7 @@ func (s service) Query(ctx context.Context, offset, limit int) ([]Short, error) 
 	}
 	result := []Short{}
 	for _, item := range items {
-		result = append(result, Short{parseShortResponse(item)})
+		result = append(result, Short{ParseShortResponse(item)})
 	}
 	return result, nil
 }
@@ -204,10 +204,11 @@ func (s service) RegisterVisit(ctx context.Context, code string) (Short, error) 
 	if err := s.repo.Update(ctx, short); err != nil {
 		return Short{}, err
 	}
-	return Short{parseShortResponse(short)}, nil
+	return Short{ParseShortResponse(short)}, nil
 }
 
-func parseShortResponse(original entity.Short) ShortResponse {
+// ParseShortResponse parses a Short entity into a secure response.
+func ParseShortResponse(original entity.Short) ShortResponse {
 	return ShortResponse{
 		Code:        original.Code,
 		OriginalURL: original.OriginalURL,

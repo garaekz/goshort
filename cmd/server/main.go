@@ -13,6 +13,7 @@ import (
 	"github.com/garaekz/goshort/internal/config"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/internal/healthcheck"
+	"github.com/garaekz/goshort/internal/my"
 	"github.com/garaekz/goshort/internal/short"
 	"github.com/garaekz/goshort/pkg/accesslog"
 	"github.com/garaekz/goshort/pkg/dbcontext"
@@ -92,6 +93,11 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 	auth.RegisterHandlers(rg.Group(""),
 		auth.NewService(auth.NewRepository(db, logger), cfg.JWTSigningKey, cfg.JWTExpiration, logger),
 		logger,
+	)
+
+	my.RegisterHandlers(rg.Group(""),
+		my.NewService(my.NewRepository(db, logger), logger),
+		authHandler, logger,
 	)
 
 	short.RegisterHandlers(rg.Group(""),
