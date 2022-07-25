@@ -1,4 +1,4 @@
-package short
+package apikey
 
 import (
 	"context"
@@ -16,7 +16,7 @@ import (
 func TestRepository(t *testing.T) {
 	logger, _ := log.NewForTest()
 	db := test.DB(t)
-	test.ResetTables(t, db, "shorts")
+	test.ResetTables(t, db, "keys")
 	repo := NewRepository(db, logger)
 	authRepo := auth.NewRepository(db, logger)
 
@@ -34,48 +34,36 @@ func TestRepository(t *testing.T) {
 	count, err := repo.Count(ctx)
 	assert.Nil(t, err)
 
+	// initial count by user
+	countByOwner, err := repo.CountByOwner(ctx, "100")
+	assert.Nil(t, err)
+
 	// create
-	err = repo.Create(ctx, entity.Short{
-		Code:        "test1",
-		OriginalURL: "http://test.com",
-		Visits:      0,
-		UserID:      "100",
-		CreatorIP:   "127.0.0.1",
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+	err = repo.Create(ctx, entity.APIKey{
+		Key:       "ReallyLongAndSecretKey",
+		UserID:    "100",
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	})
 	assert.Nil(t, err)
 	count2, _ := repo.Count(ctx)
 	assert.Equal(t, 1, count2-count)
 
+	countByOwner2, _ := repo.CountByOwner(ctx, "100")
+	assert.Equal(t, 1, countByOwner2-countByOwner)
+
 	// get
-	short, err := repo.Get(ctx, "test1")
+	apiKey, err := repo.Get(ctx, "ReallyLongAndSecretKey")
 	assert.Nil(t, err)
-	assert.Equal(t, "http://test.com", short.OriginalURL)
+	assert.Equal(t, "ReallyLongAndSecretKey", apiKey.Key)
 	_, err = repo.Get(ctx, "test0")
 	assert.Equal(t, sql.ErrNoRows, err)
 
-	// update
-	err = repo.Update(ctx, entity.Short{
-		Code:        "test1 updated",
-		OriginalURL: "http://test.com updated",
-		Visits:      0,
-		UpdatedAt:   time.Now(),
-	})
-	assert.Nil(t, err)
-	short, _ = repo.Get(ctx, "test1")
-	assert.Equal(t, "http://test.com", short.OriginalURL)
-
-	// query
-	shorts, err := repo.Query(ctx, 0, count2)
-	assert.Nil(t, err)
-	assert.Equal(t, count2, len(shorts))
-
 	// delete
-	err = repo.Delete(ctx, "test1")
+	err = repo.Delete(ctx, "ReallyLongAndSecretKey")
 	assert.Nil(t, err)
-	_, err = repo.Get(ctx, "test1")
+	_, err = repo.Get(ctx, "ReallyLongAndSecretKey")
 	assert.Equal(t, sql.ErrNoRows, err)
-	err = repo.Delete(ctx, "test1")
+	err = repo.Delete(ctx, "ReallyLongAndSecretKey")
 	assert.Equal(t, sql.ErrNoRows, err)
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/pkg/log"
+	"github.com/garaekz/goshort/pkg/utils"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
 
@@ -99,7 +100,7 @@ func (s service) Create(ctx context.Context, req CreateShortRequest) (Short, err
 	userID := identity.GetID()
 
 	// Making sure the URL is in a good format
-	URL, err := FormatURL(req.URL)
+	URL, err := utils.FormatURL(req.URL)
 	if err != nil {
 		return Short{}, errors.New("URL is not in a valid format")
 	}
@@ -132,6 +133,7 @@ func (s service) Create(ctx context.Context, req CreateShortRequest) (Short, err
 		CreatedAt:   now,
 		UpdatedAt:   now,
 	})
+
 	if err != nil {
 		return Short{}, err
 	}
@@ -150,7 +152,7 @@ func (s service) Update(ctx context.Context, id string, req UpdateShortRequest) 
 		return Short{}, err
 	}
 
-	URL, err := FormatURL(req.URL)
+	URL, err := utils.FormatURL(req.URL)
 	if err != nil {
 		return Short{}, errors.New("URL is not in a valid format")
 	}
@@ -169,9 +171,11 @@ func (s service) Delete(ctx context.Context, id string) (Short, error) {
 	if err != nil {
 		return Short{}, err
 	}
+
 	if err = s.repo.Delete(ctx, id); err != nil {
 		return Short{}, err
 	}
+
 	return short, nil
 }
 

@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// Short represents an album record.
+// Short represents a shor url record.
 type Short struct {
 	Code        string     `db:"pk,code"`
 	OriginalURL string     `db:"original_url"`

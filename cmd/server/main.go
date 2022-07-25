@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/garaekz/goshort/internal/apikey"
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/config"
 	"github.com/garaekz/goshort/internal/errors"
@@ -56,11 +57,19 @@ func main() {
 		}
 	}()
 
+	dbcontext := dbcontext.New(db)
+
+	err = cfg.GetConfigFromDB(dbcontext, logger)
+	if err != nil {
+		logger.Errorf("failed to load aditional dynamic configuration: %s", err)
+		os.Exit(-1)
+	}
+
 	// build HTTP server
 	address := fmt.Sprintf(":%v", cfg.ServerPort)
 	hs := &http.Server{
 		Addr:    address,
-		Handler: buildHandler(logger, dbcontext.New(db), cfg),
+		Handler: buildHandler(logger, dbcontext, cfg),
 	}
 
 	// start the HTTP server with graceful shutdown
@@ -95,8 +104,15 @@ func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.
 		logger,
 	)
 
+	apikey.RegisterHandlers(rg.Group(""),
+		apikey.NewService(apikey.NewRepository(db, logger), logger, cfg.MaxAPIKeysPerUser),
+		authHandler, logger,
+	)
+
 	my.RegisterHandlers(rg.Group(""),
 		my.NewService(my.NewRepository(db, logger), logger),
+		apikey.NewService(apikey.NewRepository(db, logger), logger, cfg.MaxAPIKeysPerUser),
+		short.NewService(short.NewRepository(db, logger), logger),
 		authHandler, logger,
 	)
 

@@ -1,4 +1,4 @@
-package short
+package utils
 
 import (
 	"crypto/rand"
@@ -35,8 +35,8 @@ func FormatURL(URL string) (string, error) {
 	return URL, nil
 }
 
-// RandomCode generates a random code
-func RandomCode(length int, chars []byte) (string, error) {
+// RandomString generates a random code
+func RandomString(length int, chars []byte) (string, error) {
 	if length == 0 {
 		return "", errors.New("uniuri: length must be a positive integer")
 	}

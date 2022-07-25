@@ -127,7 +127,9 @@ func Test_service_CRUD(t *testing.T) {
 }
 
 type mockRepository struct {
-	items []entity.Short
+	user    entity.User
+	apiKeys []entity.APIKey
+	shorts  []entity.Short
 }
 
 func (m mockRepository) Get(ctx context.Context, code string) (entity.Short, error) {

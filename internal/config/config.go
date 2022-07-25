@@ -1,8 +1,11 @@
 package config
 
 import (
+	"context"
 	"io/ioutil"
+	"strconv"
 
+	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/qiangxue/go-env"
@@ -24,6 +27,8 @@ type Config struct {
 	JWTSigningKey string `yaml:"jwt_signing_key" env:"JWT_SIGNING_KEY,secret"`
 	// JWT expiration in hours. Defaults to 72 hours (3 days)
 	JWTExpiration int `yaml:"jwt_expiration" env:"JWT_EXPIRATION"`
+	// MaxAPIKeysPerUser is the maximum number of API keys per user. Defaults to 1.
+	MaxAPIKeysPerUser int `yaml:"max_api_keys_per_user" env:"MAX_API_KEYS_PER_USER" db:"default_api_keys_quantity"`
 }
 
 // Validate validates the application configuration.
@@ -62,4 +67,29 @@ func Load(file string, logger log.Logger) (*Config, error) {
 	}
 
 	return &c, err
+}
+
+func (c *Config) GetConfigFromDB(db *dbcontext.DB, logger log.Logger) error {
+	var config []struct {
+		Name  string `db:"name"`
+		Value string `db:"value"`
+	}
+
+	err := db.With(context.Background()).Select().From("configs").All(&config)
+	if err != nil {
+		return err
+	}
+
+	for _, cfg := range config {
+		switch cfg.Name {
+		case "default_api_keys_quantity":
+			val, err := strconv.Atoi(cfg.Value)
+			if err != nil {
+				return err
+			}
+			c.MaxAPIKeysPerUser = val
+		}
+	}
+
+	return nil
 }

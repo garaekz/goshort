@@ -9,12 +9,14 @@ import (
 	dbx "github.com/go-ozzo/ozzo-dbx"
 )
 
-// Repository encapsulates the logic to access albums from the data source.
+// Repository encapsulates the logic to access info from the data source.
 type Repository interface {
 	// GetUserByEmail passes the email to the database and returns the user
 	GetUserByEmail(ctx context.Context, email string) (entity.User, error)
 	// GetUserByAPIKey passes the api key to the database and returns the user
 	GetUserByAPIKey(ctx context.Context, apiKey string) (entity.User, error)
+	// Register saves a new user in the database.
+	Register(ctx context.Context, user entity.User) error
 }
 
 // repository persists users in database
@@ -23,7 +25,7 @@ type repository struct {
 	logger log.Logger
 }
 
-// NewRepository creates a new album repository
+// NewRepository creates a new auth repository
 func NewRepository(db *dbcontext.DB, logger log.Logger) Repository {
 	return repository{db, logger}
 }
@@ -39,6 +41,7 @@ func (r repository) GetUserByEmail(ctx context.Context, email string) (entity.Us
 	return user, nil
 }
 
+// GetUserByAPIKey passes the api key to the database and returns the user
 func (r repository) GetUserByAPIKey(ctx context.Context, apiKey string) (entity.User, error) {
 	var user entity.User
 	err := r.db.With(ctx).
@@ -53,4 +56,9 @@ func (r repository) GetUserByAPIKey(ctx context.Context, apiKey string) (entity.
 	}
 
 	return user, nil
+}
+
+// Register saves a new user in the database.
+func (r repository) Register(ctx context.Context, user entity.User) error {
+	return r.db.With(ctx).Model(&user).Insert()
 }

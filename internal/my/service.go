@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/garaekz/goshort/internal/apikey"
 	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/short"
 	"github.com/garaekz/goshort/pkg/log"
@@ -11,7 +12,7 @@ import (
 
 // Service encapsulates usecase logic for shorts.
 type Service interface {
-	GetMyUser(ctx context.Context) (struct{ User }, error)
+	GetMyUser(ctx context.Context) (UserResponse, error)
 	GetMyShorts(ctx context.Context) ([]Short, error)
 }
 
@@ -25,35 +26,38 @@ func NewService(repo Repository, logger log.Logger) Service {
 	return service{repo, logger}
 }
 
-// Short represents the data about an short.
-type User struct {
-	ID        string    `json:"id"`
-	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"`
+// UserResponse represents the returned data from the user.
+type UserResponse struct {
+	ID        string           `json:"id"`
+	Email     string           `json:"email"`
+	CreatedAt time.Time        `json:"created_at"`
+	Keys      *[]apikey.APIKey `json:"keys"`
 }
 
+// Short represents the returned data from the short.
 type Short struct {
 	short.ShortResponse
 }
 
 // Get returns the short with provided code.
-func (s service) GetMyUser(ctx context.Context) (struct{ User }, error) {
+func (s service) GetMyUser(ctx context.Context) (UserResponse, error) {
 	identity := auth.CurrentUser(ctx)
-	id := identity.GetID()
+	userID := identity.GetID()
 
-	res, err := s.repo.Get(ctx, id)
-	user := User{
+	res, err := s.repo.Get(ctx, userID)
+	user := UserResponse{
 		ID:        res.ID,
 		Email:     res.Email,
 		CreatedAt: res.CreatedAt,
 	}
 
 	if err != nil {
-		return struct{ User }{}, err
+		return user, err
 	}
-	return struct{ User }{user}, nil
+	return user, nil
 }
 
+// GetMyShorts returns the shorts owned by the user.
 func (s service) GetMyShorts(ctx context.Context) ([]Short, error) {
 	identity := auth.CurrentUser(ctx)
 	id := identity.GetID()

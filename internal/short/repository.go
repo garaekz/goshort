@@ -6,6 +6,7 @@ import (
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
+	"github.com/garaekz/goshort/pkg/utils"
 	dbx "github.com/go-ozzo/ozzo-dbx"
 )
 
@@ -111,7 +112,7 @@ func (r repository) GenerateUniqueCode(ctx context.Context) (string, error) {
 	i := 0
 
 	for {
-		code, err := RandomCode(n, StdChars)
+		code, err := utils.RandomString(n, StdChars)
 		if err != nil {
 			return "", err
 		}

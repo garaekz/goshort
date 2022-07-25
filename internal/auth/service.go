@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	defaultErrors "errors"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -16,6 +17,8 @@ type Service interface {
 	// authenticate authenticates a user using username and password.
 	// It returns a JWT token if authentication succeeds. Otherwise, an error is returned.
 	Login(ctx context.Context, email, password string) (string, error)
+	// Register creates a new user and authenticates it.
+	Register(ctx context.Context, email, password string) (string, error)
 }
 
 // Identity represents an authenticated user identity.
@@ -38,6 +41,8 @@ func NewService(repo Repository, signingKey string, tokenExpiration int, logger 
 	return service{repo, signingKey, tokenExpiration, logger}
 }
 
+var errRegister = defaultErrors.New(`pq: duplicate key value violates unique constraint "users_email_key"`)
+
 // Login authenticates a user and generates a JWT token if authentication succeeds.
 // Otherwise, an error is returned.
 func (s service) Login(ctx context.Context, email, password string) (string, error) {
@@ -47,8 +52,32 @@ func (s service) Login(ctx context.Context, email, password string) (string, err
 	return "", errors.Unauthorized("Login failed, please check your credentials")
 }
 
-// authenticate authenticates a user using username and password.
-// If username and password are correct, an identity is returned. Otherwise, nil is returned.
+// Register creates a new user and authenticates it.
+func (s service) Register(ctx context.Context, email, password string) (string, error) {
+	userData := entity.User{
+		ID:        entity.GenerateID(),
+		Email:     email,
+		Password:  password,
+		IsActive:  true,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+
+	err := s.repo.Register(ctx, userData)
+	if err != nil {
+		if err.Error() == errRegister.Error() {
+			return "", errors.UserAlreadyExists("The user you're trying to register already exists")
+		}
+		return "", err
+	}
+
+	return s.generateJWT(userData)
+}
+
+/*
+Method authenticate validate a user using username and password.
+If username and password are correct, an identity is returned. Otherwise, nil is returned.
+*/
 func (s service) authenticate(ctx context.Context, email, password string) Identity {
 	logger := s.logger.With(ctx, "email", email)
 

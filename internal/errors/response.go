@@ -1,9 +1,10 @@
 package errors
 
 import (
-	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"net/http"
 	"sort"
+
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
 
 // ErrorResponse is the response that represents an error.
@@ -56,6 +57,16 @@ func Unauthorized(msg string) ErrorResponse {
 	}
 }
 
+func UserAlreadyExists(msg string) ErrorResponse {
+	if msg == "" {
+		msg = "The user already exists."
+	}
+	return ErrorResponse{
+		Status:  http.StatusBadRequest,
+		Message: msg,
+	}
+}
+
 // Forbidden creates a new error response representing an authorization failure (HTTP 403)
 func Forbidden(msg string) ErrorResponse {
 	if msg == "" {
@@ -102,5 +113,16 @@ func InvalidInput(errs validation.Errors) ErrorResponse {
 		Status:  http.StatusBadRequest,
 		Message: "There is some problem with the data you submitted.",
 		Details: details,
+	}
+}
+
+// MaxApiKeys creates a new error response representing not allowing to create more API keys (HTTP 403)
+func MaxApiKeys(msg string) ErrorResponse {
+	if msg == "" {
+		msg = "You are not authorized to perform the requested action anymore."
+	}
+	return ErrorResponse{
+		Status:  http.StatusForbidden,
+		Message: msg,
 	}
 }
