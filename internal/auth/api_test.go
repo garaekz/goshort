@@ -19,6 +19,13 @@ func (m mockService) Login(ctx context.Context, email, password string) (string,
 	return "", errors.Unauthorized("")
 }
 
+func (m mockService) Register(ctx context.Context, email, password string) (string, error) {
+	if email == "test@test.io" && password == "pass" {
+		return "token-100", nil
+	}
+	return "", errors.Unauthorized("")
+}
+
 func TestAPI(t *testing.T) {
 	logger, _ := log.NewForTest()
 	router := test.MockRouter(logger)

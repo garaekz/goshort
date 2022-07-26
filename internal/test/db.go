@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"path"
 	"runtime"
 	"testing"
@@ -39,11 +40,30 @@ func DB(t *testing.T) *dbcontext.DB {
 // ResetTables truncates all data in the specified tables.
 func ResetTables(t *testing.T, db *dbcontext.DB, tables ...string) {
 	for _, table := range tables {
-		_, err := db.DB().TruncateTable(table).Execute()
-		if err != nil {
-			t.Error(err)
-			t.FailNow()
-		}
+		// _, err := db.DB().TruncateTable(table).Execute()
+		// if err != nil {
+		// 	t.Error(err)
+		// 	t.FailNow()
+		// }
+		// TODO: implement truncate table when it has constraint
+		_ = db.DB().Transactional(func(tx *dbx.Tx) error {
+			var err error
+			sql := fmt.Sprintf("ALTER TABLE %v DISABLE TRIGGER ALL", db.DB().QuoteTableName(table))
+			_, err = tx.NewQuery(sql).Execute()
+			if err != nil {
+				return err
+			}
+			_, err = tx.TruncateTable(table).Execute()
+			if err != nil {
+				return err
+			}
+			sql = fmt.Sprintf("ALTER TABLE %v ENABLE TRIGGER ALL", db.DB().QuoteTableName(table))
+			_, err = tx.NewQuery(sql).Execute()
+			if err != nil {
+				return err
+			}
+			return err
+		})
 	}
 }
 

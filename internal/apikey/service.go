@@ -2,9 +2,9 @@ package apikey
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
-	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/entity"
 	customErrors "github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/log"
@@ -16,9 +16,9 @@ type Service interface {
 	Get(ctx context.Context, id string) (APIKey, error)
 	GetOwned(ctx context.Context, userID string) ([]APIKey, error)
 	Count(ctx context.Context) (int, error)
-	Create(ctx context.Context) (APIKey, error)
+	Create(ctx context.Context, UserID string) (APIKey, error)
 	Delete(ctx context.Context, id string) (APIKey, error)
-	GenerateUniqueKey(ctx context.Context, userID string) (string, error)
+	GenerateUniqueKey(ctx context.Context) (string, error)
 }
 
 // APIKey represents the data about an API Key.
@@ -67,11 +67,7 @@ func (s service) GetOwned(ctx context.Context, userID string) ([]APIKey, error) 
 }
 
 // Create creates a new apiKey.
-func (s service) Create(ctx context.Context) (APIKey, error) {
-
-	identity := auth.CurrentUser(ctx)
-	userID := identity.GetID()
-
+func (s service) Create(ctx context.Context, userID string) (APIKey, error) {
 	count, err := s.repo.CountByOwner(ctx, userID)
 	if err != nil {
 		return APIKey{}, err
@@ -81,7 +77,7 @@ func (s service) Create(ctx context.Context) (APIKey, error) {
 		return APIKey{}, customErrors.MaxApiKeys("You have reached the maximum number of API Keys allowed.")
 	}
 
-	key, err := s.GenerateUniqueKey(ctx, userID)
+	key, err := s.GenerateUniqueKey(ctx)
 	if err != nil {
 		return APIKey{}, err
 	}
@@ -120,7 +116,7 @@ func (s service) Count(ctx context.Context) (int, error) {
 }
 
 // GenerateUniqueKey generates a unique string.
-func (s service) GenerateUniqueKey(ctx context.Context, userID string) (string, error) {
+func (s service) GenerateUniqueKey(ctx context.Context) (string, error) {
 	n := 64
 	i := 0
 
@@ -132,7 +128,7 @@ func (s service) GenerateUniqueKey(ctx context.Context, userID string) (string, 
 
 		_, err = s.repo.Get(ctx, apiKey)
 		if err != nil {
-			if err.Error() == "sql: no rows in result set" {
+			if err == sql.ErrNoRows {
 				return apiKey, nil
 			}
 			return "", err

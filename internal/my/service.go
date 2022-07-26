@@ -13,7 +13,6 @@ import (
 // Service encapsulates usecase logic for shorts.
 type Service interface {
 	GetMyUser(ctx context.Context) (UserResponse, error)
-	GetMyShorts(ctx context.Context) ([]Short, error)
 }
 
 type service struct {
@@ -45,26 +44,15 @@ func (s service) GetMyUser(ctx context.Context) (UserResponse, error) {
 	userID := identity.GetID()
 
 	res, err := s.repo.Get(ctx, userID)
+	if err != nil {
+		return UserResponse{}, err
+	}
+
 	user := UserResponse{
 		ID:        res.ID,
 		Email:     res.Email,
 		CreatedAt: res.CreatedAt,
 	}
 
-	if err != nil {
-		return user, err
-	}
 	return user, nil
-}
-
-// GetMyShorts returns the shorts owned by the user.
-func (s service) GetMyShorts(ctx context.Context) ([]Short, error) {
-	identity := auth.CurrentUser(ctx)
-	id := identity.GetID()
-
-	res, err := s.repo.GetShortsByOwner(ctx, id)
-	if err != nil {
-		return []Short{}, err
-	}
-	return res, nil
 }

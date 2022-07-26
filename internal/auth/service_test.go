@@ -24,7 +24,7 @@ func Test_service_Authenticate(t *testing.T) {
 	logger, _ := log.NewForTest()
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: nil, IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string
@@ -36,7 +36,7 @@ func Test_service_Authenticate(t *testing.T) {
 	}
 	s := NewService(repo, "test", 100, logger)
 	_, err := s.Login(context.Background(), "unknown", "bad")
-	assert.Equal(t, errors.Unauthorized(""), err)
+	assert.Equal(t, errors.Unauthorized("Login failed, please check your credentials"), err)
 	token, err := s.Login(context.Background(), "test@test.io", "pass")
 	assert.Nil(t, err)
 	assert.NotEmpty(t, token)
@@ -46,7 +46,7 @@ func Test_service_authenticate(t *testing.T) {
 	logger, _ := log.NewForTest()
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: nil, IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string
@@ -65,7 +65,7 @@ func Test_service_GenerateJWT(t *testing.T) {
 	logger, _ := log.NewForTest()
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: nil, IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string
@@ -107,4 +107,12 @@ func (m mockRepository) GetUserByAPIKey(ctx context.Context, apiKey string) (ent
 		}
 	}
 	return entity.User{}, sql.ErrNoRows
+}
+
+func (m mockRepository) Register(ctx context.Context, user entity.User) error {
+	if user.ID == "error" {
+		return errors.Unauthorized("")
+	}
+	m.items = append(m.items, user)
+	return nil
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/pkg/log"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 )
@@ -32,7 +33,9 @@ func (r resource) get(c *routing.Context) error {
 }
 
 func (r resource) create(c *routing.Context) error {
-	apikeys, err := r.service.Create(c.Request.Context())
+	identity := auth.CurrentUser(c.Request.Context())
+	userID := identity.GetID()
+	apikeys, err := r.service.Create(c.Request.Context(), userID)
 	if err != nil {
 		fmt.Println(err)
 		return err

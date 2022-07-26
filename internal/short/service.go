@@ -2,6 +2,8 @@ package short
 
 import (
 	"context"
+	"database/sql"
+	"encoding/json"
 	"errors"
 	"time"
 
@@ -15,6 +17,7 @@ import (
 // Service encapsulates usecase logic for shorts.
 type Service interface {
 	Get(ctx context.Context, id string) (Short, error)
+	GetOwned(ctx context.Context, userID string) ([]Short, error)
 	Query(ctx context.Context, offset, limit int) ([]Short, error)
 	Count(ctx context.Context) (int, error)
 	Create(ctx context.Context, input CreateShortRequest) (Short, error)
@@ -81,6 +84,22 @@ func (s service) Get(ctx context.Context, code string) (Short, error) {
 	return Short{ParseShortResponse(short)}, nil
 }
 
+// GetOwned returns owned apiKeys.
+func (s service) GetOwned(ctx context.Context, userID string) ([]Short, error) {
+	short, err := s.repo.GetOwned(ctx, userID)
+	if err != nil {
+		return []Short{}, err
+	}
+	tmpShorts, err := json.Marshal(short)
+	if err != nil {
+		return []Short{}, err
+	}
+	var shorts []Short
+	err = json.Unmarshal(tmpShorts, &shorts)
+
+	return shorts, nil
+}
+
 // GetCreated returns a recently created short with the specified the short ID.
 func (s service) GetCreated(ctx context.Context, code string) (Short, error) {
 	short, err := s.repo.Get(ctx, code)
@@ -109,7 +128,7 @@ func (s service) Create(ctx context.Context, req CreateShortRequest) (Short, err
 	short, err := s.repo.GetByOriginalURL(ctx, URL, userID)
 
 	if err != nil {
-		if err.Error() != "sql: no rows in result set" {
+		if err != sql.ErrNoRows {
 			return Short{}, err
 		}
 	}

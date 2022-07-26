@@ -1,9 +1,11 @@
 package my
 
 import (
+	"database/sql"
 	"net/http"
 
 	"github.com/garaekz/goshort/internal/apikey"
+	"github.com/garaekz/goshort/internal/auth"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/internal/short"
 	"github.com/garaekz/goshort/pkg/log"
@@ -33,8 +35,10 @@ func (r resource) me(c *routing.Context) error {
 	if err != nil {
 		return err
 	}
+
 	keys, err := r.apikeyService.GetOwned(c.Request.Context(), me.ID)
-	if err != nil {
+
+	if err != nil && err != sql.ErrNoRows {
 		return err
 	}
 	me.Keys = &keys
@@ -43,7 +47,9 @@ func (r resource) me(c *routing.Context) error {
 }
 
 func (r resource) shorts(c *routing.Context) error {
-	me, err := r.service.GetMyShorts(c.Request.Context())
+	identity := auth.CurrentUser(c.Request.Context())
+	userID := identity.GetID()
+	me, err := r.shortService.GetOwned(c.Request.Context(), userID)
 	if err != nil {
 		return err
 	}

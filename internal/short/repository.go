@@ -2,6 +2,7 @@ package short
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/pkg/dbcontext"
@@ -14,6 +15,8 @@ import (
 type Repository interface {
 	// Get returns the short with the specified short ID.
 	Get(ctx context.Context, id string) (entity.Short, error)
+	// GetOwned returns the short with the specified user ID.
+	GetOwned(ctx context.Context, userID string) ([]entity.Short, error)
 	// Count returns the number of shorts.
 	Count(ctx context.Context) (int, error)
 	// Query returns the list of shorts with the given offset and limit.
@@ -52,6 +55,13 @@ func (r repository) Get(ctx context.Context, code string) (entity.Short, error) 
 	var short entity.Short
 	err := r.db.With(ctx).Select().Model(code, &short)
 	return short, err
+}
+
+// GetOwned reads the short with the specified user ID from the database.
+func (r repository) GetOwned(ctx context.Context, userID string) ([]entity.Short, error) {
+	var shorts []entity.Short
+	err := r.db.With(ctx).Select().From("shorts").Where(dbx.HashExp{"user_id": userID}).All(&shorts)
+	return shorts, err
 }
 
 // Create saves a new short record in the database.
@@ -119,7 +129,7 @@ func (r repository) GenerateUniqueCode(ctx context.Context) (string, error) {
 
 		_, err = r.Get(ctx, code)
 		if err != nil {
-			if err.Error() == "sql: no rows in result set" {
+			if err == sql.ErrNoRows {
 				return code, nil
 			}
 			return "", err

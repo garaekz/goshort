@@ -27,11 +27,17 @@ func Test_service_CRUD(t *testing.T) {
 	assert.Equal(t, 0, count)
 
 	// successful creation
-	apikey, err := s.Create(c)
+	apikey, err := s.Create(c, "100")
 	assert.Nil(t, err)
 	assert.NotEmpty(t, apikey.Key)
 	key := apikey.Key
 	assert.NotEmpty(t, apikey.CreatedAt)
+	count, _ = s.Count(c)
+	assert.Equal(t, 1, count)
+
+	// unexpected error in creation
+	_, err = s.Create(c, "error")
+	assert.Equal(t, errCRUD, err)
 	count, _ = s.Count(c)
 	assert.Equal(t, 1, count)
 
@@ -49,8 +55,7 @@ func Test_service_CRUD(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, key, apiKey.Key)
 	count, _ = s.Count(ctx)
-	fmt.Printf("Count: %+v\n", count)
-	assert.Equal(t, 1, count)
+	assert.Equal(t, 0, count)
 }
 
 type mockRepository struct {
@@ -58,11 +63,18 @@ type mockRepository struct {
 }
 
 func (m mockRepository) Get(ctx context.Context, key string) (entity.APIKey, error) {
+	fmt.Printf("Key: %+v\n", key)
+	if key == "error" || key == "none" {
+		return entity.APIKey{}, sql.ErrNoRows
+	}
+
 	for _, item := range m.items {
 		if item.Key == key {
 			return item, nil
 		}
 	}
+
+	fmt.Printf("Items: %+v\n", m.items)
 	return entity.APIKey{}, sql.ErrNoRows
 }
 
@@ -98,7 +110,7 @@ func (m mockRepository) CountByOwner(ctx context.Context, userID string) (int, e
 }
 
 func (m *mockRepository) Create(ctx context.Context, apiKey entity.APIKey) error {
-	if apiKey.Key == "error" {
+	if apiKey.UserID == "error" {
 		return errCRUD
 	}
 	m.items = append(m.items, apiKey)

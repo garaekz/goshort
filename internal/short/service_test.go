@@ -139,6 +139,19 @@ func (m mockRepository) Get(ctx context.Context, code string) (entity.Short, err
 	return entity.Short{}, sql.ErrNoRows
 }
 
+func (m mockRepository) GetOwned(ctx context.Context, userID string) ([]entity.Short, error) {
+	var shorts []entity.Short
+	for _, item := range m.items {
+		if item.UserID == userID {
+			shorts = append(shorts, item)
+		}
+	}
+	if len(shorts) == 0 {
+		return nil, sql.ErrNoRows
+	}
+	return shorts, nil
+}
+
 func (m mockRepository) Count(ctx context.Context) (int, error) {
 	return len(m.items), nil
 }
