@@ -5,6 +5,7 @@ CREATE TABLE users
   password       VARCHAR NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT 'now()',
   updated_at TIMESTAMP NOT NULL,
+  email_verified BOOLEAN NOT NULL DEFAULT false,
   is_active BOOLEAN NOT NULL DEFAULT true
 );
 

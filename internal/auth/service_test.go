@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"testing"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/log"
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type mockRepository struct {
@@ -22,9 +24,10 @@ type mockRepository struct {
 
 func Test_service_Authenticate(t *testing.T) {
 	logger, _ := log.NewForTest()
+	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: fmt.Sprintf("%s", pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string
@@ -44,9 +47,10 @@ func Test_service_Authenticate(t *testing.T) {
 
 func Test_service_authenticate(t *testing.T) {
 	logger, _ := log.NewForTest()
+	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: fmt.Sprintf("%s", pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string
@@ -63,9 +67,10 @@ func Test_service_authenticate(t *testing.T) {
 
 func Test_service_GenerateJWT(t *testing.T) {
 	logger, _ := log.NewForTest()
+	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: "pass", CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: fmt.Sprintf("%s", pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string

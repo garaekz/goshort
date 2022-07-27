@@ -1,7 +1,6 @@
 package apikey
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/garaekz/goshort/internal/auth"
@@ -37,7 +36,6 @@ func (r resource) create(c *routing.Context) error {
 	userID := identity.GetID()
 	apikeys, err := r.service.Create(c.Request.Context(), userID)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 

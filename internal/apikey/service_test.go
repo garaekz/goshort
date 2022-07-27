@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"testing"
 
 	"github.com/garaekz/goshort/internal/auth"
@@ -63,7 +62,6 @@ type mockRepository struct {
 }
 
 func (m mockRepository) Get(ctx context.Context, key string) (entity.APIKey, error) {
-	fmt.Printf("Key: %+v\n", key)
 	if key == "error" || key == "none" {
 		return entity.APIKey{}, sql.ErrNoRows
 	}
@@ -74,7 +72,6 @@ func (m mockRepository) Get(ctx context.Context, key string) (entity.APIKey, err
 		}
 	}
 
-	fmt.Printf("Items: %+v\n", m.items)
 	return entity.APIKey{}, sql.ErrNoRows
 }
 

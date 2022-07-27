@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	defaultErrors "errors"
+	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -44,7 +45,6 @@ func NewService(repo Repository, signingKey string, tokenExpiration int, logger 
 var errRegister = defaultErrors.New(`pq: duplicate key value violates unique constraint "users_email_key"`)
 
 // Login authenticates a user and generates a JWT token if authentication succeeds.
-// Otherwise, an error is returned.
 func (s service) Login(ctx context.Context, email, password string) (string, error) {
 	if identity := s.authenticate(ctx, email, password); identity != nil {
 		return s.generateJWT(identity)
@@ -81,12 +81,6 @@ If username and password are correct, an identity is returned. Otherwise, nil is
 func (s service) authenticate(ctx context.Context, email, password string) Identity {
 	logger := s.logger.With(ctx, "email", email)
 
-	// This shall only work on test environment.
-	if s.signingKey == "test" && email == "test@test.io" && password == "pass" {
-		logger.Infof("authentication successful")
-		return entity.User{ID: "100", Email: "test@test.io"}
-	}
-
 	user, err := s.repo.GetUserByEmail(ctx, email)
 	if err != nil {
 		logger.Infof("User not found: Authentication failed")
@@ -95,6 +89,7 @@ func (s service) authenticate(ctx context.Context, email, password string) Ident
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		logger.Infof("Authentication failed")
+		fmt.Printf("%v\n", err)
 		return nil
 	}
 
