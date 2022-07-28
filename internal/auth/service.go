@@ -4,12 +4,14 @@ import (
 	"context"
 	defaultErrors "errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/log"
+	"github.com/garaekz/goshort/pkg/utils"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -19,7 +21,9 @@ type Service interface {
 	// It returns a JWT token if authentication succeeds. Otherwise, an error is returned.
 	Login(ctx context.Context, email, password string) (string, error)
 	// Register creates a new user and authenticates it.
-	Register(ctx context.Context, email, password string) (string, error)
+	Register(ctx context.Context, email, password string) error
+	// Verify verifies a user's email address.
+	Verify(ctx context.Context, id, expires, token string) error
 }
 
 // Identity represents an authenticated user identity.
@@ -35,6 +39,12 @@ type service struct {
 	signingKey      string
 	tokenExpiration int
 	logger          log.Logger
+}
+
+type VerifyRequest struct {
+	UserID    string
+	Token     string
+	ExpiresAt time.Time
 }
 
 // NewService creates a new authentication service.
@@ -53,25 +63,60 @@ func (s service) Login(ctx context.Context, email, password string) (string, err
 }
 
 // Register creates a new user and authenticates it.
-func (s service) Register(ctx context.Context, email, password string) (string, error) {
+func (s service) Register(ctx context.Context, email, password string) error {
+	var tokenChars = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-=")
+	token, err := utils.RandomString(64, tokenChars)
+	pass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	userData := entity.User{
-		ID:        entity.GenerateID(),
-		Email:     email,
-		Password:  password,
-		IsActive:  true,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		ID:            entity.GenerateID(),
+		Email:         email,
+		Password:      string(pass),
+		IsActive:      true,
+		EmailVerified: false,
+		CreatedAt:     time.Now(),
+		UpdatedAt:     time.Now(),
 	}
 
-	err := s.repo.Register(ctx, userData)
+	err = s.repo.Register(ctx, userData)
 	if err != nil {
 		if err.Error() == errRegister.Error() {
-			return "", errors.UserAlreadyExists("The user you're trying to register already exists")
+			return errors.UserAlreadyExists("The user you're trying to register already exists")
 		}
-		return "", err
+		return err
 	}
 
-	return s.generateJWT(userData)
+	err = s.repo.CreateEmailVerification(ctx, entity.EmailVerification{
+		UserID:    userData.ID,
+		Token:     token,
+		ExpiresAt: time.Now().Add(time.Duration(s.tokenExpiration) * time.Hour),
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s service) Verify(ctx context.Context, id, expires, token string) error {
+	unix, err := strconv.ParseInt(expires, 10, 64)
+	if err != nil {
+		return err
+	}
+	expiresAt := time.Unix(unix, 0)
+	if time.Now().After(expiresAt) {
+		fmt.Println(expiresAt)
+		return errors.BadRequest("Your verification code has expired")
+	}
+	verifyRequest := VerifyRequest{
+		UserID:    id,
+		Token:     token,
+		ExpiresAt: expiresAt,
+	}
+	err = s.repo.VerifyEmail(ctx, verifyRequest)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -89,7 +134,11 @@ func (s service) authenticate(ctx context.Context, email, password string) Ident
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		logger.Infof("Authentication failed")
-		fmt.Printf("%v\n", err)
+		return nil
+	}
+
+	if user.EmailVerified == false {
+		logger.Infof("User not verified: Authentication failed")
 		return nil
 	}
 

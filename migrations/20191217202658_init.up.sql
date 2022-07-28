@@ -48,3 +48,11 @@ CREATE TABLE role_users
   user_id    VARCHAR NOT NULL REFERENCES users (id) ON DELETE CASCADE,
   PRIMARY KEY (role_id, user_id)
 );
+
+CREATE TABLE email_verifications 
+(
+  user_id    VARCHAR NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  token      VARCHAR NOT NULL,
+  expires_at TIMESTAMP NOT NULL,
+  PRIMARY KEY (user_id, token)
+)

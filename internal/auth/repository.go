@@ -17,6 +17,10 @@ type Repository interface {
 	GetUserByAPIKey(ctx context.Context, apiKey string) (entity.User, error)
 	// Register saves a new user in the database.
 	Register(ctx context.Context, user entity.User) error
+	// CreteEmailVerification creates new a record in the database for email validation
+	CreateEmailVerification(ctx context.Context, validation entity.EmailVerification) error
+	// VerifyEmail verifies a user's email, updates user and deletes verification record.
+	VerifyEmail(ctx context.Context, validation VerifyRequest) error
 }
 
 // repository persists users in database
@@ -61,4 +65,34 @@ func (r repository) GetUserByAPIKey(ctx context.Context, apiKey string) (entity.
 // Register saves a new user in the database.
 func (r repository) Register(ctx context.Context, user entity.User) error {
 	return r.db.With(ctx).Model(&user).Insert()
+}
+
+func (r repository) CreateEmailVerification(ctx context.Context, validation entity.EmailVerification) error {
+	return r.db.With(ctx).Model(&validation).Insert()
+}
+
+func (r repository) VerifyEmail(ctx context.Context, validation VerifyRequest) error {
+	var user entity.User
+
+	err := r.db.DB().Transactional(func(tx *dbx.Tx) error {
+		if err := tx.Select().From("users").Where(dbx.HashExp{"user_id": validation.UserID}).One(&user); err != nil {
+			return err
+		}
+
+		if _, err := tx.Update("users", dbx.Params{"email_verified": true}, dbx.HashExp{"user_id": validation.UserID}).Execute(); err != nil {
+			return err
+		}
+
+		if _, err := tx.Delete("email_verifications", dbx.HashExp{"user_id": validation.UserID}).Execute(); err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

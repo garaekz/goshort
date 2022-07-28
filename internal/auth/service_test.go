@@ -3,7 +3,6 @@ package auth
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"testing"
 	"time"
 
@@ -27,7 +26,7 @@ func Test_service_Authenticate(t *testing.T) {
 	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: fmt.Sprintf("%s", pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: string(pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string
@@ -50,7 +49,7 @@ func Test_service_authenticate(t *testing.T) {
 	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: fmt.Sprintf("%s", pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: string(pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string
@@ -70,7 +69,7 @@ func Test_service_GenerateJWT(t *testing.T) {
 	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: fmt.Sprintf("%s", pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: string(pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
 		},
 		keys: []struct {
 			Key    string

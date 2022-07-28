@@ -10,6 +10,7 @@ import (
 func RegisterHandlers(rg *routing.RouteGroup, service Service, logger log.Logger) {
 	rg.Post("/login", login(service, logger))
 	rg.Post("/register", register(service, logger))
+	rg.Get("/verify/<id>", verify(service, logger))
 }
 
 // login returns a handler that handles user login request.
@@ -48,12 +49,37 @@ func register(service Service, logger log.Logger) routing.Handler {
 			return errors.BadRequest("")
 		}
 
-		token, err := service.Register(c.Request.Context(), req.Email, req.Password)
+		err := service.Register(c.Request.Context(), req.Email, req.Password)
 		if err != nil {
 			return err
 		}
 		return c.Write(struct {
-			Token string `json:"token"`
-		}{token})
+			Status  string `json:"status"`
+			Message string `json:"message"`
+		}{
+			Status:  "success",
+			Message: "User registered successfully, please check your email for activation link.",
+		})
+	}
+}
+
+func verify(service Service, logger log.Logger) routing.Handler {
+	return func(c *routing.Context) error {
+		id := c.Param("id")
+		expires := c.Query("expires")
+		token := c.Query("signature")
+
+		err := service.Verify(c.Request.Context(), id, expires, token)
+		if err != nil {
+			return err
+		}
+
+		return c.Write(struct {
+			Status  string `json:"status"`
+			Message string `json:"message"`
+		}{
+			Status:  "success",
+			Message: "Email verified successfully, you can now login.",
+		})
 	}
 }
