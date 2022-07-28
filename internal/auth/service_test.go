@@ -26,7 +26,7 @@ func Test_service_Authenticate(t *testing.T) {
 	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: string(pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: string(pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true, EmailVerified: true},
 		},
 		keys: []struct {
 			Key    string
@@ -44,12 +44,12 @@ func Test_service_Authenticate(t *testing.T) {
 	assert.NotEmpty(t, token)
 }
 
-func Test_service_authenticate(t *testing.T) {
+func Test_service_authenticate_function(t *testing.T) {
 	logger, _ := log.NewForTest()
 	pass, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.MinCost)
 	repo := &mockRepository{
 		items: []entity.User{
-			{ID: "100", Email: "test@test.io", Password: string(pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true},
+			{ID: "100", Email: "test@test.io", Password: string(pass), CreatedAt: time.Now(), UpdatedAt: time.Now(), IsActive: true, EmailVerified: true},
 		},
 		keys: []struct {
 			Key    string
@@ -89,7 +89,7 @@ func Test_service_GenerateJWT(t *testing.T) {
 	}
 }
 
-func (m mockRepository) GetUserByEmail(ctx context.Context, email string) (entity.User, error) {
+func (m mockRepository) GetUserByEmail(_ context.Context, email string) (entity.User, error) {
 	for _, item := range m.items {
 		if item.Email == email {
 			return item, nil
@@ -98,7 +98,7 @@ func (m mockRepository) GetUserByEmail(ctx context.Context, email string) (entit
 	return entity.User{}, sql.ErrNoRows
 }
 
-func (m mockRepository) GetUserByAPIKey(ctx context.Context, apiKey string) (entity.User, error) {
+func (m mockRepository) GetUserByAPIKey(_ context.Context, apiKey string) (entity.User, error) {
 	var userID string
 	for _, key := range m.keys {
 		if key.UserID == apiKey {
@@ -113,7 +113,7 @@ func (m mockRepository) GetUserByAPIKey(ctx context.Context, apiKey string) (ent
 	return entity.User{}, sql.ErrNoRows
 }
 
-func (m mockRepository) Register(ctx context.Context, user entity.User) error {
+func (m mockRepository) Register(_ context.Context, user entity.User) error {
 	if user.ID == "error" {
 		return errors.Unauthorized("")
 	}
@@ -121,14 +121,14 @@ func (m mockRepository) Register(ctx context.Context, user entity.User) error {
 	return nil
 }
 
-func (m mockRepository) CreateEmailVerification(ctx context.Context, verification entity.EmailVerification) error {
+func (mockRepository) CreateEmailVerification(_ context.Context, verification entity.EmailVerification) error {
 	if verification.UserID == "duplicate" {
 		return errors.BadRequest("The user you're trying to register already exists")
 	}
 	return nil
 }
 
-func (m mockRepository) GetEmailVerification(ctx context.Context, userID, token string) (entity.EmailVerification, error) {
+func (m mockRepository) GetEmailVerification(_ context.Context, userID, _ string) (entity.EmailVerification, error) {
 	for _, item := range m.items {
 		if item.ID == userID {
 			return entity.EmailVerification{UserID: userID}, nil
@@ -137,6 +137,6 @@ func (m mockRepository) GetEmailVerification(ctx context.Context, userID, token 
 	return entity.EmailVerification{}, sql.ErrNoRows
 }
 
-func (m mockRepository) VerifyEmail(ctx context.Context, validation VerifyRequest) error {
+func (mockRepository) VerifyEmail(_ context.Context, _ VerifyRequest) error {
 	return nil
 }

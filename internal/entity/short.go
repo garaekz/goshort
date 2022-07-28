@@ -17,6 +17,6 @@ type Short struct {
 }
 
 // TableName represents the table name
-func (s Short) TableName() string {
+func (Short) TableName() string {
 	return "shorts"
 }

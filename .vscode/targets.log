@@ -6,14 +6,8 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # ALG�N PROP�SITO PARTICULAR.
 
  # Este programa fue construido para i386-pc-mingw32
- 
-"grep" no se reconoce como un comando interno o externo,
-programa o archivo por lotes ejecutable.
 
-El sistema no puede encontrar la ruta especificada.
-
-
-# Base de datos del Make, mostrada en Wed Jul 27 14:58:47 2022
+# Base de datos del Make, mostrada en Wed Jul 27 22:36:45 2022
 
 # Variables
 
@@ -40,8 +34,7 @@ SHELL := sh.exe
 # entorno
 WINDIR = C:\WINDOWS
 # entorno
-VSCODE_NLS_CO 
-NFIG = {"locale":"es-419","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"es-419","availableLanguages":{},"_languagePackSupport":true}
 # entorno
 ONEDRIVE = C:\Users\Gara\OneDrive
 # entorno
@@ -93,7 +86,7 @@ CONFIG_FILE = ./config/local.yml
 # autom�tica/o
 %F = $(notdir $%)
 # entorno
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10676_XWFJEHNJBKSNRJJG
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_15460_GWVZDVDUABSFQJTQ
 # entorno
 COMPUTERNAME = GARA
 # entorno
@@ -209,7 +202,7 @@ PROCESSOR_LEVEL = 23
 # makefile (de `makefile', l�nea 10):
 PID_FILE := './.pid'
 # entorno
-VSCODE_PID = 10676
+VSCODE_PID = 15460
 # entorno
 USERDOMAIN_ROAMINGPROFILE = GARA
 # estad�sticas del conjunto de variables de la tabla de hash:
@@ -231,7 +224,7 @@ USERDOMAIN_ROAMINGPROFILE = GARA
 # C:\Program Files (x86)\Razer Chroma SDK\bin (llave C:/Program Files (x86)/Razer Chroma SDK/bin, mtime 1658930707): 233 archivos, no imposibilidades.
 # C:\Windows\System32\WindowsPowerShell\v1.0\ (llave C:/Windows/System32/WindowsPowerShell/v1.0/, mtime 1644603813): 32 archivos, no imposibilidades.
 # C:\Windows\System32\Wbem (llave C:/Windows/System32/Wbem, mtime 1657698128): 172 archivos, no imposibilidades.
-# . (llave g:/proyectos/goshortv2, mtime 1658651726): 21 archivos, no imposibilidades.
+# . (llave g:/proyectos/goshortv2, mtime 1658986341): 19 archivos, no imposibilidades.
 # C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common (llave C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common, mtime 1592079710): 10 archivos, no imposibilidades.
 # C:\Users\Gara\AppData\Local\Programs\Microsoft VS Code\bin (llave C:/Users/Gara/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1658242550): 4 archivos, no imposibilidades.
 # C:\Users\Gara\AppData\Roaming\Python\Python39\Scripts (llave C:/Users/Gara/AppData/Roaming/Python/Python39/Scripts, mtime 1631553126): 25 archivos, no imposibilidades.
@@ -263,21 +256,16 @@ USERDOMAIN_ROAMINGPROFILE = GARA
 # C:\Program Files\dotnet\ (llave C:/Program Files/dotnet/, mtime 1657664583): 13 archivos, no imposibilidades.
 # C:\Program Files\Razer Chroma SDK\bin (llave C:/Program Files/Razer Chroma SDK/bin, mtime 1636131824): 5 archivos, no imposibilidades.
 # C:\Program Files\PostgreSQL\12\bin: podr�a no estar establecido.
-# C:\Users\Gara\go\bin (llave C:/Users/Gara/go/bin, mtime 1658018312): 18 archivos, no imposibilidades.
+# C:\Users\Gara\go\bin (llave C:/Users/Gara/go/bin, mtime 1658983262): 19 archivos, no imposibilidades.
 # C:\ProgramData\DockerDesktop\version-bin: podr�a no estar establecido.
 # C:\Users\Gara\AppData\Local\gitkraken\bin (llave C:/Users/Gara/AppData/Local/gitkraken/bin, mtime 1657405896): 3 archivos, no imposibilidades.
 # C:\Program Files\Git\cmd (llave C:/Program Files/Git/cmd, mtime 1620839345): 8 archivos, no imposibilidades.
-# C:\Windows\system32 (llave C:/Windows/system32, mtime 1658912261): 3113 archivos, no imposibilidades.
+# C:\Windows\system32 (llave C:/Windows/system32, mtime 1658972896): 3113 archivos, no imposibilidades.
 # C:\Python38\Lib\site-packages (llave C:/Python38/Lib/site-packages, mtime 1612848763): 85 archivos, no imposibilidades.
 # C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR (llave C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR, mtime 1592079149): 5 archivos, no imposibilidades.
-# C:\WINDOWS\system32\config\systemprofile\AppData\Local\ 
-process_begin: CreateProcess(NULL, pwd, ...) failed.
-process_begin: CreateProcess(NULL, sed -n s/^dsn:[[:space:]]*\"\(.*\)\"/\1/p ./config/local.yml, ...) failed.
-make.exe: *** No hay ninguna regla para construir el objetivo `all'.  Alto.
+# C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps: podr�a no estar establecido.
 
-Microsoft\WindowsApps: podr�a no estar establecido.
-
-# 4263 archivos, no imposibilidades en 50 directorios.
+# 4262 archivos, no imposibilidades en 50 directorios.
 
 # Reglas impl�citas.
 
@@ -374,7 +362,7 @@ test:
 # No es un objetivo:
 makefile:
 #  La b�squeda de reglas impl�citas ha sido efectuada.
-#  �ltima modificaci�n 2022-07-19 22:35:30
+#  �ltima modificaci�n 2022-07-27 22:21:38
 #  El archivo ha sido actualizado.
 #  Actualizado con �xito.
 # estad�sticas del conjunto de variables de la tabla de hash:
@@ -528,6 +516,13 @@ run-live:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Se termina la base de datos de Make en Wed Jul 27 14:58:47 2022
+# Se termina la base de datos de Make en Wed Jul 27 22:36:45 2022
 
  
+"grep" no se reconoce como un comando interno o externo,
+programa o archivo por lotes ejecutable.
+El sistema no puede encontrar la ruta especificada.
+process_begin: CreateProcess(NULL, pwd, ...) failed.
+process_begin: CreateProcess(NULL, sed -n s/^dsn:[[:space:]]*\"\(.*\)\"/\1/p ./config/local.yml, ...) failed.
+make.exe: *** No hay ninguna regla para construir el objetivo `all'.  Alto.
+

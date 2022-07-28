@@ -138,5 +138,4 @@ func runCountQuery(t *testing.T, db *dbx.DB) int {
 	err := db.NewQuery("SELECT COUNT(*) FROM dbcontexttest").Row(&count)
 	assert.Nil(t, err)
 	return count
-
 }

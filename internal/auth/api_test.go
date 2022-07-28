@@ -12,21 +12,21 @@ import (
 
 type mockService struct{}
 
-func (m mockService) Login(ctx context.Context, email, password string) (string, error) {
+func (mockService) Login(_ context.Context, email, password string) (string, error) {
 	if email == "test@test.io" && password == "pass" {
 		return "token-100", nil
 	}
 	return "", errors.Unauthorized("")
 }
 
-func (m mockService) Register(ctx context.Context, email, password string) error {
+func (mockService) Register(_ context.Context, email, password string) error {
 	if email == "test@test.io" && password == "pass" {
 		return nil
 	}
 	return errors.Unauthorized("")
 }
 
-func (m mockService) Verify(ctx context.Context, id, expires string) error {
+func (mockService) Verify(_ context.Context, _, _ string) error {
 	return nil
 }
 

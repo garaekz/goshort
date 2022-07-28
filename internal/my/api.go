@@ -63,9 +63,9 @@ func (r resource) createMyShort(c *routing.Context) error {
 		return errors.BadRequest("")
 	}
 	input.IP = realip.GetRealIP(c.Request)
-	short, err := r.shortService.Create(c.Request.Context(), input)
+	newShort, err := r.shortService.Create(c.Request.Context(), input)
 	if err != nil {
 		return err
 	}
-	return c.WriteWithStatus(short, http.StatusCreated)
+	return c.WriteWithStatus(newShort, http.StatusCreated)
 }

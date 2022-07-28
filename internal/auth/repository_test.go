@@ -86,5 +86,4 @@ func TestRepository(t *testing.T) {
 	})
 
 	assert.Nil(t, err)
-
 }

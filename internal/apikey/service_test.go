@@ -61,7 +61,7 @@ type mockRepository struct {
 	items []entity.APIKey
 }
 
-func (m mockRepository) Get(ctx context.Context, key string) (entity.APIKey, error) {
+func (m mockRepository) Get(_ context.Context, key string) (entity.APIKey, error) {
 	if key == "error" || key == "none" {
 		return entity.APIKey{}, sql.ErrNoRows
 	}
@@ -75,7 +75,7 @@ func (m mockRepository) Get(ctx context.Context, key string) (entity.APIKey, err
 	return entity.APIKey{}, sql.ErrNoRows
 }
 
-func (m mockRepository) GetOwned(ctx context.Context, userID string) ([]APIKey, error) {
+func (m mockRepository) GetOwned(_ context.Context, userID string) ([]APIKey, error) {
 	var owned []APIKey
 	for _, item := range m.items {
 		if item.UserID == userID {
@@ -90,11 +90,11 @@ func (m mockRepository) GetOwned(ctx context.Context, userID string) ([]APIKey, 
 	return []APIKey{}, sql.ErrNoRows
 }
 
-func (m mockRepository) Count(ctx context.Context) (int, error) {
+func (m mockRepository) Count(_ context.Context) (int, error) {
 	return len(m.items), nil
 }
 
-func (m mockRepository) CountByOwner(ctx context.Context, userID string) (int, error) {
+func (m mockRepository) CountByOwner(_ context.Context, userID string) (int, error) {
 	var count int
 
 	for _, item := range m.items {
@@ -106,7 +106,7 @@ func (m mockRepository) CountByOwner(ctx context.Context, userID string) (int, e
 	return count, nil
 }
 
-func (m *mockRepository) Create(ctx context.Context, apiKey entity.APIKey) error {
+func (m *mockRepository) Create(_ context.Context, apiKey entity.APIKey) error {
 	if apiKey.UserID == "error" {
 		return errCRUD
 	}
@@ -114,7 +114,7 @@ func (m *mockRepository) Create(ctx context.Context, apiKey entity.APIKey) error
 	return nil
 }
 
-func (m *mockRepository) Update(ctx context.Context, apiKey entity.APIKey) error {
+func (m *mockRepository) Update(_ context.Context, apiKey entity.APIKey) error {
 	if apiKey.Key == "error" {
 		return errCRUD
 	}
@@ -127,7 +127,7 @@ func (m *mockRepository) Update(ctx context.Context, apiKey entity.APIKey) error
 	return nil
 }
 
-func (m *mockRepository) Delete(ctx context.Context, key string) error {
+func (m *mockRepository) Delete(_ context.Context, key string) error {
 	for i, item := range m.items {
 		if item.Key == key {
 			m.items[i] = m.items[len(m.items)-1]

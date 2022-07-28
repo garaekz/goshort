@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/pkg/dbcontext"
@@ -71,7 +70,6 @@ func (r repository) Register(ctx context.Context, user entity.User) error {
 }
 
 func (r repository) CreateEmailVerification(ctx context.Context, validation entity.EmailVerification) error {
-	fmt.Printf("%+v", validation)
 	return r.db.With(ctx).Model(&validation).Insert()
 }
 
@@ -84,7 +82,7 @@ func (r repository) GetEmailVerification(ctx context.Context, userID, token stri
 	return validation, nil
 }
 
-func (r repository) VerifyEmail(ctx context.Context, validation VerifyRequest) error {
+func (r repository) VerifyEmail(_ context.Context, validation VerifyRequest) error {
 	err := r.db.DB().Transactional(func(tx *dbx.Tx) error {
 		if _, err := tx.Update("users", dbx.Params{"email_verified": true}, dbx.HashExp{"id": validation.UserID}).Execute(); err != nil {
 			return err

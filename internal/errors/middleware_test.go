@@ -3,13 +3,14 @@ package errors
 import (
 	"database/sql"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/garaekz/goshort/pkg/log"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/stretchr/testify/assert"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 func TestHandler(t *testing.T) {
@@ -80,14 +81,14 @@ func handlerOK(c *routing.Context) error {
 	return c.Write("test")
 }
 
-func handlerError(c *routing.Context) error {
+func handlerError(_ *routing.Context) error {
 	return fmt.Errorf("abc")
 }
 
-func handlerHTTPError(c *routing.Context) error {
+func handlerHTTPError(_ *routing.Context) error {
 	return NotFound("")
 }
 
-func handlerPanic(c *routing.Context) error {
+func handlerPanic(_ *routing.Context) error {
 	panic("xyz")
 }

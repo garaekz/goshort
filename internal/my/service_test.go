@@ -38,7 +38,7 @@ type shortMockRepository struct {
 	shorts []entity.Short
 }
 
-func (m mockRepository) Get(ctx context.Context, id string) (entity.User, error) {
+func (m mockRepository) Get(_ context.Context, id string) (entity.User, error) {
 	for _, user := range m.users {
 		if user.ID == id {
 			return user, nil
@@ -48,67 +48,67 @@ func (m mockRepository) Get(ctx context.Context, id string) (entity.User, error)
 	return entity.User{}, sql.ErrNoRows
 }
 
-func (m apiKeyMockRepository) Get(ctx context.Context, key string) (entity.APIKey, error) {
+func (apiKeyMockRepository) Get(_ context.Context, _ string) (entity.APIKey, error) {
 	return entity.APIKey{}, sql.ErrNoRows
 }
 
-func (m apiKeyMockRepository) GetOwned(ctx context.Context, userID string) ([]apikey.APIKey, error) {
+func (apiKeyMockRepository) GetOwned(_ context.Context, _ string) ([]apikey.APIKey, error) {
 	return []apikey.APIKey{}, sql.ErrNoRows
 }
 
-func (m apiKeyMockRepository) Count(ctx context.Context) (int, error) {
+func (apiKeyMockRepository) Count(_ context.Context) (int, error) {
 	return 0, nil
 }
 
-func (m apiKeyMockRepository) CountByOwner(ctx context.Context, userID string) (int, error) {
+func (apiKeyMockRepository) CountByOwner(_ context.Context, _ string) (int, error) {
 	var count int
 	return count, nil
 }
 
-func (m *apiKeyMockRepository) Create(ctx context.Context, apiKey entity.APIKey) error {
+func (apiKeyMockRepository) Create(_ context.Context, _ entity.APIKey) error {
 	return nil
 }
 
-func (m *apiKeyMockRepository) Update(ctx context.Context, apiKey entity.APIKey) error {
+func (apiKeyMockRepository) Update(_ context.Context, _ entity.APIKey) error {
 	return nil
 }
 
-func (m *apiKeyMockRepository) Delete(ctx context.Context, key string) error {
+func (apiKeyMockRepository) Delete(_ context.Context, _ string) error {
 	return nil
 }
 
-func (m shortMockRepository) Get(ctx context.Context, code string) (entity.Short, error) {
+func (shortMockRepository) Get(_ context.Context, _ string) (entity.Short, error) {
 	return entity.Short{}, sql.ErrNoRows
 }
 
-func (m shortMockRepository) Count(ctx context.Context) (int, error) {
+func (shortMockRepository) Count(_ context.Context) (int, error) {
 	return 0, nil
 }
 
-func (m shortMockRepository) Query(ctx context.Context, offset, limit int) ([]entity.Short, error) {
+func (m shortMockRepository) Query(_ context.Context, _, _ int) ([]entity.Short, error) {
 	return m.shorts, nil
 }
 
-func (m *shortMockRepository) Create(ctx context.Context, short entity.Short) error {
+func (shortMockRepository) Create(_ context.Context, _ entity.Short) error {
 	return nil
 }
 
-func (m *shortMockRepository) Update(ctx context.Context, short entity.Short) error {
+func (shortMockRepository) Update(_ context.Context, _ entity.Short) error {
 	return nil
 }
 
-func (m *shortMockRepository) Delete(ctx context.Context, code string) error {
+func (shortMockRepository) Delete(_ context.Context, _ string) error {
 	return nil
 }
 
-func (m *shortMockRepository) GenerateUniqueCode(ctx context.Context) (string, error) {
+func (shortMockRepository) GenerateUniqueCode(_ context.Context) (string, error) {
 	return "code", nil
 }
 
-func (m *shortMockRepository) GetByOriginalURL(ctx context.Context, URL, userID string) (entity.Short, error) {
+func (shortMockRepository) GetByOriginalURL(_ context.Context, _, _ string) (entity.Short, error) {
 	return entity.Short{}, nil
 }
 
-func (m *shortMockRepository) GetOwned(ctx context.Context, userID string) ([]entity.Short, error) {
+func (m *shortMockRepository) GetOwned(_ context.Context, _ string) ([]entity.Short, error) {
 	return m.shorts, nil
 }

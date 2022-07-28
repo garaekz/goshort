@@ -70,7 +70,7 @@ func Load(file string, logger log.Logger) (*Config, error) {
 }
 
 // GetConfigFromDB returns an application configuration which is populated from the given database.
-func (c *Config) GetConfigFromDB(db *dbcontext.DB, logger log.Logger) error {
+func (c *Config) GetConfigFromDB(db *dbcontext.DB) error {
 	var config []struct {
 		Name  string `db:"name"`
 		Value string `db:"value"`
@@ -82,13 +82,12 @@ func (c *Config) GetConfigFromDB(db *dbcontext.DB, logger log.Logger) error {
 	}
 
 	for _, cfg := range config {
-		switch cfg.Name {
-		case "default_api_keys_quantity":
-			val, err := strconv.Atoi(cfg.Value)
+		// TODO: change this to a switch statement when we have more config options
+		if cfg.Name == "default_api_keys_quantity" {
+			c.MaxAPIKeysPerUser, err = strconv.Atoi(cfg.Value)
 			if err != nil {
 				return err
 			}
-			c.MaxAPIKeysPerUser = val
 		}
 	}
 

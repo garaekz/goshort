@@ -57,9 +57,9 @@ func main() {
 		}
 	}()
 
-	dbcontext := dbcontext.New(db)
+	newDbcontext := dbcontext.New(db)
 
-	err = cfg.GetConfigFromDB(dbcontext, logger)
+	err = cfg.GetConfigFromDB(newDbcontext)
 	if err != nil {
 		logger.Errorf("failed to load aditional dynamic configuration: %s", err)
 		os.Exit(-1)
@@ -69,7 +69,7 @@ func main() {
 	address := fmt.Sprintf(":%v", cfg.ServerPort)
 	hs := &http.Server{
 		Addr:    address,
-		Handler: buildHandler(logger, dbcontext, cfg),
+		Handler: buildHandler(logger, newDbcontext, cfg),
 	}
 
 	// start the HTTP server with graceful shutdown
@@ -82,7 +82,7 @@ func main() {
 }
 
 // buildHandler sets up the HTTP routing and builds an HTTP handler.
-func buildHandler(logger log.Logger, db *dbcontext.DB, cfg *config.Config) http.Handler {
+func buildHandler(logger log.Logger, db *newDbcontext.DB, cfg *config.Config) http.Handler {
 	router := routing.New()
 
 	router.Use(

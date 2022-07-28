@@ -14,6 +14,6 @@ type APIKey struct {
 }
 
 // TableName represents the table name
-func (k APIKey) TableName() string {
+func (APIKey) TableName() string {
 	return "keys"
 }

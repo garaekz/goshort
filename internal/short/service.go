@@ -24,7 +24,7 @@ type Service interface {
 	Update(ctx context.Context, id string, input UpdateShortRequest) (Short, error)
 	Delete(ctx context.Context, id string) (Short, error)
 	GetCreated(ctx context.Context, id string) (Short, error)
-	RegisterVisit(ctx context.Context, code string) (Short, error)
+	RegisterVisit(ctx context.Context, code string) error
 }
 
 // Short represents the data about an short.
@@ -218,17 +218,13 @@ func (s service) Query(ctx context.Context, offset, limit int) ([]Short, error) 
 }
 
 // RegisterVisit updates the short visit count with the specified code.
-func (s service) RegisterVisit(ctx context.Context, code string) (Short, error) {
+func (s service) RegisterVisit(ctx context.Context, code string) error {
 	short, err := s.repo.Get(ctx, code)
 	if err != nil {
-		return Short{}, err
+		return err
 	}
 	short.Visits++
-
-	if err := s.repo.Update(ctx, short); err != nil {
-		return Short{}, err
-	}
-	return Short{ParseResponse(short)}, nil
+	return s.repo.Update(ctx, short)
 }
 
 // ParseResponse parses a Short entity into a secure response.

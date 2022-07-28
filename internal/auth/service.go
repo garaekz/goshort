@@ -129,7 +129,7 @@ func (s service) authenticate(ctx context.Context, email, password string) Ident
 		return nil
 	}
 
-	if user.EmailVerified == false {
+	if !user.EmailVerified {
 		logger.Infof("User not verified: Authentication failed")
 		return nil
 	}

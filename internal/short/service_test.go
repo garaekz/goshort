@@ -130,7 +130,7 @@ type mockRepository struct {
 	items []entity.Short
 }
 
-func (m mockRepository) Get(ctx context.Context, code string) (entity.Short, error) {
+func (m mockRepository) Get(_ context.Context, code string) (entity.Short, error) {
 	for _, item := range m.items {
 		if item.Code == code {
 			return item, nil
@@ -139,7 +139,7 @@ func (m mockRepository) Get(ctx context.Context, code string) (entity.Short, err
 	return entity.Short{}, sql.ErrNoRows
 }
 
-func (m mockRepository) GetOwned(ctx context.Context, userID string) ([]entity.Short, error) {
+func (m mockRepository) GetOwned(_ context.Context, userID string) ([]entity.Short, error) {
 	var shorts []entity.Short
 	for _, item := range m.items {
 		if item.UserID == userID {
@@ -152,15 +152,15 @@ func (m mockRepository) GetOwned(ctx context.Context, userID string) ([]entity.S
 	return shorts, nil
 }
 
-func (m mockRepository) Count(ctx context.Context) (int, error) {
+func (m mockRepository) Count(_ context.Context) (int, error) {
 	return len(m.items), nil
 }
 
-func (m mockRepository) Query(ctx context.Context, offset, limit int) ([]entity.Short, error) {
+func (m mockRepository) Query(_ context.Context, _, _ int) ([]entity.Short, error) {
 	return m.items, nil
 }
 
-func (m *mockRepository) Create(ctx context.Context, short entity.Short) error {
+func (m *mockRepository) Create(_ context.Context, short entity.Short) error {
 	if short.Code == "error" {
 		return errCRUD
 	}
@@ -168,7 +168,7 @@ func (m *mockRepository) Create(ctx context.Context, short entity.Short) error {
 	return nil
 }
 
-func (m *mockRepository) Update(ctx context.Context, short entity.Short) error {
+func (m *mockRepository) Update(_ context.Context, short entity.Short) error {
 	if short.Code == "error" {
 		return errCRUD
 	}
@@ -181,7 +181,7 @@ func (m *mockRepository) Update(ctx context.Context, short entity.Short) error {
 	return nil
 }
 
-func (m *mockRepository) Delete(ctx context.Context, code string) error {
+func (m *mockRepository) Delete(_ context.Context, code string) error {
 	for i, item := range m.items {
 		if item.Code == code {
 			m.items[i] = m.items[len(m.items)-1]
@@ -192,10 +192,10 @@ func (m *mockRepository) Delete(ctx context.Context, code string) error {
 	return nil
 }
 
-func (m *mockRepository) GenerateUniqueCode(ctx context.Context) (string, error) {
+func (*mockRepository) GenerateUniqueCode(_ context.Context) (string, error) {
 	return "code", nil
 }
 
-func (m *mockRepository) GetByOriginalURL(ctx context.Context, URL, userID string) (entity.Short, error) {
+func (*mockRepository) GetByOriginalURL(_ context.Context, _, _ string) (entity.Short, error) {
 	return entity.Short{}, nil
 }

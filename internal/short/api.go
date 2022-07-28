@@ -35,7 +35,10 @@ func (r resource) get(c *routing.Context) error {
 	if err != nil {
 		return err
 	}
-	r.service.RegisterVisit(c.Request.Context(), short.Code)
+	if err = r.service.RegisterVisit(c.Request.Context(), short.Code); err != nil {
+		return err
+	}
+
 	return c.Write(short)
 }
 

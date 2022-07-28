@@ -63,7 +63,7 @@ func register(service Service, logger log.Logger) routing.Handler {
 	}
 }
 
-func verify(service Service, logger log.Logger) routing.Handler {
+func verify(service Service, _ log.Logger) routing.Handler {
 	return func(c *routing.Context) error {
 		id := c.Param("id")
 		token := c.Param("token")
