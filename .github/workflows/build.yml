@@ -43,7 +43,9 @@ jobs:
           go get github.com/mgechev/revive
 
       - name: Run Revive
-        run: make lint
+        run: |
+          $(go env GOPATH)/bin/revive -config $GITHUB_ACTION/revive.toml ./... # this is ouput for user
+          $(go env GOPATH)/bin/revive -config $GITHUB_ACTION/revive.toml ./...| xargs -0 -r false # this is for github actions
 
       - name: Build
         run: make build
