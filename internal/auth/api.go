@@ -10,7 +10,7 @@ import (
 func RegisterHandlers(rg *routing.RouteGroup, service Service, logger log.Logger) {
 	rg.Post("/login", login(service, logger))
 	rg.Post("/register", register(service, logger))
-	rg.Get("/verify/<id>", verify(service, logger))
+	rg.Get("/verify/<id>/<token>", verify(service, logger))
 }
 
 // login returns a handler that handles user login request.
@@ -66,10 +66,9 @@ func register(service Service, logger log.Logger) routing.Handler {
 func verify(service Service, logger log.Logger) routing.Handler {
 	return func(c *routing.Context) error {
 		id := c.Param("id")
-		expires := c.Query("expires")
-		token := c.Query("signature")
+		token := c.Param("signature")
 
-		err := service.Verify(c.Request.Context(), id, expires, token)
+		err := service.Verify(c.Request.Context(), id, token)
 		if err != nil {
 			return err
 		}

@@ -19,11 +19,15 @@ func (m mockService) Login(ctx context.Context, email, password string) (string,
 	return "", errors.Unauthorized("")
 }
 
-func (m mockService) Register(ctx context.Context, email, password string) (string, error) {
+func (m mockService) Register(ctx context.Context, email, password string) error {
 	if email == "test@test.io" && password == "pass" {
-		return "token-100", nil
+		return nil
 	}
-	return "", errors.Unauthorized("")
+	return errors.Unauthorized("")
+}
+
+func (m mockService) Verify(ctx context.Context, id, expires string) error {
+	return nil
 }
 
 func TestAPI(t *testing.T) {

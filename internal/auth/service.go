@@ -3,8 +3,6 @@ package auth
 import (
 	"context"
 	defaultErrors "errors"
-	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -23,7 +21,7 @@ type Service interface {
 	// Register creates a new user and authenticates it.
 	Register(ctx context.Context, email, password string) error
 	// Verify verifies a user's email address.
-	Verify(ctx context.Context, id, expires, token string) error
+	Verify(ctx context.Context, id, token string) error
 }
 
 // Identity represents an authenticated user identity.
@@ -42,9 +40,8 @@ type service struct {
 }
 
 type VerifyRequest struct {
-	UserID    string
-	Token     string
-	ExpiresAt time.Time
+	UserID string
+	Token  string
 }
 
 // NewService creates a new authentication service.
@@ -97,20 +94,14 @@ func (s service) Register(ctx context.Context, email, password string) error {
 	return nil
 }
 
-func (s service) Verify(ctx context.Context, id, expires, token string) error {
-	unix, err := strconv.ParseInt(expires, 10, 64)
-	if err != nil {
-		return err
-	}
-	expiresAt := time.Unix(unix, 0)
-	if time.Now().After(expiresAt) {
-		fmt.Println(expiresAt)
+func (s service) Verify(ctx context.Context, id, token string) error {
+	verification, err := s.repo.GetEmailVerification(ctx, id, token)
+	if time.Now().After(verification.ExpiresAt) {
 		return errors.BadRequest("Your verification code has expired")
 	}
 	verifyRequest := VerifyRequest{
-		UserID:    id,
-		Token:     token,
-		ExpiresAt: expiresAt,
+		UserID: id,
+		Token:  token,
 	}
 	err = s.repo.VerifyEmail(ctx, verifyRequest)
 	if err != nil {

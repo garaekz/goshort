@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/pkg/dbcontext"
@@ -19,6 +20,8 @@ type Repository interface {
 	Register(ctx context.Context, user entity.User) error
 	// CreteEmailVerification creates new a record in the database for email validation
 	CreateEmailVerification(ctx context.Context, validation entity.EmailVerification) error
+	// GetEmailVerification returns the email verification record
+	GetEmailVerification(ctx context.Context, userID, token string) (entity.EmailVerification, error)
 	// VerifyEmail verifies a user's email, updates user and deletes verification record.
 	VerifyEmail(ctx context.Context, validation VerifyRequest) error
 }
@@ -68,18 +71,22 @@ func (r repository) Register(ctx context.Context, user entity.User) error {
 }
 
 func (r repository) CreateEmailVerification(ctx context.Context, validation entity.EmailVerification) error {
+	fmt.Printf("%+v", validation)
 	return r.db.With(ctx).Model(&validation).Insert()
 }
 
+func (r repository) GetEmailVerification(ctx context.Context, userID, token string) (entity.EmailVerification, error) {
+	var validation entity.EmailVerification
+	err := r.db.With(ctx).Select().From("email_validations").Where(dbx.HashExp{"user_id": userID, "token": token}).One(&validation)
+	if err != nil {
+		return validation, err
+	}
+	return validation, nil
+}
+
 func (r repository) VerifyEmail(ctx context.Context, validation VerifyRequest) error {
-	var user entity.User
-
 	err := r.db.DB().Transactional(func(tx *dbx.Tx) error {
-		if err := tx.Select().From("users").Where(dbx.HashExp{"user_id": validation.UserID}).One(&user); err != nil {
-			return err
-		}
-
-		if _, err := tx.Update("users", dbx.Params{"email_verified": true}, dbx.HashExp{"user_id": validation.UserID}).Execute(); err != nil {
+		if _, err := tx.Update("users", dbx.Params{"email_verified": true}, dbx.HashExp{"id": validation.UserID}).Execute(); err != nil {
 			return err
 		}
 

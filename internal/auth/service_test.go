@@ -120,3 +120,23 @@ func (m mockRepository) Register(ctx context.Context, user entity.User) error {
 	m.items = append(m.items, user)
 	return nil
 }
+
+func (m mockRepository) CreateEmailVerification(ctx context.Context, verification entity.EmailVerification) error {
+	if verification.UserID == "duplicate" {
+		return errors.UserAlreadyExists("The user you're trying to register already exists")
+	}
+	return nil
+}
+
+func (m mockRepository) GetEmailVerification(ctx context.Context, userID, token string) (entity.EmailVerification, error) {
+	for _, item := range m.items {
+		if item.ID == userID {
+			return entity.EmailVerification{UserID: userID}, nil
+		}
+	}
+	return entity.EmailVerification{}, sql.ErrNoRows
+}
+
+func (m mockRepository) VerifyEmail(ctx context.Context, validation VerifyRequest) error {
+	return nil
+}
