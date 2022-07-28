@@ -57,16 +57,6 @@ func Unauthorized(msg string) ErrorResponse {
 	}
 }
 
-func UserAlreadyExists(msg string) ErrorResponse {
-	if msg == "" {
-		msg = "The user already exists."
-	}
-	return ErrorResponse{
-		Status:  http.StatusBadRequest,
-		Message: msg,
-	}
-}
-
 // Forbidden creates a new error response representing an authorization failure (HTTP 403)
 func Forbidden(msg string) ErrorResponse {
 	if msg == "" {
@@ -116,8 +106,8 @@ func InvalidInput(errs validation.Errors) ErrorResponse {
 	}
 }
 
-// MaxApiKeys creates a new error response representing not allowing to create more API keys (HTTP 403)
-func MaxApiKeys(msg string) ErrorResponse {
+// MaxAPIKeys creates a new error response representing not allowing to create more API keys (HTTP 403)
+func MaxAPIKeys(msg string) ErrorResponse {
 	if msg == "" {
 		msg = "You are not authorized to perform the requested action anymore."
 	}

@@ -23,15 +23,16 @@ type Service interface {
 
 // APIKey represents the data about an API Key.
 type APIKey struct {
-	APIKeyResponse
+	Response
 }
 
-type APIKeyResponse struct {
+// Response represents the returned API Key.
+type Response struct {
 	Key       string    `json:"key"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
-// CreateShortRequest represents an short creation request.
+// CreateAPIKeyRequest represents an API Key creation request.
 type CreateAPIKeyRequest struct {
 	Key    string `db:"key"`
 	UserID string `db:"user_id"`
@@ -40,12 +41,12 @@ type CreateAPIKeyRequest struct {
 type service struct {
 	repo       Repository
 	logger     log.Logger
-	maxApiKeys int
+	MaxAPIKeys int
 }
 
 // NewService creates a new short service.
-func NewService(repo Repository, logger log.Logger, maxApiKeys int) Service {
-	return service{repo, logger, maxApiKeys}
+func NewService(repo Repository, logger log.Logger, MaxAPIKeys int) Service {
+	return service{repo, logger, MaxAPIKeys}
 }
 
 // Get returns the short with provided key.
@@ -54,7 +55,7 @@ func (s service) Get(ctx context.Context, key string) (APIKey, error) {
 	if err != nil {
 		return APIKey{}, err
 	}
-	return ParseAPIKeyResponse(apiKey), nil
+	return ParseResponse(apiKey), nil
 }
 
 // GetOwned returns owned apiKeys.
@@ -73,8 +74,8 @@ func (s service) Create(ctx context.Context, userID string) (APIKey, error) {
 		return APIKey{}, err
 	}
 
-	if count >= s.maxApiKeys {
-		return APIKey{}, customErrors.MaxApiKeys("You have reached the maximum number of API Keys allowed.")
+	if count >= s.MaxAPIKeys {
+		return APIKey{}, customErrors.MaxAPIKeys("You have reached the maximum number of API Keys allowed.")
 	}
 
 	key, err := s.GenerateUniqueKey(ctx)
@@ -141,10 +142,10 @@ func (s service) GenerateUniqueKey(ctx context.Context) (string, error) {
 	}
 }
 
-// ParseAPIKeyResponse parses a Short entity into a secure response.
-func ParseAPIKeyResponse(original entity.APIKey) APIKey {
+// ParseResponse parses a Short entity into a secure response.
+func ParseResponse(original entity.APIKey) APIKey {
 	return APIKey{
-		APIKeyResponse{
+		Response{
 			Key:       original.Key,
 			CreatedAt: original.CreatedAt,
 		},

@@ -14,7 +14,7 @@ type User struct {
 }
 
 // TableName represents the table name
-func (s User) TableName() string {
+func (u User) TableName() string {
 	return "users"
 }
 

@@ -39,6 +39,7 @@ type service struct {
 	logger          log.Logger
 }
 
+// VerifyRequest represents a request to verify a user's email address.
 type VerifyRequest struct {
 	UserID string
 	Token  string
@@ -77,7 +78,7 @@ func (s service) Register(ctx context.Context, email, password string) error {
 	err = s.repo.Register(ctx, userData)
 	if err != nil {
 		if err.Error() == errRegister.Error() {
-			return errors.UserAlreadyExists("The user you're trying to register already exists")
+			return errors.BadRequest("The user you're trying to register already exists")
 		}
 		return err
 	}

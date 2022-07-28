@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createsApiKey(ctx context.Context, db *dbcontext.DB) error {
+func createsAPIKey(ctx context.Context, db *dbcontext.DB) error {
 	apiKey := entity.APIKey{
 		UserID: "100",
 		Key:    "9876543210",
@@ -54,7 +54,7 @@ func TestRepository(t *testing.T) {
 	assert.EqualError(t, err, sql.ErrNoRows.Error())
 
 	// get user by api key
-	_ = createsApiKey(ctx, db)
+	_ = createsAPIKey(ctx, db)
 	user, err = repo.GetUserByAPIKey(ctx, "9876543210")
 	assert.Nil(t, err)
 	assert.Equal(t, "100", user.ID)

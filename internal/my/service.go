@@ -35,7 +35,7 @@ type UserResponse struct {
 
 // Short represents the returned data from the short.
 type Short struct {
-	short.ShortResponse
+	short.Response
 }
 
 // Get returns the short with provided code.

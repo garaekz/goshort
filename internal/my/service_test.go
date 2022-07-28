@@ -14,7 +14,6 @@ import (
 )
 
 var errCRUD = errors.New("error crud")
-var parseError = errors.New("URL is not in a valid format")
 
 func Test_service_CRUD(t *testing.T) {
 	logger, _ := log.NewForTest()

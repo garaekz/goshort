@@ -80,7 +80,7 @@ func (m mockRepository) GetOwned(ctx context.Context, userID string) ([]APIKey, 
 	for _, item := range m.items {
 		if item.UserID == userID {
 			owned = append(owned, APIKey{
-				APIKeyResponse: APIKeyResponse{
+				Response: Response{
 					Key:       item.Key,
 					CreatedAt: item.CreatedAt,
 				},

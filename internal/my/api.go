@@ -62,7 +62,7 @@ func (r resource) createMyShort(c *routing.Context) error {
 		r.logger.With(c.Request.Context()).Info(err)
 		return errors.BadRequest("")
 	}
-	input.IP = realip.GetRealAddr(c.Request)
+	input.IP = realip.GetRealIP(c.Request)
 	short, err := r.shortService.Create(c.Request.Context(), input)
 	if err != nil {
 		return err

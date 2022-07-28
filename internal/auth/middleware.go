@@ -14,6 +14,7 @@ import (
 	"github.com/go-ozzo/ozzo-routing/v2/auth"
 )
 
+// ContextDB is a global variable that stores the database context.
 var ContextDB *dbcontext.DB
 
 // Handler returns a JWT-based authentication middleware.
@@ -21,6 +22,7 @@ func Handler(verificationKey string) routing.Handler {
 	return auth.JWT(verificationKey, auth.JWTOptions{TokenHandler: handleToken})
 }
 
+// APIHandler returns a JWT-based authentication middleware for customer API Keys.
 func APIHandler(db *dbcontext.DB) routing.Handler {
 	ContextDB = db
 	return auth.Bearer(handleAPIKey)

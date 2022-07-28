@@ -29,10 +29,11 @@ type Service interface {
 
 // Short represents the data about an short.
 type Short struct {
-	ShortResponse
+	Response
 }
 
-type ShortResponse struct {
+// Response the returned data of a short.
+type Response struct {
 	Code        string    `json:"code"`
 	OriginalURL string    `json:"original_url"`
 	CreatedAt   time.Time `json:"created_at"`
@@ -81,7 +82,7 @@ func (s service) Get(ctx context.Context, code string) (Short, error) {
 	if err != nil {
 		return Short{}, err
 	}
-	return Short{ParseShortResponse(short)}, nil
+	return Short{ParseResponse(short)}, nil
 }
 
 // GetOwned returns owned apiKeys.
@@ -106,7 +107,7 @@ func (s service) GetCreated(ctx context.Context, code string) (Short, error) {
 	if err != nil {
 		return Short{}, err
 	}
-	return Short{ParseShortResponse(short)}, nil
+	return Short{ParseResponse(short)}, nil
 }
 
 // Create creates a new short.
@@ -133,8 +134,8 @@ func (s service) Create(ctx context.Context, req CreateShortRequest) (Short, err
 		}
 	}
 	// If it's already on the DB we just return that
-	if (Short{ParseShortResponse(short)}) != (Short{}) {
-		return Short{ParseShortResponse(short)}, nil
+	if (Short{ParseResponse(short)}) != (Short{}) {
+		return Short{ParseResponse(short)}, nil
 	}
 
 	code, err := s.repo.GenerateUniqueCode(ctx)
@@ -181,7 +182,7 @@ func (s service) Update(ctx context.Context, id string, req UpdateShortRequest) 
 	if err := s.repo.Update(ctx, short); err != nil {
 		return Short{}, err
 	}
-	return Short{ParseShortResponse(short)}, nil
+	return Short{ParseResponse(short)}, nil
 }
 
 // Delete deletes the short with the specified ID.
@@ -211,7 +212,7 @@ func (s service) Query(ctx context.Context, offset, limit int) ([]Short, error) 
 	}
 	result := []Short{}
 	for _, item := range items {
-		result = append(result, Short{ParseShortResponse(item)})
+		result = append(result, Short{ParseResponse(item)})
 	}
 	return result, nil
 }
@@ -227,12 +228,12 @@ func (s service) RegisterVisit(ctx context.Context, code string) (Short, error) 
 	if err := s.repo.Update(ctx, short); err != nil {
 		return Short{}, err
 	}
-	return Short{ParseShortResponse(short)}, nil
+	return Short{ParseResponse(short)}, nil
 }
 
-// ParseShortResponse parses a Short entity into a secure response.
-func ParseShortResponse(original entity.Short) ShortResponse {
-	return ShortResponse{
+// ParseResponse parses a Short entity into a secure response.
+func ParseResponse(original entity.Short) Response {
+	return Response{
 		Code:        original.Code,
 		OriginalURL: original.OriginalURL,
 		CreatedAt:   original.CreatedAt,

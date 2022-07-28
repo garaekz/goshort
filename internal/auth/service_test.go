@@ -123,7 +123,7 @@ func (m mockRepository) Register(ctx context.Context, user entity.User) error {
 
 func (m mockRepository) CreateEmailVerification(ctx context.Context, verification entity.EmailVerification) error {
 	if verification.UserID == "duplicate" {
-		return errors.UserAlreadyExists("The user you're trying to register already exists")
+		return errors.BadRequest("The user you're trying to register already exists")
 	}
 	return nil
 }

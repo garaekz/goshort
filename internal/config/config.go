@@ -69,6 +69,7 @@ func Load(file string, logger log.Logger) (*Config, error) {
 	return &c, err
 }
 
+// GetConfigFromDB returns an application configuration which is populated from the given database.
 func (c *Config) GetConfigFromDB(db *dbcontext.DB, logger log.Logger) error {
 	var config []struct {
 		Name  string `db:"name"`

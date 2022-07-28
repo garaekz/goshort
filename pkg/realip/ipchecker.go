@@ -7,7 +7,8 @@ import (
 	"strings"
 )
 
-func GetRealAddr(r *http.Request) string {
+// GetRealIP returns the real IP address from the request.
+func GetRealIP(r *http.Request) string {
 	remoteIP := ""
 
 	if parts := strings.Split(r.RemoteAddr, ":"); len(parts) == 2 {

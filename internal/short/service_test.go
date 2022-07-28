@@ -13,7 +13,7 @@ import (
 )
 
 var errCRUD = errors.New("error crud")
-var parseError = errors.New("URL is not in a valid format")
+var errParse = errors.New("URL is not in a valid format")
 
 func TestCreateShortRequest_Validate(t *testing.T) {
 	tests := []struct {
@@ -79,7 +79,7 @@ func Test_service_CRUD(t *testing.T) {
 
 	// parse url error in creation
 	_, err = s.Create(c, CreateShortRequest{URL: "```", IP: "127.0.0.1"})
-	assert.Equal(t, parseError, err)
+	assert.Equal(t, errParse, err)
 	count, _ = s.Count(c)
 	assert.Equal(t, 1, count)
 
@@ -100,7 +100,7 @@ func Test_service_CRUD(t *testing.T) {
 
 	// unexpected error in update
 	_, err = s.Update(ctx, code, UpdateShortRequest{URL: "```"})
-	assert.Equal(t, parseError, err)
+	assert.Equal(t, errParse, err)
 	count, _ = s.Count(ctx)
 	assert.Equal(t, 2, count)
 
