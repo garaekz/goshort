@@ -66,7 +66,7 @@ func register(service Service, logger log.Logger) routing.Handler {
 func verify(service Service, logger log.Logger) routing.Handler {
 	return func(c *routing.Context) error {
 		id := c.Param("id")
-		token := c.Param("signature")
+		token := c.Param("token")
 
 		err := service.Verify(c.Request.Context(), id, token)
 		if err != nil {

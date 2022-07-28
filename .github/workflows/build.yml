@@ -42,8 +42,11 @@ jobs:
           go get github.com/mattn/goveralls
           go get golang.org/x/lint/golint
 
-      - name: Run go lint
-        run: make lint
+      - name: Run Revive
+        run: |
+          GO111MODULE=off go get github.com/mgechev/revive
+          $(go env GOPATH)/bin/revive -exclude ./vendor/... ./... # this is ouput for user
+          $(go env GOPATH)/bin/revive -exclude ./vendor/... ./...| xargs -0 -r false # this is for github actions
 
       - name: Build
         run: make build

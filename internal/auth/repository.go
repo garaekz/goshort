@@ -77,7 +77,7 @@ func (r repository) CreateEmailVerification(ctx context.Context, validation enti
 
 func (r repository) GetEmailVerification(ctx context.Context, userID, token string) (entity.EmailVerification, error) {
 	var validation entity.EmailVerification
-	err := r.db.With(ctx).Select().From("email_validations").Where(dbx.HashExp{"user_id": userID, "token": token}).One(&validation)
+	err := r.db.With(ctx).Select().From("email_verifications").Where(dbx.HashExp{"user_id": userID, "token": token}).One(&validation)
 	if err != nil {
 		return validation, err
 	}
