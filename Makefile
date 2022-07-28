@@ -80,7 +80,7 @@ testdata: ## populate the database with test data
 
 .PHONY: lint
 lint: ## run golint on all Go package
-	@golint $(PACKAGES)
+	@revive -config revive.toml $(PACKAGES)
 
 .PHONY: fmt
 fmt: ## run "go fmt" on all Go packages

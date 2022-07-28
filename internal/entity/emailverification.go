@@ -10,6 +10,6 @@ type EmailVerification struct {
 }
 
 // TableName represents the table name
-func (_ EmailVerification) TableName() string {
+func (EmailVerification) TableName() string {
 	return "email_verifications"
 }
