@@ -41,11 +41,10 @@ jobs:
           go get golang.org/x/tools/cmd/cover
           go get github.com/mattn/goveralls
 
-      - name: Run Revive
-        run: |
-          GO111MODULE=off go get github.com/mgechev/revive
-          $(go env GOPATH)/bin/revive -config $GITHUB_ACTION/revive.toml  ./... # this is ouput for user
-          $(go env GOPATH)/bin/revive -config $GITHUB_ACTION/revive.toml  ./...| xargs -0 -r false # this is for github actions
+      - name: Revive Action
+        uses: morphy2k/revive-action@v2.3.1
+        with:
+          config: revive.toml
 
       - name: Build
         run: make build
