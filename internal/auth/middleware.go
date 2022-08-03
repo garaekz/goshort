@@ -5,13 +5,13 @@ import (
 	defaultErrors "errors"
 	"net/http"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/dbcontext"
 	"github.com/garaekz/goshort/pkg/log"
 	routing "github.com/go-ozzo/ozzo-routing/v2"
 	"github.com/go-ozzo/ozzo-routing/v2/auth"
+	"github.com/golang-jwt/jwt"
 )
 
 // ContextDB is a global variable that stores the database context.

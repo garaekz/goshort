@@ -5,11 +5,11 @@ import (
 	defaultErrors "errors"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/garaekz/goshort/internal/entity"
 	"github.com/garaekz/goshort/internal/errors"
 	"github.com/garaekz/goshort/pkg/log"
 	"github.com/garaekz/goshort/pkg/utils"
+	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
 
